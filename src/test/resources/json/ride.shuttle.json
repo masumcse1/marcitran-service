@@ -1,0 +1,15 @@
+{
+  "ride": {
+    "description": "Test rides",
+    "sourceAddress": "3153 Glenloch Pl, Lawrenceville, Georgia, United States",
+    "destinationAddress": "6784 Duluth Highway, Lawrenceville, GA, United States",
+    "finalPrice": 5,
+    "numberOfGuest": 0,
+    "pickOffTime": "2016-05-05T06:51:51.760Z",
+    "vehicleType": "CAR"
+  },
+  "subscriber": {
+    "transactionId": "PAY-NIKSON01234",
+    "type": "ONE_TIME"
+  }
+}

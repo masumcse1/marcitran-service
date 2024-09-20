@@ -1,0 +1,28 @@
+{
+  "username": "moinsam",
+  "enabled": true,
+  "email": "moinsam@yahoo.com",
+  "phone": null,
+  "firstName": "Md Moin",
+  "lastName": "Uddin",
+  "gender": null,
+  "streetAddress": null,
+  "city": null,
+  "state": null,
+  "zipCode": null,
+  "profilePicture": null,
+  "creditPoints": [],
+  "subscription": null,
+  "reviews": [
+    {
+      "role": "PROVIDER",
+      "averageRating": 0,
+      "reviewerCount": 0
+    },
+    {
+      "role": "CONSUMER",
+      "averageRating": 0,
+      "reviewerCount": 0
+    }
+  ]
+}

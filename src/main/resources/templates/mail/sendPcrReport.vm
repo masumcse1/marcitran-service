@@ -1,0 +1,55 @@
+<html>
+<body>
+    <h3> Welcome to Marcitran!</h3>
+    <p>PCR report:</p>
+    <p>Submitted at: $submittedTime</p>
+
+    <p>Vital:</p>
+    #foreach($entry in $vital.entrySet())
+        <p>$entry.getKey() : $entry.getValue()</p>
+    #end
+
+    <p>Assessment:</p>
+    #foreach($entry in $assessment.entrySet())
+    <p>$entry.getKey() : $entry.getValue()</p>
+    #end
+
+    <p>Intervention:</p>
+    #foreach($entry in $intervention.entrySet())
+    <p>$entry.getKey() : $entry.getValue()</p>
+    #end
+
+    <p>IC Activity:</p>
+    #foreach($entry in $icActivity.entrySet())
+    <p>$entry.getKey() : $entry.getValue()</p>
+    #end
+
+    <p>Medication:</p>
+    #foreach($entry in $medication.entrySet())
+    <p>$entry.getKey() : $entry.getValue()</p>
+    #end
+
+    <p>ECG Record:</p>
+    #foreach($entry in $ecgRecord.entrySet())
+    <p>$entry.getKey() : $entry.getValue()</p>
+    #end
+
+    <p>Lab Test:</p>
+    #foreach($entry in $labTest.entrySet())
+    <p>$entry.getKey() : $entry.getValue()</p>
+    #end
+
+    <p>MI Report:</p>
+    #foreach($entry in $miReport.entrySet())
+    <p>$entry.getKey() : $entry.getValue()</p>
+    #end
+
+    <p>Procedure:</p>
+    #foreach($entry in $procedure.entrySet())
+    <p>$entry.getKey() : $entry.getValue()</p>
+    #end
+
+    <p>Thank You</p>
+    <p>Marcitran Team</p>
+</body>
+</html>

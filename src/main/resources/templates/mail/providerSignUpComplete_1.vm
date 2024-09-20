@@ -1,0 +1,15 @@
+<html>
+<body>
+<h3> Welcome to Ufril!</h3>
+<p>You're receiving this message because you signed up for an account on Ufril. (If you didn't sign up, you can ignore this email.)</p>
+<h3>Complete Your Registration</h3>
+<p>Please complete your registration process by <a href="${webUrl}signup-provider-confirmation/${token}/${user.username}">clicking here</a>.</p>
+<p>If this does not work, then please copy the following URL and paste it into your browser to complete your registration process.</p>
+<p>
+  <a href="${webUrl}signup-provider-confirmation/${token}/${user.username}">${webUrl}signup-provider-confirmation/${token}/${user.username}</a>
+</p>
+
+<p>Thank You</p>
+<p>Ufril Team</p>
+</body>
+</html>

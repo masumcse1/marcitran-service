@@ -1,0 +1,10 @@
+<html>
+<body>
+<h3> Welcome to Ufril!</h3>
+<p>You're receiving this message because you signed up for an account . (If you didn't sign up, you can ignore this email.)</p>
+<p>You have successfully complete your registration process. You can not able to login as provider from ufril home page. Please go to <a href="${webUrl}">ufril.com</a> and start your journey</p>
+
+<p>Thank You</p>
+<p>Ufril</p>
+</body>
+</html>
