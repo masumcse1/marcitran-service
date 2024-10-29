@@ -16,10 +16,10 @@ public interface ClaimRepository extends JpaRepository<Claim, Integer> {
 
     @Query("SELECT new com.ufril.medtran.dto.common.ClaimDTO(c) " +
             "FROM Claim c WHERE c.companyId = 1?")
-    List<ClaimDTO> getAllClaimByCompanyId(int companyId, Pageable pageable);
+    List<ClaimDTO> findAllByCompanyId(int companyId, Pageable pageable);
 
     @Query("SELECT new com.ufril.medtran.dto.common.ClaimDTO(c) " +
             "FROM Claim c " +
             "WHERE c.id = :id")
-    ClaimDTO getClaimById(@Param("id") Integer id);
+    ClaimDTO findById(@Param("id") Integer id);
 }

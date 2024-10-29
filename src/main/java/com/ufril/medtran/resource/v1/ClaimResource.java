@@ -51,8 +51,8 @@ public class ClaimResource {
             value = "/claim/getAllClaim/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getAllClaimByCompanyId(@PathVariable("companyId") int companyId,
-                                                    @RequestParam(defaultValue = "0") Integer pageNumber) {
+    public ResponseEntity<?> getAllClaim(@PathVariable("companyId") int companyId,
+                                         @RequestParam(defaultValue = "0") Integer pageNumber) {
 
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(pageNumber, 10, sort);

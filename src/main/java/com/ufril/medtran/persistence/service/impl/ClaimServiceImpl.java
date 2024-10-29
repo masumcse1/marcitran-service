@@ -20,12 +20,12 @@ public class ClaimServiceImpl implements ClaimService {
 
     @Override
     public List<ClaimDTO> getAllClaimByCompanyId(int companyId, Pageable pageable) {
-        return claimRepository.getAllClaimByCompanyId(companyId, pageable);
+        return claimRepository.findAllByCompanyId(companyId, pageable);
     }
 
     @Override
     public ClaimDTO getClaimById(int id) {
-        return claimRepository.getClaimById(id);
+        return claimRepository.findById(id);
     }
 
     @Override
