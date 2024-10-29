@@ -65,6 +65,7 @@ public class IncidentResource {
             dto.setSummary(incident.getSummary());
             dto.setCause(incident.getCause());
             dto.setNotes(incident.getNotes());
+            dto.setCompanyId(incident.getCompanyId());
 
             if (incident.getVehicle() != null) {
                 dto.setVehicleId(incident.getVehicle().getId());
@@ -85,7 +86,8 @@ public class IncidentResource {
         return new ResponseEntity<>(new Response(StatusType.OK, list), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/incident/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/incident/{id}",
+            method = RequestMethod.GET)
     public ResponseEntity<?> getIncidentById(@PathVariable("id") final int id) {
         Incident incident = incidentService.getIncidentById(id);
 
@@ -95,6 +97,7 @@ public class IncidentResource {
         dto.setSummary(incident.getSummary());
         dto.setCause(incident.getCause());
         dto.setNotes(incident.getNotes());
+        dto.setCompanyId(incident.getCompanyId());
 
         if (incident.getVehicle() != null) {
             dto.setVehicleId(incident.getVehicle().getId());
@@ -118,7 +121,7 @@ public class IncidentResource {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> createIncident(@RequestBody IncidentDTO dto) throws Exception {
+    public ResponseEntity<?> createIncident(@RequestBody IncidentDTO dto) {
         Incident incident = MapperUtils.mapDTOToIncident(dto);
 
         Vehicles vehicles = vehicleRepository.findOne(dto.getVehicleId());

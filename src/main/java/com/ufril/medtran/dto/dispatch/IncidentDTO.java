@@ -3,6 +3,7 @@ package com.ufril.medtran.dto.dispatch;
 import java.util.Date;
 
 public class IncidentDTO {
+
     private int id;
     private int vehicleId;
     private String callSign;
@@ -14,6 +15,7 @@ public class IncidentDTO {
     private int secondaryActor;
     private String secondaryActorName;
     private String Notes;
+    private int companyId;
 
     public int getId() {
         return id;
@@ -101,5 +103,13 @@ public class IncidentDTO {
 
     public void setNotes(String notes) {
         Notes = notes;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }
