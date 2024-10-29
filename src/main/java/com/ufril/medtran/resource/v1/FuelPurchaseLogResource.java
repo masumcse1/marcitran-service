@@ -46,7 +46,8 @@ public class FuelPurchaseLogResource {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @RequestMapping(value = "/fuelPurchaseLog/{companyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/fuelPurchaseLog/{companyId}",
+            method = RequestMethod.GET)
     public ResponseEntity<?> getAllFuelPurchaseLog(@PathVariable("companyId") Integer companyId,
                                                    @RequestParam("startDate")
                                                    @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -75,6 +76,7 @@ public class FuelPurchaseLogResource {
             dto.setGallons(log.getGallons());
             dto.setNotes(log.getNotes());
             dto.setAttendant(log.getAttendant());
+            dto.setCompanyId(log.getCompanyId());
 
             if (log.getVehicles() != null) {
                 dto.setVehicleId(log.getVehicles().getId());
@@ -92,7 +94,8 @@ public class FuelPurchaseLogResource {
         return new ResponseEntity<>(new Response(StatusType.OK, list), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/fuelPurchaseLog/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/fuelPurchaseLog/{id}",
+            method = RequestMethod.GET)
     public ResponseEntity<?> getFuelPurchaseLogById(@PathVariable("id") final int id) {
         FuelPurchaseLog log = fuelPurchaseLogService.getFuelPurchaseLogById(id);
 
@@ -108,6 +111,7 @@ public class FuelPurchaseLogResource {
         dto.setNotes(log.getNotes());
         dto.setAttendant(log.getAttendant());
         dto.setDownloadUri(log.getDownloadUri());
+        dto.setCompanyId(log.getCompanyId());
 
         if (log.getVehicles() != null) {
             dto.setVehicleId(log.getVehicles().getId());
@@ -122,14 +126,17 @@ public class FuelPurchaseLogResource {
         return new ResponseEntity<>(new Response(StatusType.OK, dto), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/fuelPurchaseLog", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> createFuelPurchaseLog(@RequestBody FuelPurchaseLogDTO fuelPurchaseLogDTO) throws Exception {
-        FuelPurchaseLog fuelPurchaseLog = MapperUtils.mapDTOToFuelPurchaseLog(fuelPurchaseLogDTO);
+    @RequestMapping(value = "/fuelPurchaseLog",
+            method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> createFuelPurchaseLog(@RequestBody FuelPurchaseLogDTO dto) throws Exception {
+        FuelPurchaseLog fuelPurchaseLog = MapperUtils.mapDTOToFuelPurchaseLog(dto);
 
-        Vehicles vehicles = vehicleRepository.findOne(fuelPurchaseLogDTO.getVehicleId());
+        Vehicles vehicles = vehicleRepository.findOne(dto.getVehicleId());
         fuelPurchaseLog.setVehicles(vehicles);
 
-        Employees employees = employeeRepository.findOne(fuelPurchaseLogDTO.getEmployeeId());
+        Employees employees = employeeRepository.findOne(dto.getEmployeeId());
         fuelPurchaseLog.setEmployee(employees);
 
         fuelPurchaseLog = fuelPurchaseLogService.createFuelPurchaseLog(fuelPurchaseLog);
@@ -137,20 +144,25 @@ public class FuelPurchaseLogResource {
         return new ResponseEntity<>(new Response(StatusType.OK, fuelPurchaseLog), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/fuelPurchaseLog", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> updateFuelPurchaseLog(@RequestBody FuelPurchaseLogDTO fuelPurchaseLogDTO) {
-        FuelPurchaseLog fuelPurchaseLog = MapperUtils.mapDTOToFuelPurchaseLog(fuelPurchaseLogDTO);
+    @RequestMapping(value = "/fuelPurchaseLog",
+            method = RequestMethod.PUT,
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> updateFuelPurchaseLog(@RequestBody FuelPurchaseLogDTO dto) {
+        FuelPurchaseLog fuelPurchaseLog = MapperUtils.mapDTOToFuelPurchaseLog(dto);
         fuelPurchaseLog = fuelPurchaseLogService.updateFuelPurchaseLog(fuelPurchaseLog);
         return new ResponseEntity<>(new Response(StatusType.OK, fuelPurchaseLog), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/fuelPurchaseLog/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/fuelPurchaseLog/{id}",
+            method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteFuelPurchaseLog(@PathVariable("id") final int id) {
         Boolean isDeleted = fuelPurchaseLogService.deleteFuelPurchaseLog(id);
         return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/fuelPurchaseLog/downloadFileImage/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/fuelPurchaseLog/downloadFileImage/{id}",
+            method = RequestMethod.GET)
     public ResponseEntity<?> downloadFile(@PathVariable("id") int id) {
         FuelPurchaseLog fuelPurchaseLog = fuelPurchaseLogService.getFuelPurchaseLogById(id);
         Path filePath = Paths.get(Utils.getFilePath() + "/" + fuelPurchaseLog.getStoredFileName());
@@ -161,7 +173,3 @@ public class FuelPurchaseLogResource {
                 .body(resource);
     }
 }
-
-
-
-
