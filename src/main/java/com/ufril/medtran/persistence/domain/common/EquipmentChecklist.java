@@ -1,26 +1,17 @@
 package com.ufril.medtran.persistence.domain.common;
 
 import com.ufril.medtran.persistence.domain.dispatch.Shifts;
-import com.ufril.medtran.persistence.domain.dispatch.Vehicles;
-import io.swagger.models.auth.In;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
+
 @Entity
-@Table(name = "EquipmentChecklist")
+@Table(name = "equipment_checklist")
 public class EquipmentChecklist {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  Integer id;
+    private Integer id;
     @ManyToOne
     private Shifts shift;
     @Column

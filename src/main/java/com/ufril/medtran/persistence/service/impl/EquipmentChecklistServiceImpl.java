@@ -2,18 +2,13 @@ package com.ufril.medtran.persistence.service.impl;
 
 import com.ufril.medtran.dto.common.EquipmentChecklistDTO;
 import com.ufril.medtran.persistence.domain.common.EquipmentChecklist;
-import com.ufril.medtran.persistence.domain.common.EquipmentType;
-import com.ufril.medtran.persistence.domain.dispatch.Shifts;
 import com.ufril.medtran.persistence.repository.common.EquipmentChecklistRepository;
 import com.ufril.medtran.persistence.repository.common.EquipmentTypeRepository;
-import com.ufril.medtran.persistence.repository.dispatch.ShiftRepository;
 import com.ufril.medtran.persistence.service.EquipmentChecklistService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +29,7 @@ public class EquipmentChecklistServiceImpl implements EquipmentChecklistService 
                                               int checkType) {
 
         return checklistRepo.getByCompanyIdAndShiftAndCheckDate(
-                companyId,shiftId, checkDate, checkType);
+                companyId, shiftId, checkDate, checkType);
     }
 
     @Override
@@ -42,8 +37,4 @@ public class EquipmentChecklistServiceImpl implements EquipmentChecklistService 
         checklistRepo.save(checklist);
     }
 
-    @Override
-    public List<EquipmentType> getEquipmentTypes(Integer companyId) {
-        return typeRepository.findAllByCompanyId(companyId);
-    }
 }

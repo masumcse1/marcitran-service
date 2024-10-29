@@ -9,7 +9,5 @@ import java.util.List;
 @Repository
 public interface EquipmentTypeRepository extends JpaRepository<EquipmentType, Integer> {
 
-    List<EquipmentType> findAllByCompanyId(int companyId);
-
-    List<EquipmentType> findByCompanyIdAndCheckType(int companyId, int checkType);
+    List<EquipmentType> findAllByCheckType(int checkType);
 }

@@ -1,20 +1,16 @@
 package com.ufril.medtran.persistence.domain.common;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "Equipment_Type")
+@Table(name = "equipment_type")
 public class EquipmentType {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     private int checkType;
-    private int companyId;
 
     public int getId() {
         return id;
@@ -38,13 +34,5 @@ public class EquipmentType {
 
     public void setCheckType(int checkType) {
         this.checkType = checkType;
-    }
-
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
     }
 }

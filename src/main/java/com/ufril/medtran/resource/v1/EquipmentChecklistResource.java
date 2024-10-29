@@ -63,8 +63,7 @@ public class EquipmentChecklistResource {
         if (equipmentChecklistList == null || equipmentChecklistList.isEmpty()) {
             equipmentChecklistList = new ArrayList<>();
 
-            List<EquipmentType> equipmentTypes = equipmentTypeRepository.findByCompanyIdAndCheckType(
-                    companyId, checkType);
+            List<EquipmentType> equipmentTypes = equipmentTypeRepository.findAllByCheckType(checkType);
 
             for (EquipmentType type : equipmentTypes) {
                 EquipmentChecklistDTO dto = new EquipmentChecklistDTO();
@@ -120,11 +119,11 @@ public class EquipmentChecklistResource {
             @ApiResponse(code = 404, message = "Unable to get all EquipmentChecklist", response = Response.class)
     })
     @RequestMapping(
-            value = "/checklist/getEquipmentTypes/{companyId}",
+            value = "/checklist/getEquipmentTypes",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getEquipmentTypes(@PathVariable("companyId") Integer companyId) {
-        List<EquipmentType> types = checklistService.getEquipmentTypes(companyId);
+    public ResponseEntity<?> getEquipmentTypes() {
+        List<EquipmentType> types = equipmentTypeRepository.findAll();
         return new ResponseEntity<>(new Response(StatusType.OK, types), HttpStatus.OK);
     }
 }
