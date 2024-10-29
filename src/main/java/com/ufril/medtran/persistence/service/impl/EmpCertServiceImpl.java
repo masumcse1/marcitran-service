@@ -34,9 +34,6 @@ public class EmpCertServiceImpl implements EmpCertService {
     @Override
     @Transactional
     public List<EmployeeCertificates> mapEmployeeCertificates(List<EmployeeCertificates> empCertList) {
-        for (EmployeeCertificates empCert: empCertList) {
-            employeeCertificatesRepository.save(empCert);
-        }
-        return empCertList;
+        return employeeCertificatesRepository.save(empCertList);
     }
 }
