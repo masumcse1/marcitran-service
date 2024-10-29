@@ -6,6 +6,7 @@ import java.util.Date;
 @Entity
 @Table(name = "pcr_log")
 public class PCRLog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
