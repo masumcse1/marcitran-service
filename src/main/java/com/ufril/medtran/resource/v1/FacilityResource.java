@@ -8,7 +8,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +20,6 @@ import java.util.List;
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "facility")
 public class FacilityResource {
-    private static Logger logger = Logger.getLogger(FacilityResource.class);
 
     @Autowired
     private FacilityService facilityService;
@@ -112,7 +110,7 @@ public class FacilityResource {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> updateFacility(Facilities facilities) {
+    public ResponseEntity<?> updateFacility(@RequestBody Facilities facilities) {
         facilities = facilityService.updateFacilities(facilities);
         return new ResponseEntity<>(new Response(StatusType.OK, facilities), HttpStatus.OK);
     }
