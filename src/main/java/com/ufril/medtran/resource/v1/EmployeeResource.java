@@ -15,7 +15,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,8 +34,6 @@ import java.util.Optional;
 @Api(value = "employee")
 public class EmployeeResource {
 
-    private static Logger logger = Logger.getLogger(EmployeeResource.class);
-
     @Autowired
     private EmployeeService employeeService;
 
@@ -54,6 +51,7 @@ public class EmployeeResource {
                                              @RequestParam boolean status,
                                              @RequestParam(required = false) String fullName,
                                              @RequestParam(defaultValue = "0") Integer pageNumber) {
+
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(pageNumber, 10, sort);
         List<Employees> employeesList = employeeService.getAllEmployees(
@@ -154,6 +152,7 @@ public class EmployeeResource {
         userDTO.setRole(employeeDTO.getRole());
         userDTO.setStatus("1");
         userDTO.setEmployeeId(employee.getId());
+        userDTO.setCompanyId(employee.getCompanyId());
 
         userService.createUser(userDTO, null);
 

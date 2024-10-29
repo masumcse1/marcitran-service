@@ -236,4 +236,12 @@ public class Employees {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public Collection<EmployeeCertificates> getEmployeeCertificates() {
+		return employeeCertificates;
+	}
+
+	public void setEmployeeCertificates(Collection<EmployeeCertificates> employeeCertificates) {
+		this.employeeCertificates = employeeCertificates;
+	}
 }
