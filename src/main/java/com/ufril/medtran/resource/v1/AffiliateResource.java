@@ -57,7 +57,8 @@ public class AffiliateResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getAffiliateById(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, affiliateService.getAffiliateById(id)), HttpStatus.OK);
+        Affiliate affiliate = affiliateService.getAffiliateById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, affiliate), HttpStatus.OK);
     }
 
     @ApiOperation(
