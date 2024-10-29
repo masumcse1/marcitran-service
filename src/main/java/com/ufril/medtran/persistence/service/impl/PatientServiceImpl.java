@@ -23,8 +23,10 @@ public class PatientServiceImpl implements PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
+
     @Autowired
     private PatientFileRepository documentRepository;
+
     @Autowired
     private DocumentTypeRepository documentTypeRepository;
 
