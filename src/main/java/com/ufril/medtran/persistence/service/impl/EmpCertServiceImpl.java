@@ -22,8 +22,8 @@ public class EmpCertServiceImpl implements EmpCertService {
     private CertificateRepository certificateRepository;
 
     @Override
-    public List<Certificates> getAllCertificatesByCompanyId(int companyId) {
-        return certificateRepository.findAllByCompanyId(companyId);
+    public List<Certificates> getAllCertificates() {
+        return certificateRepository.findAll();
     }
 
     @Override

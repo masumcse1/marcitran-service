@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EmpCertService {
 
-    List<Certificates> getAllCertificatesByCompanyId(int companyId);
+    List<Certificates> getAllCertificates();
 
     List<EmployeeCertificates> getCertificatesByEmployeeId(int id);
 

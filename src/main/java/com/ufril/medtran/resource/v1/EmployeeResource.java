@@ -9,7 +9,6 @@ import com.ufril.medtran.helper.ResourceValidationHelper;
 import com.ufril.medtran.persistence.domain.account.*;
 import com.ufril.medtran.persistence.service.EmpCertService;
 import com.ufril.medtran.persistence.service.EmployeeService;
-import com.ufril.medtran.persistence.service.PayrollLogService;
 import com.ufril.medtran.persistence.service.UserService;
 import com.ufril.medtran.util.MapperUtils;
 import io.swagger.annotations.Api;
@@ -21,13 +20,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 @RestController(value = "employeeResourceV1")
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
@@ -196,10 +197,9 @@ public class EmployeeResource {
         return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "employee/getAllCertificates/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCertificates(@PathVariable("companyId") Integer companyId) {
-        List<Certificates> certificates = empCertService.getAllCertificatesByCompanyId(companyId);
+    @RequestMapping(value = "employee/getAllCertificates", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCertificates() {
+        List<Certificates> certificates = empCertService.getAllCertificates();
         return new ResponseEntity<>(new Response(StatusType.OK, certificates), HttpStatus.OK);
     }
 
