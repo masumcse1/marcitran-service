@@ -8,7 +8,6 @@ import com.ufril.medtran.persistence.domain.dispatch.*;
 import com.ufril.medtran.persistence.domain.patient.Patients;
 import com.ufril.medtran.persistence.service.DropDownService;
 import io.swagger.annotations.Api;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +23,6 @@ import java.util.List;
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "dropdown")
 public class DropDownResource {
-
-    private static Logger logger = Logger.getLogger(DispatchResource.class);
 
     @Autowired
     private DropDownService dropDownService;
