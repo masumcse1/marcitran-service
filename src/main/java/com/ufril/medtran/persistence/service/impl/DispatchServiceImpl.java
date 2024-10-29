@@ -42,9 +42,8 @@ public class DispatchServiceImpl implements DispatchService {
                                                        String shiftType,
                                                        Pageable pageable) {
 
-        return dispatchRepository.getAllDispatchByCompanyId(companyId,
-                status, employeeId, vehicleId, patientName, dispatcher,
-                shiftType, pageable);
+        return dispatchRepository.getAllDispatchByCompanyId(
+                companyId, status, employeeId, vehicleId, patientName, dispatcher, shiftType, pageable);
     }
 
     @Override
@@ -52,8 +51,8 @@ public class DispatchServiceImpl implements DispatchService {
                                                                          Date startDate,
                                                                          Date endDate) {
 
-        return dispatchRepository.getCallsPerDayNightSplitByCompanyId(companyId,
-                startDate, endDate);
+        return dispatchRepository.getCallsPerDayNightSplitByCompanyId(
+                companyId, startDate, endDate);
     }
 
     @Override
@@ -61,17 +60,17 @@ public class DispatchServiceImpl implements DispatchService {
                                                                     Date startDate,
                                                                     Date endDate) {
 
-        return dispatchRepository.countCallsPerVehicleByCompanyId(companyId,
-                startDate, endDate);
+        return dispatchRepository.countCallsPerVehicleByCompanyId(
+                companyId, startDate, endDate);
     }
 
     @Override
     public List<CallsByDispatcherDTO> getCallsByDispatcherCrewMemberAndCompanyId(Integer companyId,
-                                                                                Date startDate,
-                                                                                Date endDate) {
+                                                                                 Date startDate,
+                                                                                 Date endDate) {
 
-        return dispatchRepository.getCallsByDispatcherCrewMemberAndCompanyId(companyId,
-                startDate, endDate);
+        return dispatchRepository.getCallsByDispatcherCrewMemberAndCompanyId(
+                companyId, startDate, endDate);
     }
 
     @Override

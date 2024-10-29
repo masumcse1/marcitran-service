@@ -6,8 +6,6 @@ import com.ufril.medtran.persistence.domain.patient.Patients;
 import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
-
 @Entity
 @Table(name = "dispatches")
 public class Dispatches {

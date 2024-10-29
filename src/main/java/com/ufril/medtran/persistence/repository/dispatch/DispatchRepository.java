@@ -44,9 +44,11 @@ public interface DispatchRepository extends JpaRepository<Dispatches, Integer> {
                                                 Pageable pageable);
 
     @Query(value = "SELECT new com.ufril.medtran.dto.dispatch.CallsPerDayNightDTO(" +
-            "CASE WHEN HOUR(d.createdDate) >= 7 AND HOUR(d.createdDate) <= 19 THEN 'Day' ELSE 'Night' END, COUNT(d)) " +
+            "CASE WHEN HOUR(d.createdDate) >= 7 AND HOUR(d.createdDate) <= 19 THEN 'Day' ELSE 'Night' END, " +
+            "COUNT(d)) " +
             "FROM Dispatches d " +
-            "WHERE d.companyId = :companyId AND d.createdDate BETWEEN :startDate AND :endDate " +
+            "WHERE d.companyId = :companyId " +
+            "AND d.createdDate BETWEEN :startDate AND :endDate " +
             "GROUP BY CASE WHEN HOUR(d.createdDate) >= 7 AND HOUR(d.createdDate) <= 19 THEN 'Day' ELSE 'Night' END")
     List<CallsPerDayNightDTO> getCallsPerDayNightSplitByCompanyId(@Param("companyId") Integer companyId,
                                                                   @Param("startDate") Date startDate,
@@ -55,7 +57,8 @@ public interface DispatchRepository extends JpaRepository<Dispatches, Integer> {
     @Query(value = "SELECT NEW com.ufril.medtran.dto.dispatch.CallsPerVehicleDTO(v.callSign, COUNT(d)) " +
             "FROM DispatchLogs d " +
             "JOIN d.shift.vehicle v " +
-            "WHERE d.companyId = :companyId AND d.dispatch.createdDate BETWEEN :startDate AND :endDate " +
+            "WHERE d.companyId = :companyId " +
+            "AND d.dispatch.createdDate BETWEEN :startDate AND :endDate " +
             "GROUP BY v.callSign")
     List<CallsPerVehicleDTO> countCallsPerVehicleByCompanyId(@Param("companyId") Integer companyId,
                                                              @Param("startDate") Date startDate,
@@ -63,7 +66,8 @@ public interface DispatchRepository extends JpaRepository<Dispatches, Integer> {
 
     @Query(value = "SELECT new com.ufril.medtran.dto.dispatch.CallsByDispatcherDTO(d.createdBy, COUNT(d)) " +
             "FROM Dispatches d " +
-            "WHERE d.companyId = :companyId AND d.createdDate BETWEEN :startDate AND :endDate " +
+            "WHERE d.companyId = :companyId " +
+            "AND d.createdDate BETWEEN :startDate AND :endDate " +
             "GROUP BY d.createdBy")
     List<CallsByDispatcherDTO> getCallsByDispatcherCrewMemberAndCompanyId(@Param("companyId") Integer companyId,
                                                                           @Param("startDate") Date startDate,

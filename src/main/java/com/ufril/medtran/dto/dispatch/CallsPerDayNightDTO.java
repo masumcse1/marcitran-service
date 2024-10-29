@@ -1,8 +1,7 @@
 package com.ufril.medtran.dto.dispatch;
 
-
-
 public class CallsPerDayNightDTO {
+
     private String period;
     private long noOfCalls;
 

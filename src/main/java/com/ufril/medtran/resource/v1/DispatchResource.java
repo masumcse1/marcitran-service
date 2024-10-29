@@ -12,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.PageRequest;
@@ -39,18 +38,21 @@ import java.util.List;
 @Api(value = "dispatch")
 public class DispatchResource {
 
-    private static Logger logger = Logger.getLogger(DispatchResource.class);
-
     @Autowired
     private DispatchService dispatchService;
+
     @Autowired
     private FacilityService facilityService;
+
     @Autowired
     private ServiceLevelService serviceLevelService;
+
     @Autowired
     private PatientService patientService;
+
     @Autowired
     private ShiftService shiftService;
+
     @Autowired
     private TagService tagService;
 
@@ -62,18 +64,18 @@ public class DispatchResource {
             @ApiResponse(code = 200, message = "", response = Response.class),
             @ApiResponse(code = 404, message = "Unable to get all Dispatch", response = Response.class)})
     @RequestMapping(value = "/dispatch/getAllDispatch/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllDispatchByCompanyId(@PathVariable("companyId") Integer companyId,
-                                                       @RequestParam Integer status,
-                                                       @RequestParam(required = false) Integer employeeId,
-                                                       @RequestParam(required = false) Integer vehicleId,
-                                                       @RequestParam(required = false) String patientName,
-                                                       @RequestParam(required = false) String dispatcher,
-                                                       @RequestParam(required = false) String shiftType,
-                                                       @RequestParam(defaultValue = "0") Integer pageNumber) {
+    public ResponseEntity<?> getAllDispatch(@PathVariable("companyId") Integer companyId,
+                                            @RequestParam Integer status,
+                                            @RequestParam(required = false) Integer employeeId,
+                                            @RequestParam(required = false) Integer vehicleId,
+                                            @RequestParam(required = false) String patientName,
+                                            @RequestParam(required = false) String dispatcher,
+                                            @RequestParam(required = false) String shiftType,
+                                            @RequestParam(defaultValue = "0") Integer pageNumber) {
 
         Pageable pageable = new PageRequest(pageNumber, 20);
-        List<DispatchDTO> dispatches = dispatchService.getAllDispatchByCompanyId(companyId, status, employeeId,
-                vehicleId, patientName, dispatcher, shiftType, pageable);
+        List<DispatchDTO> dispatches = dispatchService.getAllDispatchByCompanyId(
+                companyId, status, employeeId, vehicleId, patientName, dispatcher, shiftType, pageable);
 
         return new ResponseEntity<>(new Response(StatusType.OK, dispatches), HttpStatus.OK);
     }
@@ -83,11 +85,15 @@ public class DispatchResource {
             @ApiResponse(code = 200, message = "", response = Response.class),
             @ApiResponse(code = 404, message = "Unable to get number of calls day and night shift", response = Response.class)})
     @RequestMapping(value = "/dispatch/getCallsPerDayNightSplit/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getCallsPerDayNightSplitByCompanyId(@PathVariable("companyId") Integer companyId,
-                                                                 @RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE) Date startDate,
-                                                                 @RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE) Date endDate) {
+    public ResponseEntity<?> getCallsPerDayNightSplit(@PathVariable("companyId") Integer companyId,
+                                                      @RequestParam("startDate")
+                                                      @DateTimeFormat(iso = ISO.DATE) Date startDate,
+                                                      @RequestParam("endDate")
+                                                      @DateTimeFormat(iso = ISO.DATE) Date endDate) {
 
-        List<CallsPerDayNightDTO> callsPerDayNightDTOS = dispatchService.getCallsPerDayNightSplitByCompanyId(companyId, startDate, endDate);
+        List<CallsPerDayNightDTO> callsPerDayNightDTOS = dispatchService.getCallsPerDayNightSplitByCompanyId(
+                companyId, startDate, endDate);
+
         return new ResponseEntity<>(new Response(StatusType.OK, callsPerDayNightDTOS), HttpStatus.OK);
     }
 
@@ -96,11 +102,15 @@ public class DispatchResource {
             @ApiResponse(code = 200, message = "", response = Response.class),
             @ApiResponse(code = 404, message = "Unable to get number of calls day and night shift", response = Response.class)})
     @RequestMapping(value = "/dispatch/getCallsPerVehicle/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getCallsPerVehicleByCompanyId(@PathVariable("companyId") Integer companyId,
-                                                           @RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE) Date startDate,
-                                                           @RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE) Date endDate) {
+    public ResponseEntity<?> getCallsPerVehicle(@PathVariable("companyId") Integer companyId,
+                                                @RequestParam("startDate")
+                                                @DateTimeFormat(iso = ISO.DATE) Date startDate,
+                                                @RequestParam("endDate")
+                                                @DateTimeFormat(iso = ISO.DATE) Date endDate) {
 
-        List<CallsPerVehicleDTO> numCallByVehicle = dispatchService.countCallsPerVehicleByCompanyId(companyId, startDate, endDate);
+        List<CallsPerVehicleDTO> numCallByVehicle = dispatchService.countCallsPerVehicleByCompanyId(
+                companyId, startDate, endDate);
+
         return new ResponseEntity<>(new Response(StatusType.OK, numCallByVehicle), HttpStatus.OK);
     }
 
@@ -109,12 +119,14 @@ public class DispatchResource {
             @ApiResponse(code = 200, message = "", response = Response.class),
             @ApiResponse(code = 404, message = "Unable to get number of calls day and night shift", response = Response.class)})
     @RequestMapping(value = "/dispatch/getCallsByDispatcher/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getCallsByDispatcherAndCompanyId(@PathVariable("companyId") Integer companyId,
-                                                              @RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE) Date startDate,
-                                                              @RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE) Date endDate) {
+    public ResponseEntity<?> getCallsByDispatcher(@PathVariable("companyId") Integer companyId,
+                                                  @RequestParam("startDate")
+                                                  @DateTimeFormat(iso = ISO.DATE) Date startDate,
+                                                  @RequestParam("endDate")
+                                                  @DateTimeFormat(iso = ISO.DATE) Date endDate) {
 
-        List<CallsByDispatcherDTO> callsByDispatcherDTO = dispatchService.getCallsByDispatcherCrewMemberAndCompanyId(companyId,
-                startDate, endDate);
+        List<CallsByDispatcherDTO> callsByDispatcherDTO = dispatchService.getCallsByDispatcherCrewMemberAndCompanyId(
+                companyId, startDate, endDate);
 
         return new ResponseEntity<>(new Response(StatusType.OK, callsByDispatcherDTO), HttpStatus.OK);
     }
@@ -132,7 +144,8 @@ public class DispatchResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getDispatchById(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, dispatchService.getDispatchById(id)), HttpStatus.OK);
+        DispatchDTO dispatchDTO = dispatchService.getDispatchById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, dispatchDTO), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -248,14 +261,9 @@ public class DispatchResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> deleteDispatch(@PathVariable("id") final int id) {
-
-            /*dispatchService.deleteDispatchLog(id);
-            dispatchService.deleteDispatchSchedule(id);*/
         boolean flag = dispatchService.deleteDispatch(id);
-
         return new ResponseEntity<>(new Response(StatusType.OK, flag), HttpStatus.OK);
     }
-
 
     @ApiOperation(
             value = "Get a PCR By DispatchId",
@@ -270,7 +278,8 @@ public class DispatchResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getPCRByDispatchId(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, dispatchService.getPCRByDispatchId(id)), HttpStatus.OK);
+        PCRLog pcrLog = dispatchService.getPCRByDispatchId(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, pcrLog), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -288,9 +297,7 @@ public class DispatchResource {
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> updatePCRLog(@RequestBody PCRLogDTO pcrLogDTO) {
-
         dispatchService.updatePCRLog(pcrLogDTO);
-
         return new ResponseEntity<>(new Response(StatusType.OK, pcrLogDTO), HttpStatus.OK);
     }
 
