@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController(value = "eventResourceV1")
-@RequestMapping(value = { "/v1/", "/oauth2/v1/" })
+@RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "event")
 public class EventResource {
 
@@ -55,7 +55,8 @@ public class EventResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getEventById(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, eventService.getEventById(id)), HttpStatus.OK);
+        Event event = eventService.getEventById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, event), HttpStatus.OK);
     }
 
     @ApiOperation(
