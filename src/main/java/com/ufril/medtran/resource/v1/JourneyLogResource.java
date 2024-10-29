@@ -60,9 +60,9 @@ public class JourneyLogResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getAllJourneyLog(@PathVariable("companyId") Integer companyId,
-                                              @RequestParam(required = false)
+                                              @RequestParam(required = true)
                                               @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-                                              @RequestParam(required = false)
+                                              @RequestParam(required = true)
                                               @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
                                               @RequestParam(required = false) Integer vehicleId,
                                               @RequestParam(defaultValue = "0") Integer pageNumber) {
@@ -87,6 +87,7 @@ public class JourneyLogResource {
             dto.setKmCovered(log.getKmCovered());
             dto.setBackInServiceTime(log.getBackInServiceTime());
             dto.setVehicleStatus(log.getVehicleStatus());
+            dto.setCompanyId(log.getCompanyId());
 
             if (log.getVehicle() != null) {
                 dto.setVehicleId(log.getVehicle().getId());
@@ -126,6 +127,7 @@ public class JourneyLogResource {
         dto.setKmCovered(log.getKmCovered());
         dto.setBackInServiceTime(log.getBackInServiceTime());
         dto.setVehicleStatus(log.getVehicleStatus());
+        dto.setCompanyId(log.getCompanyId());
 
         if (log.getVehicle() != null) {
             dto.setVehicleId(log.getVehicle().getId());
