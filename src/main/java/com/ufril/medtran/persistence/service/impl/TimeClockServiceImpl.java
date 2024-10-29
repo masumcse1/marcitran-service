@@ -1,6 +1,5 @@
 package com.ufril.medtran.persistence.service.impl;
 
-import com.ufril.medtran.dto.account.TimeClockDTO;
 import com.ufril.medtran.persistence.domain.account.Employees;
 import com.ufril.medtran.persistence.domain.account.TimeClock;
 import com.ufril.medtran.persistence.repository.account.TimeClockRepository;
@@ -21,8 +20,9 @@ public class TimeClockServiceImpl implements TimeClockService {
     private TimeClockRepository timeClockRepository;
 
     @Override
-    public List<TimeClock> getAllTimeClock(Pageable pageable) {
-        return timeClockRepository.findAll(pageable).getContent();
+    public List<TimeClock> getAllTimeClock(Integer companyId, Pageable pageable) {
+        return timeClockRepository.findAllByCompanyId(companyId, pageable)
+                .getContent();
     }
 
     @Override
@@ -36,8 +36,8 @@ public class TimeClockServiceImpl implements TimeClockService {
     }
 
     @Override
-    public List<TimeClock> getTimeClockByDate(Date date) {
-        return timeClockRepository.findAllByClockInAfter(date);
+    public List<TimeClock> getTimeClockByDate(Integer companyId, Date date) {
+        return timeClockRepository.findAllByCompanyIdAndClockInAfter(companyId, date);
     }
 
     @Override

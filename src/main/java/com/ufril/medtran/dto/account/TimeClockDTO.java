@@ -10,6 +10,7 @@ public class TimeClockDTO {
     private Date clockIn;
     private Date clockOut;
     private String comment;
+    private int companyId;
 
     public int getId() {
         return id;
@@ -65,5 +66,13 @@ public class TimeClockDTO {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

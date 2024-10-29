@@ -44,6 +44,8 @@ public class Employees {
 	private GenderType gender;
 	private String ethnicity;
 	private boolean active;
+	private int companyId;
+
 	@OneToOne
 	@JoinColumn(name = "username_fk", referencedColumnName = "username")
 	private User user;
@@ -217,6 +219,14 @@ public class Employees {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 
 	public User getUser() {

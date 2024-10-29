@@ -12,7 +12,6 @@ import com.ufril.medtran.persistence.service.FuelPurchaseLogService;
 import com.ufril.medtran.util.MapperUtils;
 import com.ufril.medtran.util.Utils;
 import io.swagger.annotations.Api;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -24,42 +23,47 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 
 @RestController(value = "fuelPurchaseLogResourceV1")
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "fuelPurchaseLog")
 public class FuelPurchaseLogResource {
-    private static Logger logger = Logger.getLogger(FuelPurchaseLogResource.class);
 
     @Autowired
     private FuelPurchaseLogService fuelPurchaseLogService;
+
     @Autowired
     private VehicleRepository vehicleRepository;
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @RequestMapping(value = "/fuelPurchaseLog", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllFuelPurchaseLog(@RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate, @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate, @RequestParam(value = "vehicleId", required = false) Integer vehicleId, @RequestParam(defaultValue = "0") Integer pageNumber) {
+    @RequestMapping(value = "/fuelPurchaseLog/{companyId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllFuelPurchaseLog(@PathVariable("companyId") Integer companyId,
+                                                   @RequestParam("startDate")
+                                                   @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                                   @RequestParam("endDate")
+                                                   @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+                                                   @RequestParam(value = "vehicleId", required = false) Integer vehicleId,
+                                                   @RequestParam(defaultValue = "0") Integer pageNumber) {
+
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(pageNumber, 10, sort);
-        List<FuelPurchaseLog> data = fuelPurchaseLogService.getAllFuelPurchaseLogs(startDate, endDate, vehicleId, pageable);
+
+        List<FuelPurchaseLog> data = fuelPurchaseLogService.getAllFuelPurchaseLogs(
+                companyId, startDate, endDate, vehicleId, pageable);
 
         List<FuelPurchaseLogDTO> list = new ArrayList<>();
 
-        for (FuelPurchaseLog log: data) {
+        for (FuelPurchaseLog log : data) {
             FuelPurchaseLogDTO dto = new FuelPurchaseLogDTO();
             dto.setId(log.getId());
             dto.setPurchaseDate(log.getPurchaseDate());
@@ -72,12 +76,12 @@ public class FuelPurchaseLogResource {
             dto.setNotes(log.getNotes());
             dto.setAttendant(log.getAttendant());
 
-            if(log.getVehicles() != null) {
+            if (log.getVehicles() != null) {
                 dto.setVehicleId(log.getVehicles().getId());
                 dto.setCallSign(log.getVehicles().getCallSign());
             }
 
-            if(log.getEmployee() != null){
+            if (log.getEmployee() != null) {
                 dto.setEmployeeId(log.getEmployee().getId());
                 dto.setEmployeeName(log.getEmployee().getFullName());
             }
@@ -105,12 +109,12 @@ public class FuelPurchaseLogResource {
         dto.setAttendant(log.getAttendant());
         dto.setDownloadUri(log.getDownloadUri());
 
-        if(log.getVehicles() != null) {
+        if (log.getVehicles() != null) {
             dto.setVehicleId(log.getVehicles().getId());
             dto.setCallSign(log.getVehicles().getCallSign());
         }
 
-        if(log.getEmployee() != null){
+        if (log.getEmployee() != null) {
             dto.setEmployeeId(log.getEmployee().getId());
             dto.setEmployeeName(log.getEmployee().getFullName());
         }
@@ -136,15 +140,14 @@ public class FuelPurchaseLogResource {
     @RequestMapping(value = "/fuelPurchaseLog", method = RequestMethod.PUT, consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> updateFuelPurchaseLog(@RequestBody FuelPurchaseLogDTO fuelPurchaseLogDTO) {
         FuelPurchaseLog fuelPurchaseLog = MapperUtils.mapDTOToFuelPurchaseLog(fuelPurchaseLogDTO);
-
         fuelPurchaseLog = fuelPurchaseLogService.updateFuelPurchaseLog(fuelPurchaseLog);
-
         return new ResponseEntity<>(new Response(StatusType.OK, fuelPurchaseLog), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/fuelPurchaseLog/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteFuelPurchaseLog(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, fuelPurchaseLogService.deleteFuelPurchaseLog(id)), HttpStatus.OK);
+        Boolean isDeleted = fuelPurchaseLogService.deleteFuelPurchaseLog(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/fuelPurchaseLog/downloadFileImage/{id}", method = RequestMethod.GET)
@@ -153,7 +156,9 @@ public class FuelPurchaseLogResource {
         Path filePath = Paths.get(Utils.getFilePath() + "/" + fuelPurchaseLog.getStoredFileName());
         Resource resource = new FileSystemResource(filePath.toFile());
 
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fuelPurchaseLog.getOriginalFileName() + "\"").body(resource);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fuelPurchaseLog.getOriginalFileName() + "\"")
+                .body(resource);
     }
 }
 

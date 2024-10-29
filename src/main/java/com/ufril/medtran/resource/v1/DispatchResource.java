@@ -1,45 +1,44 @@
 package com.ufril.medtran.resource.v1;
 
 import com.ufril.medtran.dto.common.Response;
-import com.ufril.medtran.dto.dispatch.CallsByDispatcherDTO;
-import com.ufril.medtran.dto.dispatch.CallsPerVehicleDTO;
-import com.ufril.medtran.dto.dispatch.DispatchDTO;
-import com.ufril.medtran.dto.dispatch.CallsPerDayNightDTO;
-import com.ufril.medtran.dto.dispatch.PCRLogDTO;
+import com.ufril.medtran.dto.dispatch.*;
 import com.ufril.medtran.enumeration.StatusType;
 import com.ufril.medtran.persistence.domain.common.Tag;
 import com.ufril.medtran.persistence.domain.dispatch.*;
 import com.ufril.medtran.persistence.domain.patient.Patients;
 import com.ufril.medtran.persistence.service.*;
 import com.ufril.medtran.util.MapperUtils;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @RestController(value = "dispatchResourceV1")
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "dispatch")
 public class DispatchResource {
+
     private static Logger logger = Logger.getLogger(DispatchResource.class);
 
     @Autowired
@@ -58,86 +57,64 @@ public class DispatchResource {
     @Autowired
     private JavaMailSender mailSender;
 
-    @ApiOperation(
-            value = "Get All Dispatch",
-            response = Response.class
-    )
+    @ApiOperation(value = "Get All Dispatch By Company Id", response = Response.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "", response = Response.class),
-            @ApiResponse(code = 404, message = "Unable to get all Dispatch", response = Response.class)
-    })
-    @RequestMapping(
-            value = "/dispatch/getAllDispatch",
-            method = RequestMethod.GET
-    )
-    public ResponseEntity<?> getAllDispatch(@RequestParam Integer status,
-                                            @RequestParam(required = false) Integer employeeId,
-                                            @RequestParam(required = false) Integer vehicleId,
-                                            @RequestParam(required = false) String patientName,
-                                            @RequestParam(required = false) String dispatcher,
-                                            @RequestParam(required = false) String shiftType,
-                                            @RequestParam(defaultValue = "0") Integer pageNumber
-    ) {
+            @ApiResponse(code = 404, message = "Unable to get all Dispatch", response = Response.class)})
+    @RequestMapping(value = "/dispatch/getAllDispatch/{companyId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllDispatchByCompanyId(@PathVariable("companyId") Integer companyId,
+                                                       @RequestParam Integer status,
+                                                       @RequestParam(required = false) Integer employeeId,
+                                                       @RequestParam(required = false) Integer vehicleId,
+                                                       @RequestParam(required = false) String patientName,
+                                                       @RequestParam(required = false) String dispatcher,
+                                                       @RequestParam(required = false) String shiftType,
+                                                       @RequestParam(defaultValue = "0") Integer pageNumber) {
+
         Pageable pageable = new PageRequest(pageNumber, 20);
-        List<DispatchDTO> dispatches
-                = dispatchService.getAllDispatch(status, employeeId, vehicleId, patientName, dispatcher, shiftType, pageable);
+        List<DispatchDTO> dispatches = dispatchService.getAllDispatchByCompanyId(companyId, status, employeeId,
+                vehicleId, patientName, dispatcher, shiftType, pageable);
 
         return new ResponseEntity<>(new Response(StatusType.OK, dispatches), HttpStatus.OK);
     }
 
-    @ApiOperation(
-            value = "Get All number of calls day and night shift",
-            response = Response.class
-    )
+    @ApiOperation(value = "Get All number of calls day and night shift by company id", response = Response.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "", response = Response.class),
-            @ApiResponse(code = 404, message = "Unable to get number of calls day and night shift", response = Response.class)
-    })
-    @RequestMapping(
-            value = "/dispatch/getCallsPerDayNightSplit",
-            method = RequestMethod.GET
-    )
-    public ResponseEntity<?> getCallsPerDayNightSplit(
-            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
-        List<CallsPerDayNightDTO> callsPerDayNightDTOS = dispatchService.getCallsPerDayNightSplit(startDate, endDate);
+            @ApiResponse(code = 404, message = "Unable to get number of calls day and night shift", response = Response.class)})
+    @RequestMapping(value = "/dispatch/getCallsPerDayNightSplit/{companyId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getCallsPerDayNightSplitByCompanyId(@PathVariable("companyId") Integer companyId,
+                                                                 @RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE) Date startDate,
+                                                                 @RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE) Date endDate) {
+
+        List<CallsPerDayNightDTO> callsPerDayNightDTOS = dispatchService.getCallsPerDayNightSplitByCompanyId(companyId, startDate, endDate);
         return new ResponseEntity<>(new Response(StatusType.OK, callsPerDayNightDTOS), HttpStatus.OK);
     }
 
-    @ApiOperation(
-            value = "Get All number of calls per vehicle",
-            response = Response.class
-    )
+    @ApiOperation(value = "Get All number of calls per vehicle by company id", response = Response.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "", response = Response.class),
-            @ApiResponse(code = 404, message = "Unable to get number of calls day and night shift", response = Response.class)
-    })
-    @RequestMapping(
-            value = "/dispatch/getCallsPerVehicle",
-            method = RequestMethod.GET
-    )
-    public ResponseEntity<?> getCallsPerVehicle(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-                                                  @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
-        List<CallsPerVehicleDTO> numCallByVehicle = dispatchService.countCallsPerVehicle(startDate, endDate);
-        return new ResponseEntity<>(new Response(StatusType.OK, numCallByVehicle), HttpStatus.OK);
+            @ApiResponse(code = 404, message = "Unable to get number of calls day and night shift", response = Response.class)})
+    @RequestMapping(value = "/dispatch/getCallsPerVehicle/{companyId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getCallsPerVehicleByCompanyId(@PathVariable("companyId") Integer companyId,
+                                                           @RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE) Date startDate,
+                                                           @RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE) Date endDate) {
 
+        List<CallsPerVehicleDTO> numCallByVehicle = dispatchService.countCallsPerVehicleByCompanyId(companyId, startDate, endDate);
+        return new ResponseEntity<>(new Response(StatusType.OK, numCallByVehicle), HttpStatus.OK);
     }
 
-    @ApiOperation(
-            value = "Get All number of calls by dispatcher",
-            response = Response.class
-    )
+    @ApiOperation(value = "Get All number of calls by dispatcher by company id", response = Response.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "", response = Response.class),
-            @ApiResponse(code = 404, message = "Unable to get number of calls day and night shift", response = Response.class)
-    })
-    @RequestMapping(
-            value = "/dispatch/getCallsByDispatcher",
-            method = RequestMethod.GET
-    )
-    public ResponseEntity<?> getCallsByDispatcher(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-                                                            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
-        List<CallsByDispatcherDTO> callsByDispatcherDTO = dispatchService.getCallsByDispatcherCrewMember(startDate, endDate);
+            @ApiResponse(code = 404, message = "Unable to get number of calls day and night shift", response = Response.class)})
+    @RequestMapping(value = "/dispatch/getCallsByDispatcher/{companyId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getCallsByDispatcherAndCompanyId(@PathVariable("companyId") Integer companyId,
+                                                              @RequestParam("startDate") @DateTimeFormat(iso = ISO.DATE) Date startDate,
+                                                              @RequestParam("endDate") @DateTimeFormat(iso = ISO.DATE) Date endDate) {
+
+        List<CallsByDispatcherDTO> callsByDispatcherDTO = dispatchService.getCallsByDispatcherCrewMemberAndCompanyId(companyId,
+                startDate, endDate);
 
         return new ResponseEntity<>(new Response(StatusType.OK, callsByDispatcherDTO), HttpStatus.OK);
     }

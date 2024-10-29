@@ -17,39 +17,43 @@ import java.util.List;
 public class VehicleMaintenanceLogServiceImpl implements VehicleMaintenanceLogService {
 
     @Autowired
-    private VehicleMaintenanceLogRepository vehicleMaintRepo;
+    private VehicleMaintenanceLogRepository vehicleMainRepo;
 
     @Override
-    public List<VehicleMaintenanceLog> getAllVehicleMaintenanceLog(Date startDate, Date endDate, Integer vehicleId, Pageable pageable) {
-        List<VehicleMaintenanceLog> data = new ArrayList<>();
+    public List<VehicleMaintenanceLog> getAllVehicleMaintenanceLog(Integer companyId,
+                                                                   Date startDate,
+                                                                   Date endDate,
+                                                                   Integer vehicleId,
+                                                                   Pageable pageable) {
 
-        if(vehicleId != null)
-            data = vehicleMaintRepo.findByDateBetweenAndVehicles_Id(startDate, endDate, vehicleId, pageable);
+        if (vehicleId != null)
+            return vehicleMainRepo.findByCompanyIdAndDateBetweenAndVehicles_Id(
+                    companyId, startDate, endDate, vehicleId, pageable);
         else
-            data = vehicleMaintRepo.findByDateBetween(startDate, endDate, pageable);
-        return data;
+            return vehicleMainRepo.findByCompanyIdAndDateBetween(
+                    companyId, startDate, endDate, pageable);
     }
 
     @Override
     public VehicleMaintenanceLog getVehicleMaintenanceLogById(int id) {
-        return vehicleMaintRepo.findOne(id);
+        return vehicleMainRepo.findOne(id);
     }
 
     @Override
     @Transactional
     public VehicleMaintenanceLog createVehicleMaintenanceLog(VehicleMaintenanceLog vehicleMaintenanceLog) {
-        return vehicleMaintRepo.save(vehicleMaintenanceLog);
+        return vehicleMainRepo.save(vehicleMaintenanceLog);
     }
 
     @Override
     @Transactional
     public VehicleMaintenanceLog updateVehicleMaintenanceLog(VehicleMaintenanceLog vehicleMaintenanceLog) {
-        return vehicleMaintRepo.save(vehicleMaintenanceLog);
+        return vehicleMainRepo.save(vehicleMaintenanceLog);
     }
 
     @Override
     public Boolean deleteVehicleMaintenanceLog(int id) {
-        vehicleMaintRepo.delete(id);
+        vehicleMainRepo.delete(id);
         return true;
     }
 }

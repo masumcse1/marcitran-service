@@ -5,8 +5,13 @@ import com.ufril.medtran.persistence.domain.common.Affiliate;
 import java.util.List;
 
 public interface AffiliateService {
-    List<Affiliate> getAllAffiliate();
+
+    List<Affiliate> getAllAffiliateByCompanyId(int companyId);
+
     Affiliate getAffiliateById(int id);
+
     Affiliate createAffiliate(Affiliate affiliate);
+
     Affiliate updateAffiliate(Affiliate affiliate);
+
 }

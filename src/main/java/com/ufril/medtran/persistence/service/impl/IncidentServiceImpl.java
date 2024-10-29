@@ -1,4 +1,5 @@
 package com.ufril.medtran.persistence.service.impl;
+
 import com.ufril.medtran.persistence.domain.dispatch.Incident;
 import com.ufril.medtran.persistence.repository.dispatch.IncidentRepository;
 import com.ufril.medtran.persistence.service.IncidentService;
@@ -6,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,15 +18,19 @@ public class IncidentServiceImpl implements IncidentService {
     @Autowired
     private IncidentRepository incidentRepo;
 
-
     @Override
-    public List<Incident> getAllIncidents(Date startDate, Date endDate, Integer vehicleId, Pageable pageable) {
-        List<Incident> data = new ArrayList<>();
-        if(vehicleId != null)
-            data = incidentRepo.findByIncidentTimeBetweenAndVehicle_Id(startDate, endDate, vehicleId, pageable);
+    public List<Incident> getAllIncidents(Integer companyId,
+                                          Date startDate,
+                                          Date endDate,
+                                          Integer vehicleId,
+                                          Pageable pageable) {
+
+        if (vehicleId != null)
+            return incidentRepo.findByCompanyIdAndIncidentTimeBetweenAndVehicle_Id(
+                    companyId, startDate, endDate, vehicleId, pageable);
         else
-            data = incidentRepo.findByIncidentTimeBetween(startDate, endDate, pageable);
-        return data;
+            return incidentRepo.findByCompanyIdAndIncidentTimeBetween(
+                    companyId, startDate, endDate, pageable);
     }
 
     @Override

@@ -26,6 +26,7 @@ public class EmployeeDTO {
     private String matchingPassword;
     private String status;
     private RoleType role;
+    private int companyId;
 
     public Integer getId() {
         return id;
@@ -185,5 +186,13 @@ public class EmployeeDTO {
 
     public void setRole(RoleType role) {
         this.role = role;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

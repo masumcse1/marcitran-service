@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController(value = "facilityResourceV1")
-@RequestMapping(value = { "/v1/", "/oauth2/v1/" })
+@RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "facility")
 public class FacilityResource {
     private static Logger logger = Logger.getLogger(FacilityResource.class);
@@ -35,12 +35,11 @@ public class FacilityResource {
             @ApiResponse(code = 404, message = "Unable to get all Facility", response = Response.class)
     })
     @RequestMapping(
-            value = "/facility/getAllFacilities",
+            value = "/facility/getAllFacilities/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getAllFacility() {
-        List<Facilities> facilityList = facilityService.getAllFacilities();
-
+    public ResponseEntity<?> getAllFacility(@PathVariable("companyId") Integer companyId) {
+        List<Facilities> facilityList = facilityService.getAllFacilities(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, facilityList), HttpStatus.OK);
     }
 
@@ -53,11 +52,13 @@ public class FacilityResource {
             @ApiResponse(code = 404, message = "Unable to get Facility", response = Response.class)
     })
     @RequestMapping(
-            value = "/facility/getFacilityByName/{name}",
+            value = "/facility/getFacilityByName/{companyId}/{name}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getFacilityByName(@PathVariable("name") String name) {
-        Facilities facility = facilityService.getFacilityByName(name);
+    public ResponseEntity<?> getFacilityByName(@PathVariable("companyId") Integer companyId,
+                                               @PathVariable("name") String name) {
+
+        Facilities facility = facilityService.getFacilityByName(companyId, name);
         return new ResponseEntity<>(new Response(StatusType.OK, facility), HttpStatus.OK);
     }
 
@@ -74,7 +75,8 @@ public class FacilityResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getFacilityById(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, facilityService.getFacilitiesById(id)), HttpStatus.OK);
+        Facilities facilities = facilityService.getFacilitiesById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, facilities), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -93,7 +95,6 @@ public class FacilityResource {
     )
     public ResponseEntity<?> createFacility(@RequestBody Facilities facilities) {
         facilities = facilityService.createFacilities(facilities);
-
         return new ResponseEntity<>(new Response(StatusType.OK, facilities), HttpStatus.OK);
     }
 
@@ -113,7 +114,6 @@ public class FacilityResource {
     )
     public ResponseEntity<?> updateFacility(Facilities facilities) {
         facilities = facilityService.updateFacilities(facilities);
-
         return new ResponseEntity<>(new Response(StatusType.OK, facilities), HttpStatus.OK);
     }
 
@@ -130,9 +130,7 @@ public class FacilityResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> deleteFacility(@PathVariable("id") final int id) {
-
         boolean flag = facilityService.deleteFacilities(id);
-
         return new ResponseEntity<>(new Response(StatusType.OK, flag), HttpStatus.OK);
     }
 }

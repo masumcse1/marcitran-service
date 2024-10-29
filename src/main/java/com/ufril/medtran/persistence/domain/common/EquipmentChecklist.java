@@ -35,6 +35,7 @@ public class EquipmentChecklist {
     private Integer expiry;
     private Integer dayStartQuantity;
     private Integer refill;
+    private int companyId;
 
     public Integer getId() {
         return id;
@@ -114,5 +115,13 @@ public class EquipmentChecklist {
 
     public void setExpiry(Integer expiry) {
         this.expiry = expiry;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

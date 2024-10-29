@@ -17,8 +17,8 @@ public class ZoneServiceImpl implements ZoneService {
     private ZoneRepository zoneRepository;
 
     @Override
-    public List<Zone> getAllZone() {
-        return zoneRepository.findAll();
+    public List<Zone> getAllZone(Integer companyId) {
+        return zoneRepository.findAllByCompanyId(companyId);
     }
 
     @Override

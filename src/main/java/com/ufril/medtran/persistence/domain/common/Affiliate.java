@@ -29,6 +29,7 @@ public class Affiliate {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date renewalDate;
 
+	private int companyId;
 
 	public int getId() {
 		return id;
@@ -156,5 +157,13 @@ public class Affiliate {
 
 	public void setRenewalDate(Date renewalDate) {
 		this.renewalDate = renewalDate;
+	}
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 }

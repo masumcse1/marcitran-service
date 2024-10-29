@@ -19,25 +19,29 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController(value = "tagResourceV1")
-@RequestMapping(value = { "/v1/", "/oauth2/v1/" })
+@RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "tag")
 public class TagResource {
-    private static Logger logger = Logger.getLogger(TagResource.class);
 
     @Autowired
     private TagService tagService;
+
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping(value = "/tag/getAllTags", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllTags() {
-        return new ResponseEntity<>(new Response(StatusType.OK, tagService.getAllTags()), HttpStatus.OK);
+    @RequestMapping(value = "/tag/getAllTags/{companyId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllTags(@PathVariable("companyId") Integer companyId) {
+        List<Tag> tags = tagService.getAllTags(companyId);
+        return new ResponseEntity<>(new Response(StatusType.OK, tags), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/tag/getTagById/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getTagById(@PathVariable("id") final long id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, tagService.getTagById(id)), HttpStatus.OK);
+        Tag tag = tagService.getTagById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, tag), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -55,7 +59,8 @@ public class TagResource {
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> createTag(@RequestBody Tag tag) {
-        return new ResponseEntity<>(new Response(StatusType.OK, tagService.createTag(tag)), HttpStatus.OK);
+        long id = tagService.createTag(tag);
+        return new ResponseEntity<>(new Response(StatusType.OK, id), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -73,7 +78,8 @@ public class TagResource {
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
     public ResponseEntity<?> updateTag(@RequestBody Tag tag) {
-        return new ResponseEntity<>(new Response(StatusType.OK, tagService.upDateTag(tag)), HttpStatus.OK);
+        long id = tagService.upDateTag(tag);
+        return new ResponseEntity<>(new Response(StatusType.OK, id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/tag/test", method = RequestMethod.GET)

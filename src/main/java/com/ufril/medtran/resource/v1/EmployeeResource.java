@@ -33,25 +33,33 @@ import java.util.*;
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "employee")
 public class EmployeeResource {
+
     private static Logger logger = Logger.getLogger(EmployeeResource.class);
 
     @Autowired
     private EmployeeService employeeService;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private EmpCertService empCertService;
+
     @Autowired
     private ResourceValidationHelper validationHelper;
 
-    @RequestMapping(value = "employee/getAllEmployees", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllEmployees(@RequestParam boolean status,
+    @RequestMapping(value = "employee/getAllEmployees/{companyId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllEmployees(@PathVariable("companyId") Integer companyId,
+                                             @RequestParam boolean status,
                                              @RequestParam(required = false) String fullName,
                                              @RequestParam(defaultValue = "0") Integer pageNumber) {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(pageNumber, 10, sort);
-        List<Employees> employeesList = employeeService.getAllEmployees(status, fullName, pageable);
+        List<Employees> employeesList = employeeService.getAllEmployees(
+                companyId, status, fullName, pageable);
+
         List<EmployeeDTO> data = new ArrayList<>();
+
         for (Employees employee : employeesList) {
             EmployeeDTO employeeDTO = new EmployeeDTO();
 
@@ -146,7 +154,7 @@ public class EmployeeResource {
         userDTO.setStatus("1");
         userDTO.setEmployeeId(employee.getId());
 
-        User user = userService.createUser(userDTO, null);
+        userService.createUser(userDTO, null);
 
         return new ResponseEntity<>(new Response(StatusType.OK, employee), HttpStatus.OK);
     }
@@ -172,6 +180,7 @@ public class EmployeeResource {
 
         User user = userService.getUserByEmployeeID(employeeDTO.getId());
         Optional<Role> firstRole = user.getRoles().stream().findFirst();
+
         if (firstRole.isPresent()) {
             userService.removeRoleFromUser(user, RoleType.valueOf(firstRole.get().getName()));
         }
@@ -183,23 +192,27 @@ public class EmployeeResource {
 
     @RequestMapping(value = "employee/deleteEmployee/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> deleteEmployee(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, employeeService.deleteEmployee(id)), HttpStatus.OK);
+        boolean isDeleted = employeeService.deleteEmployee(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "employee/getAllCertificates", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCertificates() {
-        return new ResponseEntity<>(new Response(StatusType.OK, empCertService.getAllCertificates()), HttpStatus.OK);
+    @RequestMapping(value = "employee/getAllCertificates/{companyId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCertificates(@PathVariable("companyId") Integer companyId) {
+        List<Certificates> certificates = empCertService.getAllCertificatesByCompanyId(companyId);
+        return new ResponseEntity<>(new Response(StatusType.OK, certificates), HttpStatus.OK);
     }
 
     @RequestMapping(value = "employee/getCertificatesByEmployeeId/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getCertificatesByEmployeeId(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, empCertService.getCertificatesByEmployeeId(id)), HttpStatus.OK);
+        List<EmployeeCertificates> employeeCertificates = empCertService.getCertificatesByEmployeeId(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, employeeCertificates), HttpStatus.OK);
     }
 
     @RequestMapping(value = "employee/mapEmployeeCertificates", method = RequestMethod.POST)
     public ResponseEntity<?> mapEmployeeCertificates(List<EmployeeCertificates> empCertList) {
-        return new ResponseEntity<>(new Response(StatusType.OK, empCertService.mapEmployeeCertificates(empCertList)), HttpStatus.OK);
+        empCertList = empCertService.mapEmployeeCertificates(empCertList);
+        return new ResponseEntity<>(new Response(StatusType.OK, empCertList), HttpStatus.OK);
     }
 
 }

@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,14 +19,18 @@ public class FuelPurchaseLogServiceImpl implements FuelPurchaseLogService {
     private FuelPurchaseLogRepository fuelPurchaseLogRepository;
 
     @Override
-    public List<FuelPurchaseLog> getAllFuelPurchaseLogs(Date startDate, Date endDate, Integer vehicleId, Pageable pageable) {
-        List<FuelPurchaseLog> data = new ArrayList<>();
+    public List<FuelPurchaseLog> getAllFuelPurchaseLogs(Integer companyId,
+                                                        Date startDate,
+                                                        Date endDate,
+                                                        Integer vehicleId,
+                                                        Pageable pageable) {
 
-        if(vehicleId != null)
-            data = fuelPurchaseLogRepository.findByPurchaseDateBetweenAndVehicles_Id(startDate, endDate, vehicleId, pageable);
+        if (vehicleId != null)
+            return fuelPurchaseLogRepository.findByCompanyIdAndPurchaseDateBetweenAndVehicles_Id(
+                    companyId, startDate, endDate, vehicleId, pageable);
         else
-            data = fuelPurchaseLogRepository.findByPurchaseDateBetween(startDate, endDate, pageable);
-        return data;
+            return fuelPurchaseLogRepository.findByCompanyIdAndPurchaseDateBetween(
+                    companyId, startDate, endDate, pageable);
     }
 
     @Override

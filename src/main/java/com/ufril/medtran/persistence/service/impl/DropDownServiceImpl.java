@@ -16,53 +16,60 @@ import java.util.List;
 @Service
 @Transactional
 public class DropDownServiceImpl implements DropDownService {
+
     @Autowired
-    private DispatchRepository dispatchRepo;
+    private DispatchRepository dispatchRepository;
+
     @Autowired
-    private ShiftRepository shiftRepo;
+    private ShiftRepository shiftRepository;
+
     @Autowired
-    private VehicleRepository vehicleRepo;
+    private VehicleRepository vehicleRepository;
+
     @Autowired
-    private ServiceLevelRepository serviceLevelRepo;
+    private ServiceLevelRepository serviceLevelRepository;
+
     @Autowired
-    private FacilityRepository facilityRepo;
+    private FacilityRepository facilityRepository;
+
     @Autowired
-    private PatientRepository patientRepo;
+    private PatientRepository patientRepository;
+
     @Autowired
-    private EmployeeRepository employeeRepo;
+    private EmployeeRepository employeeRepository;
 
     @Override
-    public List<Dispatches> getDispatches() {
-        return dispatchRepo.findAll();
+    public List<Dispatches> getDispatchesByCompanyId(Integer companyId) {
+        return dispatchRepository.findAllByCompanyId(companyId);
     }
 
     @Override
-    public List<Shifts> getShifts() {
-        return shiftRepo.findAll();
+    public List<Shifts> getShiftsByCompanyId(Integer companyId) {
+        return shiftRepository.findAllByCompanyId(companyId);
     }
 
     @Override
-    public List<Vehicles> getVehicles() {
-        return vehicleRepo.findAll();
+    public List<Vehicles> getVehiclesByCompanyId(Integer companyId) {
+        return vehicleRepository.findAllByCompanyId(companyId);
     }
 
     @Override
-    public List<ServiceLevel> getServiceLevels() {
-        return serviceLevelRepo.findAll();
+    public List<ServiceLevel> getServiceLevelsByCompanyId(Integer companyId) {
+        return serviceLevelRepository.findAllByCompanyId(companyId);
     }
 
     @Override
-    public List<Facilities> getFacilities() {
-        return facilityRepo.findAll();
+    public List<Facilities> getFacilitiesByCompanyId(Integer companyId) {
+        return facilityRepository.findAllByCompanyId(companyId);
     }
 
     @Override
-    public List<Patients> getPatients() {
-        return patientRepo.findAll();
+    public List<Patients> getPatientsByCompanyId(Integer companyId) {
+        return patientRepository.findAllByCompanyId(companyId);
     }
 
     @Override
-    public List<Employees> getEmployees() {
-        return employeeRepo.findAll();
+    public List<Employees> getEmployeesByCompanyId(Integer companyId) {
+        return employeeRepository.findAllByCompanyId(companyId);
     }
 }

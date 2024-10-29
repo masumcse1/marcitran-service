@@ -21,7 +21,6 @@ import java.util.List;
 @RequestMapping(value = { "/v1/", "/oauth2/v1/" })
 @Api(value = "event")
 public class EventResource {
-    private static Logger logger = Logger.getLogger(EventResource.class);
 
     @Autowired
     private EventService eventService;
@@ -35,12 +34,11 @@ public class EventResource {
             @ApiResponse(code = 404, message = "Unable to get all Event", response = Response.class)
     })
     @RequestMapping(
-            value = "/event/getAllEvent",
+            value = "/event/getAllEvent/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getAllEvent() {
-        List<Event> eventList = eventService.getAllEvent();
-
+    public ResponseEntity<?> getAllEvent(@PathVariable("companyId") Integer companyId) {
+        List<Event> eventList = eventService.getAllEvent(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, eventList), HttpStatus.OK);
     }
 
@@ -76,7 +74,6 @@ public class EventResource {
     )
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
         event = eventService.createEvent(event);
-
         return new ResponseEntity<>(new Response(StatusType.OK, event), HttpStatus.OK);
     }
 
@@ -96,7 +93,6 @@ public class EventResource {
     )
     public ResponseEntity<?> updateEvent(@RequestBody Event event) {
         event = eventService.updateEvent(event);
-
         return new ResponseEntity<>(new Response(StatusType.OK, event), HttpStatus.OK);
     }
 }

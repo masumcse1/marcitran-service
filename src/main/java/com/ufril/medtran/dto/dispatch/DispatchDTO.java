@@ -8,27 +8,30 @@ import com.ufril.medtran.persistence.domain.patient.Patients;
 import java.util.Date;
 
 public class DispatchDTO {
-    public DispatchDTO(){
+    public DispatchDTO() {
 
     }
 
     public DispatchDTO(int id, String caller, String phone,
                        Facilities origin, Facilities destination,
-                       Patients patient, ServiceLevel serviceLevel, Shifts shift, String createdBy, Date createdDate){
+                       Patients patient, ServiceLevel serviceLevel, Shifts shift,
+                       String createdBy, Date createdDate) {
+
         this.setId(id);
         this.setCaller(caller);
         this.setPhone(phone);
 
-        if(origin != null)
+        if (origin != null)
             this.setOriginAddress(origin.getName());
-        if(destination != null)
+        if (destination != null)
             this.setDestinationAddress(destination.getName());
-        if(patient != null)
+        if (patient != null)
             this.setPatientName(patient.getFirstName() + " " + patient.getLastName());
-        if(serviceLevel != null)
+        if (serviceLevel != null)
             this.setServiceLevelName(serviceLevel.getName());
-        if(shift != null && shift.getVehicle() != null)
+        if (shift != null && shift.getVehicle() != null)
             this.setShiftInfo(shift.getVehicle().getCallSign() + " " + shift.getShiftType());
+
         this.setCreatedBy(createdBy);
         this.setCreatedDate(createdDate);
     }
@@ -110,7 +113,7 @@ public class DispatchDTO {
 
     private String createdBy;
     private Date createdDate;
-
+    private int companyId;
 
     public int getId() {
         return id;
@@ -614,5 +617,13 @@ public class DispatchDTO {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

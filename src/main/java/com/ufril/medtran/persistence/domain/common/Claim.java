@@ -36,6 +36,7 @@ public class Claim {
 
     private String name;
     private float hourlyRate;
+    private int companyId;
 
     public int getId() {
         return id;
@@ -155,5 +156,13 @@ public class Claim {
 
     public void setHourlyRate(float hourlyRate) {
         this.hourlyRate = hourlyRate;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

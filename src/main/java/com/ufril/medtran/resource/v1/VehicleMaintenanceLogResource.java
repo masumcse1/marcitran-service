@@ -48,27 +48,30 @@ import java.util.UUID;
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "vehicleMaintenanceLog")
 public class VehicleMaintenanceLogResource {
-    private static Logger logger = Logger.getLogger(VehicleMaintenanceLogResource.class);
 
     @Autowired
     private VehicleMaintenanceLogService vehicleMaintenanceLogService;
+
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    @RequestMapping(value = "/vehicleMaintenanceLog", method = RequestMethod.GET)
-    public ResponseEntity<?> getAll(
-            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
-            @RequestParam(value = "vehicleId", required = false) Integer vehicleId,
-            @RequestParam(defaultValue = "0") Integer pageNumber) {
+    @RequestMapping(value = "/vehicleMaintenanceLog/{companyId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAll(@PathVariable("companyId") Integer companyId,
+                                    @RequestParam("startDate")
+                                    @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                    @RequestParam("endDate")
+                                    @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+                                    @RequestParam(value = "vehicleId", required = false) Integer vehicleId,
+                                    @RequestParam(defaultValue = "0") Integer pageNumber) {
+
         Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = new PageRequest(pageNumber,10, sort);
-        List<VehicleMaintenanceLog> data
-                = vehicleMaintenanceLogService.getAllVehicleMaintenanceLog(startDate, endDate, vehicleId, pageable);
+        Pageable pageable = new PageRequest(pageNumber, 10, sort);
+        List<VehicleMaintenanceLog> data = vehicleMaintenanceLogService
+                .getAllVehicleMaintenanceLog(companyId, startDate, endDate, vehicleId, pageable);
 
         List<VehicleMaintenanceLogDTO> list = new ArrayList<>();
 
-        for(VehicleMaintenanceLog log : data) {
+        for (VehicleMaintenanceLog log : data) {
             VehicleMaintenanceLogDTO dto = new VehicleMaintenanceLogDTO();
             dto.setId(log.getId());
             dto.setActive(log.isActive());
@@ -78,7 +81,7 @@ public class VehicleMaintenanceLogResource {
             dto.setCost(log.getCost());
             dto.setNotes(log.getNotes());
 
-            if(log.getVehicles() != null) {
+            if (log.getVehicles() != null) {
                 dto.setVehicleId(log.getVehicles().getId());
                 dto.setCallSign(log.getVehicles().getCallSign());
             }
@@ -102,7 +105,7 @@ public class VehicleMaintenanceLogResource {
         dto.setNotes(log.getNotes());
         dto.setDownloadUri(log.getDownloadUri());
 
-        if(log.getVehicles() != null) {
+        if (log.getVehicles() != null) {
             dto.setVehicleId(log.getVehicles().getId());
             dto.setCallSign(log.getVehicles().getCallSign());
         }
@@ -137,15 +140,14 @@ public class VehicleMaintenanceLogResource {
     )
     public ResponseEntity<?> update(@RequestBody VehicleMaintenanceLogDTO vehicleMaintenanceLogDTO) {
         VehicleMaintenanceLog vehicleMaintenanceLog = MapperUtils.mapDTOToVehicleMaintenanceLog(vehicleMaintenanceLogDTO);
-
         vehicleMaintenanceLog = vehicleMaintenanceLogService.updateVehicleMaintenanceLog(vehicleMaintenanceLog);
-
         return new ResponseEntity<>(new Response(StatusType.OK, vehicleMaintenanceLog), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/vehicleMaintenanceLog/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, vehicleMaintenanceLogService.deleteVehicleMaintenanceLog(id)), HttpStatus.OK);
+        boolean isDeleted = vehicleMaintenanceLogService.deleteVehicleMaintenanceLog(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/vehicleMaintenanceLog/downloadFileImage/{id}", method = RequestMethod.GET)

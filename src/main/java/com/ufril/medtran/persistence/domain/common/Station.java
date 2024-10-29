@@ -10,6 +10,7 @@ public class Station {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String name;
+	private int companyId;
 
 	public int getId() {
 		return id;
@@ -25,5 +26,13 @@ public class Station {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 }

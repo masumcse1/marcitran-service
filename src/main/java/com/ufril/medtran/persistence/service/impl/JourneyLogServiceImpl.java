@@ -1,7 +1,5 @@
 package com.ufril.medtran.persistence.service.impl;
 
-import com.ufril.medtran.dto.dispatch.JourneyLogDTO;
-import com.ufril.medtran.persistence.domain.dispatch.FuelPurchaseLog;
 import com.ufril.medtran.persistence.domain.dispatch.JourneyLogs;
 import com.ufril.medtran.persistence.repository.dispatch.JourneyLogsRepository;
 import com.ufril.medtran.persistence.service.JourneyLogService;
@@ -21,11 +19,18 @@ public class JourneyLogServiceImpl implements JourneyLogService {
     private JourneyLogsRepository journeyLogsRepository;
 
     @Override
-    public List<JourneyLogs> getAllJourneyLogs(Date startDate, Date endDate, Integer vehicleId, Pageable pageable) {
+    public List<JourneyLogs> getAllJourneyLogs(Integer companyId,
+                                               Date startDate,
+                                               Date endDate,
+                                               Integer vehicleId,
+                                               Pageable pageable) {
+
         if (vehicleId != null)
-            return journeyLogsRepository.findByTransportBeginTimeBetweenAndVehicle_Id(startDate, endDate, vehicleId, pageable);
+            return journeyLogsRepository.findByCompanyIdAndTransportBeginTimeBetweenAndVehicle_Id(
+                    companyId, startDate, endDate, vehicleId, pageable);
         else
-            return journeyLogsRepository.findByTransportBeginTimeBetween(startDate, endDate, pageable);
+            return journeyLogsRepository.findByCompanyIdAndTransportBeginTimeBetween(
+                    companyId, startDate, endDate, pageable);
     }
 
     @Override

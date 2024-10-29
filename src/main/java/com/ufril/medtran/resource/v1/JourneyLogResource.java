@@ -1,11 +1,9 @@
 package com.ufril.medtran.resource.v1;
 
 import com.ufril.medtran.dto.common.Response;
-import com.ufril.medtran.dto.dispatch.DispatchDTO;
 import com.ufril.medtran.dto.dispatch.JourneyLogDTO;
 import com.ufril.medtran.enumeration.StatusType;
 import com.ufril.medtran.persistence.domain.dispatch.Dispatches;
-import com.ufril.medtran.persistence.domain.dispatch.FuelPurchaseLog;
 import com.ufril.medtran.persistence.domain.dispatch.JourneyLogs;
 import com.ufril.medtran.persistence.domain.dispatch.Shifts;
 import com.ufril.medtran.persistence.domain.dispatch.Vehicles;
@@ -18,7 +16,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,14 +34,16 @@ import java.util.List;
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "journeyLog")
 public class JourneyLogResource {
-    private static Logger logger = Logger.getLogger(JourneyLogResource.class);
 
     @Autowired
     private JourneyLogService journeyLogService;
+
     @Autowired
     private ShiftRepository shiftRepository;
+
     @Autowired
     private VehicleRepository vehicleRepository;
+
     @Autowired
     private DispatchRepository dispatchRepository;
 
@@ -57,20 +56,26 @@ public class JourneyLogResource {
             @ApiResponse(code = 404, message = "Unable to get all JourneyLog", response = Response.class)
     })
     @RequestMapping(
-            value = "/journeyLog/getAllJourneyLog",
+            value = "/journeyLog/getAllJourneyLog/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getAllJourneyLog(@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-                                              @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+    public ResponseEntity<?> getAllJourneyLog(@PathVariable("companyId") Integer companyId,
+                                              @RequestParam(required = false)
+                                              @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+                                              @RequestParam(required = false)
+                                              @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
                                               @RequestParam(required = false) Integer vehicleId,
                                               @RequestParam(defaultValue = "0") Integer pageNumber) {
+
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(pageNumber, 10, sort);
-        List<JourneyLogs> data = journeyLogService.getAllJourneyLogs(startDate, endDate, vehicleId, pageable);
+
+        List<JourneyLogs> data = journeyLogService.getAllJourneyLogs(
+                companyId, startDate, endDate, vehicleId, pageable);
 
         List<JourneyLogDTO> list = new ArrayList<>();
 
-        for(JourneyLogs log : data) {
+        for (JourneyLogs log : data) {
             JourneyLogDTO dto = new JourneyLogDTO();
             dto.setId(log.getId());
             dto.setStartFrom(log.getStartFrom());
@@ -83,11 +88,11 @@ public class JourneyLogResource {
             dto.setBackInServiceTime(log.getBackInServiceTime());
             dto.setVehicleStatus(log.getVehicleStatus());
 
-            if(log.getVehicle() != null) {
+            if (log.getVehicle() != null) {
                 dto.setVehicleId(log.getVehicle().getId());
                 dto.setCallSign(log.getVehicle().getCallSign());
             }
-            if(log.getDispatches() != null) {
+            if (log.getDispatches() != null) {
                 dto.setDispatchId(log.getDispatches().getId());
             }
             list.add(dto);
@@ -122,11 +127,11 @@ public class JourneyLogResource {
         dto.setBackInServiceTime(log.getBackInServiceTime());
         dto.setVehicleStatus(log.getVehicleStatus());
 
-        if(log.getVehicle() != null) {
+        if (log.getVehicle() != null) {
             dto.setVehicleId(log.getVehicle().getId());
             dto.setCallSign(log.getVehicle().getCallSign());
         }
-        if(log.getDispatches() != null) {
+        if (log.getDispatches() != null) {
             dto.setDispatchId(log.getDispatches().getId());
         }
         return new ResponseEntity<>(new Response(StatusType.OK, dto), HttpStatus.OK);
@@ -207,6 +212,7 @@ public class JourneyLogResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> deleteJourneyLog(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, journeyLogService.deleteJourneyLog(id)), HttpStatus.OK);
+        boolean isDeleted = journeyLogService.deleteJourneyLog(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 }

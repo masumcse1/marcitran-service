@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "push notifications", description = " FCMPush Notification API")
 public class PushNotificationsResource {
 
-    private static Logger logger = Logger.getLogger(PushNotificationsResource.class);
-
     @Autowired
     private PushNotificationService pushNotificationService;
 
@@ -32,20 +30,20 @@ public class PushNotificationsResource {
 			response = PushNotificationResponse.class
 	)
 	@RequestMapping(value = "/fcm/notification/topic", method = RequestMethod.POST)
-	public ResponseEntity sendNotification(@RequestBody FCMPushNotificationRequest request) {
+	public ResponseEntity<?> sendNotification(@RequestBody FCMPushNotificationRequest request) {
 		pushNotificationService.sendPushNotificationWithoutData(request);
 		return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/fcm/notification/token", method = RequestMethod.POST)
-	public ResponseEntity sendTokenNotification(@RequestBody FCMPushNotificationRequest request) {
+	public ResponseEntity<?> sendTokenNotification(@RequestBody FCMPushNotificationRequest request) {
 		pushNotificationService.sendPushNotificationToToken(request);
 		return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
 	}
 
 
 	@RequestMapping(value = "/fcm/notification/data", method = RequestMethod.POST)
-	public ResponseEntity sendDataNotification(@RequestBody FCMPushNotificationRequest request) {
+	public ResponseEntity<?> sendDataNotification(@RequestBody FCMPushNotificationRequest request) {
 		pushNotificationService.sendPushNotification(request);
 		return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."), HttpStatus.OK);
 	}

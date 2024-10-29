@@ -1,10 +1,7 @@
 package com.ufril.medtran.persistence.service.impl;
 
-import com.ufril.medtran.persistence.domain.common.Affiliate;
 import com.ufril.medtran.persistence.domain.common.Lead;
-import com.ufril.medtran.persistence.repository.common.AffiliateRepository;
 import com.ufril.medtran.persistence.repository.common.LeadRepository;
-import com.ufril.medtran.persistence.service.AffiliateService;
 import com.ufril.medtran.persistence.service.LeadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +17,8 @@ public class LeadServiceImpl implements LeadService {
     private LeadRepository leadRepository;
 
     @Override
-    public List<Lead> getAllLead() {
-        return leadRepository.findAll();
+    public List<Lead> getAllLead(Integer companyId) {
+        return leadRepository.findAllByCompanyId(companyId);
     }
 
     @Override

@@ -7,10 +7,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface FuelPurchaseLogRepository extends JpaRepository<FuelPurchaseLog, Integer> {
-    List<FuelPurchaseLog> findByPurchaseDateBetween(Date startDate, Date endDate, Pageable pageable);
-    List<FuelPurchaseLog> findByPurchaseDateBetweenAndVehicles_Id(Date startDate, Date endDate, int vehicleId, Pageable pageable);
+
+    List<FuelPurchaseLog> findByCompanyIdAndPurchaseDateBetween(Integer companyId,
+                                                                Date startDate,
+                                                                Date endDate,
+                                                                Pageable pageable);
+
+    List<FuelPurchaseLog> findByCompanyIdAndPurchaseDateBetweenAndVehicles_Id(Integer companyId,
+                                                                              Date startDate,
+                                                                              Date endDate,
+                                                                              int vehicleId,
+                                                                              Pageable pageable);
 }

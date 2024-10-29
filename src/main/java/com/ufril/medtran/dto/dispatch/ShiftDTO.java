@@ -30,6 +30,7 @@ public class ShiftDTO {
     private Integer status;
     private String fuelLevel;
     private String shiftType;
+    private int companyId;
 
     private List<Integer> employees;
 
@@ -183,5 +184,13 @@ public class ShiftDTO {
 
     public void setShiftType(String shiftType) {
         this.shiftType = shiftType;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

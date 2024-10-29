@@ -12,265 +12,275 @@ import java.util.Date;
 @Table(name = "dispatches")
 public class Dispatches {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
-	private String caller;
-	private String phone;
-	@ManyToOne
-	private Tag tag;
-	@ManyToOne
-	private Facilities origin;
-	@ManyToOne
-	private Facilities Destination;
-	private String reason;
-	@ManyToOne
-	private Patients patient;
-	@ManyToOne
-	private ServiceLevel serviceLevel;
-	private String complaint;
-	private boolean isBillable;
-	private int priority;
-	private boolean priorAuth;
-	private float billToInsurance;
-	private float billToFacility;
-	private float billToAffiliate;
-	private float billToPatient;
-	private boolean cashUpFront;
-	private float priceQuote;
-	private String paymentMode;
-	private String warnings;
-	private String commentsToCrew;
-	private String billingNotes;
-	private String phoneFrom;
-	private String phoneTo;
-	private int status;
-	private String createdBy;
-	@Column
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-	public int getId() {
-		return id;
-	}
+    private String caller;
+    private String phone;
+    @ManyToOne
+    private Tag tag;
+    @ManyToOne
+    private Facilities origin;
+    @ManyToOne
+    private Facilities Destination;
+    private String reason;
+    @ManyToOne
+    private Patients patient;
+    @ManyToOne
+    private ServiceLevel serviceLevel;
+    private String complaint;
+    private boolean isBillable;
+    private int priority;
+    private boolean priorAuth;
+    private float billToInsurance;
+    private float billToFacility;
+    private float billToAffiliate;
+    private float billToPatient;
+    private boolean cashUpFront;
+    private float priceQuote;
+    private String paymentMode;
+    private String warnings;
+    private String commentsToCrew;
+    private String billingNotes;
+    private String phoneFrom;
+    private String phoneTo;
+    private int status;
+    private String createdBy;
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    private int companyId;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getCaller() {
-		return caller;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setCaller(String caller) {
-		this.caller = caller;
-	}
+    public String getCaller() {
+        return caller;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setCaller(String caller) {
+        this.caller = caller;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public Tag getTag() {
-		return tag;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setTag(Tag tag) {
-		this.tag = tag;
-	}
+    public Tag getTag() {
+        return tag;
+    }
 
-	public Facilities getOrigin() {
-		return origin;
-	}
+    public void setTag(Tag tag) {
+        this.tag = tag;
+    }
 
-	public void setOrigin(Facilities origin) {
-		this.origin = origin;
-	}
+    public Facilities getOrigin() {
+        return origin;
+    }
 
-	public Facilities getDestination() {
-		return Destination;
-	}
+    public void setOrigin(Facilities origin) {
+        this.origin = origin;
+    }
 
-	public void setDestination(Facilities destination) {
-		Destination = destination;
-	}
+    public Facilities getDestination() {
+        return Destination;
+    }
 
-	public String getReason() {
-		return reason;
-	}
+    public void setDestination(Facilities destination) {
+        Destination = destination;
+    }
 
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
+    public String getReason() {
+        return reason;
+    }
 
-	public Patients getPatient() {
-		return patient;
-	}
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
-	public void setPatient(Patients patient) {
-		this.patient = patient;
-	}
+    public Patients getPatient() {
+        return patient;
+    }
 
-	public ServiceLevel getServiceLevel() {
-		return serviceLevel;
-	}
+    public void setPatient(Patients patient) {
+        this.patient = patient;
+    }
 
-	public void setServiceLevel(ServiceLevel serviceLevel) {
-		this.serviceLevel = serviceLevel;
-	}
+    public ServiceLevel getServiceLevel() {
+        return serviceLevel;
+    }
 
-	public String getComplaint() {
-		return complaint;
-	}
+    public void setServiceLevel(ServiceLevel serviceLevel) {
+        this.serviceLevel = serviceLevel;
+    }
 
-	public void setComplaint(String complaint) {
-		this.complaint = complaint;
-	}
+    public String getComplaint() {
+        return complaint;
+    }
 
-	public boolean isBillable() {
-		return isBillable;
-	}
+    public void setComplaint(String complaint) {
+        this.complaint = complaint;
+    }
 
-	public void setBillable(boolean billable) {
-		isBillable = billable;
-	}
+    public boolean isBillable() {
+        return isBillable;
+    }
 
-	public int getPriority() {
-		return priority;
-	}
+    public void setBillable(boolean billable) {
+        isBillable = billable;
+    }
 
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
+    public int getPriority() {
+        return priority;
+    }
 
-	public boolean isPriorAuth() {
-		return priorAuth;
-	}
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 
-	public void setPriorAuth(boolean priorAuth) {
-		this.priorAuth = priorAuth;
-	}
+    public boolean isPriorAuth() {
+        return priorAuth;
+    }
 
-	public float getBillToInsurance() {
-		return billToInsurance;
-	}
+    public void setPriorAuth(boolean priorAuth) {
+        this.priorAuth = priorAuth;
+    }
 
-	public void setBillToInsurance(float billToInsurance) {
-		this.billToInsurance = billToInsurance;
-	}
+    public float getBillToInsurance() {
+        return billToInsurance;
+    }
 
-	public float getBillToFacility() {
-		return billToFacility;
-	}
+    public void setBillToInsurance(float billToInsurance) {
+        this.billToInsurance = billToInsurance;
+    }
 
-	public void setBillToFacility(float billToFacility) {
-		this.billToFacility = billToFacility;
-	}
+    public float getBillToFacility() {
+        return billToFacility;
+    }
 
-	public float getBillToAffiliate() {
-		return billToAffiliate;
-	}
+    public void setBillToFacility(float billToFacility) {
+        this.billToFacility = billToFacility;
+    }
 
-	public void setBillToAffiliate(float billToAffiliate) {
-		this.billToAffiliate = billToAffiliate;
-	}
+    public float getBillToAffiliate() {
+        return billToAffiliate;
+    }
 
-	public float getBillToPatient() {
-		return billToPatient;
-	}
+    public void setBillToAffiliate(float billToAffiliate) {
+        this.billToAffiliate = billToAffiliate;
+    }
 
-	public void setBillToPatient(float billToPatient) {
-		this.billToPatient = billToPatient;
-	}
+    public float getBillToPatient() {
+        return billToPatient;
+    }
 
-	public boolean isCashUpFront() {
-		return cashUpFront;
-	}
+    public void setBillToPatient(float billToPatient) {
+        this.billToPatient = billToPatient;
+    }
 
-	public void setCashUpFront(boolean cashUpFront) {
-		this.cashUpFront = cashUpFront;
-	}
+    public boolean isCashUpFront() {
+        return cashUpFront;
+    }
 
-	public float getPriceQuote() {
-		return priceQuote;
-	}
+    public void setCashUpFront(boolean cashUpFront) {
+        this.cashUpFront = cashUpFront;
+    }
 
-	public void setPriceQuote(float priceQuote) {
-		this.priceQuote = priceQuote;
-	}
+    public float getPriceQuote() {
+        return priceQuote;
+    }
 
-	public String getWarnings() {
-		return warnings;
-	}
+    public void setPriceQuote(float priceQuote) {
+        this.priceQuote = priceQuote;
+    }
 
-	public void setWarnings(String warnings) {
-		this.warnings = warnings;
-	}
+    public String getWarnings() {
+        return warnings;
+    }
 
-	public String getCommentsToCrew() {
-		return commentsToCrew;
-	}
+    public void setWarnings(String warnings) {
+        this.warnings = warnings;
+    }
 
-	public void setCommentsToCrew(String commentsToCrew) {
-		this.commentsToCrew = commentsToCrew;
-	}
+    public String getCommentsToCrew() {
+        return commentsToCrew;
+    }
 
-	public String getBillingNotes() {
-		return billingNotes;
-	}
+    public void setCommentsToCrew(String commentsToCrew) {
+        this.commentsToCrew = commentsToCrew;
+    }
 
-	public void setBillingNotes(String billingNotes) {
-		this.billingNotes = billingNotes;
-	}
+    public String getBillingNotes() {
+        return billingNotes;
+    }
 
-	public String getPhoneFrom() {
-		return phoneFrom;
-	}
+    public void setBillingNotes(String billingNotes) {
+        this.billingNotes = billingNotes;
+    }
 
-	public void setPhoneFrom(String phoneFrom) {
-		this.phoneFrom = phoneFrom;
-	}
+    public String getPhoneFrom() {
+        return phoneFrom;
+    }
 
-	public String getPhoneTo() {
-		return phoneTo;
-	}
+    public void setPhoneFrom(String phoneFrom) {
+        this.phoneFrom = phoneFrom;
+    }
 
-	public void setPhoneTo(String phoneTo) {
-		this.phoneTo = phoneTo;
-	}
+    public String getPhoneTo() {
+        return phoneTo;
+    }
 
-	public int getStatus() {
-		return status;
-	}
+    public void setPhoneTo(String phoneTo) {
+        this.phoneTo = phoneTo;
+    }
 
-	public void setStatus(int status) {
-		this.status = status;
-	}
+    public int getStatus() {
+        return status;
+    }
 
-	public String getPaymentMode() {
-		return paymentMode;
-	}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-	public void setPaymentMode(String paymentMode) {
-		this.paymentMode = paymentMode;
-	}
+    public String getPaymentMode() {
+        return paymentMode;
+    }
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
 
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-	public Date getCreatedDate() {
-		return createdDate;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
 }

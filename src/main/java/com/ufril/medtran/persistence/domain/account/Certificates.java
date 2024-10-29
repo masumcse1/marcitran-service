@@ -11,6 +11,7 @@ public class Certificates {
 	private int id;
 	private String name;
 	private String code;
+	private int companyId;
 
 	public int getId() {
 		return id;
@@ -34,5 +35,13 @@ public class Certificates {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 }

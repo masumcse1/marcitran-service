@@ -5,9 +5,14 @@ import com.ufril.medtran.persistence.domain.dispatch.ServiceLevel;
 import java.util.List;
 
 public interface ServiceLevelService {
-    List<ServiceLevel> getAllServiceLevels();
+
+    List<ServiceLevel> getAllServiceLevels(Integer companyId);
+
     ServiceLevel getServiceLevelById(int id);
+
     ServiceLevel createServiceLevel(ServiceLevel ServiceLevel);
+
     ServiceLevel updateServiceLevel(ServiceLevel ServiceLevel);
+
     Boolean deleteServiceLevel(int id);
 }

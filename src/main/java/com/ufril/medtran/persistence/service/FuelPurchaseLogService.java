@@ -14,9 +14,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FuelPurchaseLogService {
-    List<FuelPurchaseLog> getAllFuelPurchaseLogs(Date startDate, Date endDate, Integer vehicleId, Pageable pageable);
+    List<FuelPurchaseLog> getAllFuelPurchaseLogs(Integer companyId,
+                                                 Date startDate,
+                                                 Date endDate,
+                                                 Integer vehicleId,
+                                                 Pageable pageable);
+
     FuelPurchaseLog getFuelPurchaseLogById(int id);
+
     FuelPurchaseLog createFuelPurchaseLog(FuelPurchaseLog fuelPurchaseLog) throws Exception;
+
     FuelPurchaseLog updateFuelPurchaseLog(FuelPurchaseLog fuelPurchaseLog);
+
     Boolean deleteFuelPurchaseLog(int id);
 }

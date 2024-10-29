@@ -23,6 +23,7 @@ public class Event {
     private String contactPerson;
     private String contactNo;
     private String company;
+    private int companyId;
 
     public int getId() {
         return id;
@@ -94,5 +95,13 @@ public class Event {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

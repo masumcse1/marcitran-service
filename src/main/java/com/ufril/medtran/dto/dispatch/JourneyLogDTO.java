@@ -18,6 +18,7 @@ public class JourneyLogDTO {
     private int endOdometer;
     private Date backInServiceTime;
     private String vehicleStatus;
+    private int companyId;
 
     public int getId() {
         return id;
@@ -129,5 +130,13 @@ public class JourneyLogDTO {
 
     public void setStartFrom(String startFrom) {
         this.startFrom = startFrom;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

@@ -1,10 +1,6 @@
 package com.ufril.medtran.persistence.service;
 
-import com.ufril.medtran.dto.dispatch.CallsByDispatcherDTO;
-import com.ufril.medtran.dto.dispatch.CallsPerDayNightDTO;
-import com.ufril.medtran.dto.dispatch.CallsPerVehicleDTO;
-import com.ufril.medtran.dto.dispatch.DispatchDTO;
-import com.ufril.medtran.dto.dispatch.PCRLogDTO;
+import com.ufril.medtran.dto.dispatch.*;
 import com.ufril.medtran.persistence.domain.dispatch.DispatchLogs;
 import com.ufril.medtran.persistence.domain.dispatch.DispatchSchedules;
 import com.ufril.medtran.persistence.domain.dispatch.Dispatches;
@@ -15,14 +11,27 @@ import java.util.Date;
 import java.util.List;
 
 public interface DispatchService {
-    List<DispatchDTO> getAllDispatch(Integer status, Integer employeeId, Integer vehicleId,
-                                     String patientName, String dispatcher, String shiftType, Pageable pageable);
 
-    List<CallsPerDayNightDTO> getCallsPerDayNightSplit(Date startDate, Date endDate);
+    List<DispatchDTO> getAllDispatchByCompanyId(Integer companyId,
+                                                Integer status,
+                                                Integer employeeId,
+                                                Integer vehicleId,
+                                                String patientName,
+                                                String dispatcher,
+                                                String shiftType,
+                                                Pageable pageable);
 
-    List<CallsPerVehicleDTO> countCallsPerVehicle(Date startDate, Date endDate);
+    List<CallsPerDayNightDTO> getCallsPerDayNightSplitByCompanyId(Integer companyId,
+                                                                  Date startDate,
+                                                                  Date endDate);
 
-    List<CallsByDispatcherDTO> getCallsByDispatcherCrewMember(Date startDate, Date endDate);
+    List<CallsPerVehicleDTO> countCallsPerVehicleByCompanyId(Integer companyId,
+                                                             Date startDate,
+                                                             Date endDate);
+
+    List<CallsByDispatcherDTO> getCallsByDispatcherCrewMemberAndCompanyId(Integer companyId,
+                                                                         Date startDate,
+                                                                         Date endDate);
 
     DispatchDTO getDispatchById(int id);
 

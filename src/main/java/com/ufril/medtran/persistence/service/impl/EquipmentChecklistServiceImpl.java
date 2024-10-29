@@ -20,14 +20,21 @@ import java.util.List;
 @Service
 @Transactional
 public class EquipmentChecklistServiceImpl implements EquipmentChecklistService {
+
     @Autowired
     private EquipmentChecklistRepository checklistRepo;
+
     @Autowired
     private EquipmentTypeRepository typeRepository;
 
     @Override
-    public List<EquipmentChecklistDTO> getAll(Integer shiftId, Date checkDate, int checkType){
-        return  checklistRepo.getByShiftAndCheckDate(shiftId, checkDate, checkType);
+    public List<EquipmentChecklistDTO> getAll(Integer companyId,
+                                              Integer shiftId,
+                                              Date checkDate,
+                                              int checkType) {
+
+        return checklistRepo.getByCompanyIdAndShiftAndCheckDate(
+                companyId,shiftId, checkDate, checkType);
     }
 
     @Override
@@ -36,7 +43,7 @@ public class EquipmentChecklistServiceImpl implements EquipmentChecklistService 
     }
 
     @Override
-    public List<EquipmentType> getEquipmentTypes() {
-        return typeRepository.findAll();
+    public List<EquipmentType> getEquipmentTypes(Integer companyId) {
+        return typeRepository.findAllByCompanyId(companyId);
     }
 }

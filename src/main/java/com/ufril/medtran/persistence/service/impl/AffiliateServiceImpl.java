@@ -17,8 +17,8 @@ public class AffiliateServiceImpl implements AffiliateService {
     private AffiliateRepository affiliateRepository;
 
     @Override
-    public List<Affiliate> getAllAffiliate() {
-        return affiliateRepository.findAll();
+    public List<Affiliate> getAllAffiliateByCompanyId(int companyId) {
+        return affiliateRepository.findAllByCompanyId(companyId);
     }
 
     @Override

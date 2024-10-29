@@ -17,17 +17,18 @@ public class EmpCertServiceImpl implements EmpCertService {
 
     @Autowired
     private EmployeeCertificatesRepository employeeCertificatesRepository;
+
     @Autowired
     private CertificateRepository certificateRepository;
 
     @Override
-    public List<Certificates> getAllCertificates() {
-        return certificateRepository.findAll();
+    public List<Certificates> getAllCertificatesByCompanyId(int companyId) {
+        return certificateRepository.findAllByCompanyId(companyId);
     }
 
     @Override
     public List<EmployeeCertificates> getCertificatesByEmployeeId(int id) {
-        return employeeCertificatesRepository.findByemployeeID(id);
+        return employeeCertificatesRepository.findByEmployeeID(id);
     }
 
     @Override

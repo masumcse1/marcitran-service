@@ -20,6 +20,7 @@ public class Facilities {
 	@ManyToOne
 	private Zone zone;
 	private String telephone;
+	private int companyId;
 
 	public int getId() {
 		return id;
@@ -99,5 +100,13 @@ public class Facilities {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
 	}
 }

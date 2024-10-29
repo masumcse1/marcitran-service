@@ -9,13 +9,19 @@ import java.util.Date;
 import java.util.List;
 
 public interface ShiftService {
-    List<Shifts> getAllShifts(Integer Status, Pageable pageable);
-    List<Shifts> getAllShiftsByDate(Date fromDate, Date toDate);
+
+    List<Shifts> getAllShifts(Integer companyId, Integer Status, Pageable pageable);
+
+    List<Shifts> getAllShiftsByDate(Integer companyId, Date fromDate, Date toDate);
+
     List<Shifts> getAllShiftsByDispatch(int dispatchId);
+
     Shifts getShiftById(int id);
 
     Shifts createShift(Shifts shift);
+
     Shifts updateShift(Shifts shift);
+
     boolean deleteShift(int id);
 
     List<ShiftCrewMembers> mapShiftCrewMembers(List<ShiftCrewMembers> crewMembers);

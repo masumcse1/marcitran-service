@@ -10,21 +10,21 @@ import java.util.List;
 
 public interface PatientService {
 
-	Patients createNewPatient(PatientDTO dto);
+    Patients createNewPatient(PatientDTO dto);
 
-	Patients savePatient(Patients patients);
+    Patients savePatient(Patients patients);
 
-	Patients getPatientByID(int Id);
+    Patients getPatientByID(int Id);
 
-	List<Patients> getAllPatients(Integer status, Pageable pageable);
+    List<Patients> getAllPatients(Integer companyId, Integer status, Pageable pageable);
 
-	Patients getPatientByName(String name);
+    Patients getPatientByName(Integer companyId, String name);
 
-	void deletePatient(int id);
+    void deletePatient(int id);
 
-	PatientDocument saveDocument(PatientDocumentDTO documentDTO);
+    PatientDocument saveDocument(PatientDocumentDTO documentDTO);
 
-	List<PatientDocumentDTO> getDocumentsByPatient(PatientDocumentDTO dto);
+    List<PatientDocumentDTO> getDocumentsByPatient(PatientDocumentDTO dto);
 
-	void deleteDocument(int id);
+    void deleteDocument(int id);
 }

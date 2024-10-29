@@ -5,11 +5,11 @@ import com.ufril.medtran.persistence.domain.common.Claim;
 import java.util.Date;
 
 public class ClaimDTO {
-    public ClaimDTO() {
 
+    public ClaimDTO() {
     }
 
-    public ClaimDTO(Claim claim){
+    public ClaimDTO(Claim claim) {
         this.setId(claim.getId());
         this.setClaimDate(claim.getClaimDate());
         this.setClaimType(claim.getClaimType());
@@ -22,8 +22,9 @@ public class ClaimDTO {
         this.setNotes(claim.getNotes());
         this.setName(claim.getName());
         this.setHourlyRate(claim.getHourlyRate());
+        this.setCompanyId(claim.getCompanyId());
 
-        if(claim.getVehicles() != null) {
+        if (claim.getVehicles() != null) {
             this.setVehicleId(claim.getVehicles().getId());
             this.setVehicleCallSign(claim.getVehicles().getCallSign());
         }
@@ -50,6 +51,7 @@ public class ClaimDTO {
 
     private String name;
     private float hourlyRate;
+    private int companyId;
 
     public int getId() {
         return id;
@@ -177,5 +179,13 @@ public class ClaimDTO {
 
     public void setHourlyRate(float hourlyRate) {
         this.hourlyRate = hourlyRate;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

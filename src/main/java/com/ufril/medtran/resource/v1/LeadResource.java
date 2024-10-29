@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController(value = "leadResourceV1")
-@RequestMapping(value = { "/v1/", "/oauth2/v1/" })
+@RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "lead")
 public class LeadResource {
-    private static Logger logger = Logger.getLogger(LeadResource.class);
 
     @Autowired
     private LeadService leadService;
@@ -35,12 +34,11 @@ public class LeadResource {
             @ApiResponse(code = 404, message = "Unable to get all Lead", response = Response.class)
     })
     @RequestMapping(
-            value = "/lead/getAllLead",
+            value = "/lead/getAllLead/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getAllLead() {
-        List<Lead> leadList = leadService.getAllLead();
-
+    public ResponseEntity<?> getAllLead(@PathVariable("companyId") Integer companyId) {
+        List<Lead> leadList = leadService.getAllLead(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, leadList), HttpStatus.OK);
     }
 
@@ -57,7 +55,8 @@ public class LeadResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getLeadById(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, leadService.getLeadById(id)), HttpStatus.OK);
+        Lead lead = leadService.getLeadById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, lead), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -76,7 +75,6 @@ public class LeadResource {
     )
     public ResponseEntity<?> createLead(@RequestBody Lead lead) {
         lead = leadService.createLead(lead);
-
         return new ResponseEntity<>(new Response(StatusType.OK, lead), HttpStatus.OK);
     }
 
@@ -96,7 +94,6 @@ public class LeadResource {
     )
     public ResponseEntity<?> updateLead(@RequestBody Lead lead) {
         lead = leadService.updateLead(lead);
-
         return new ResponseEntity<>(new Response(StatusType.OK, lead), HttpStatus.OK);
     }
 }

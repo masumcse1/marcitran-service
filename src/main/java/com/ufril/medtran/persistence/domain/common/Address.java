@@ -23,7 +23,7 @@ public class Address {
     private String zipCode;
     @Column(nullable = false)
     private String country;
-
+    private int companyId;
 
     public Long getId() {
         return id;
@@ -88,4 +88,12 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
 }

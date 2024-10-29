@@ -8,21 +8,18 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController(value = "serviceLevelResourceV1")
-@RequestMapping(value = { "/v1/", "/oauth2/v1/" })
+@RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "serviceLevel")
 public class ServiceLevelResource {
-    private static Logger logger = Logger.getLogger(ServiceLevelResource.class);
 
     @Autowired
     private ServiceLevelService serviceLevelService;
@@ -36,12 +33,11 @@ public class ServiceLevelResource {
             @ApiResponse(code = 404, message = "Unable to get all ServiceLevel", response = Response.class)
     })
     @RequestMapping(
-            value = "/serviceLevel/getAllServiceLevel",
+            value = "/serviceLevel/getAllServiceLevel/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getAllServiceLevel() {
-        List<ServiceLevel> serviceLevelList = serviceLevelService.getAllServiceLevels();
-
+    public ResponseEntity<?> getAllServiceLevel(@PathVariable("companyId") Integer companyId) {
+        List<ServiceLevel> serviceLevelList = serviceLevelService.getAllServiceLevels(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, serviceLevelList), HttpStatus.OK);
     }
 
@@ -58,7 +54,8 @@ public class ServiceLevelResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getServiceLevelById(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, serviceLevelService.getServiceLevelById(id)), HttpStatus.OK);
+        ServiceLevel serviceLevel = serviceLevelService.getServiceLevelById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, serviceLevel), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -77,7 +74,6 @@ public class ServiceLevelResource {
     )
     public ResponseEntity<?> createServiceLevel(@RequestBody ServiceLevel serviceLevel) {
         serviceLevel = serviceLevelService.createServiceLevel(serviceLevel);
-
         return new ResponseEntity<>(new Response(StatusType.OK, serviceLevel), HttpStatus.OK);
     }
 
@@ -97,7 +93,6 @@ public class ServiceLevelResource {
     )
     public ResponseEntity<?> updateServiceLevel(@RequestBody ServiceLevel serviceLevel) {
         serviceLevel = serviceLevelService.updateServiceLevel(serviceLevel);
-
         return new ResponseEntity<>(new Response(StatusType.OK, serviceLevel), HttpStatus.OK);
     }
 
@@ -114,9 +109,7 @@ public class ServiceLevelResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> deleteServiceLevel(@PathVariable("id") final int id) {
-
         boolean flag = serviceLevelService.deleteServiceLevel(id);
-
         return new ResponseEntity<>(new Response(StatusType.OK, flag), HttpStatus.OK);
     }
 }

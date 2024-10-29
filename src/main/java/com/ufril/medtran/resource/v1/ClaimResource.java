@@ -14,7 +14,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,20 +26,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController(value = "claimResourceV1")
-@RequestMapping(value = { "/v1/", "/oauth2/v1/" })
+@RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "claim")
 public class ClaimResource {
-    private static Logger logger = Logger.getLogger(ClaimResource.class);
 
     @Autowired
     private ClaimService claimService;
+
     @Autowired
     private VehicleRepository vehicleRepository;
+
     @Autowired
     private DispatchRepository dispatchRepository;
 
     @ApiOperation(
-            value = "Get All Claim",
+            value = "Get All Claim By Company Id",
             response = Response.class
     )
     @ApiResponses(value = {
@@ -48,13 +48,15 @@ public class ClaimResource {
             @ApiResponse(code = 404, message = "Unable to get all Claim", response = Response.class)
     })
     @RequestMapping(
-            value = "/claim/getAllClaim",
+            value = "/claim/getAllClaim/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getAllClaim(@RequestParam(defaultValue = "0") Integer pageNumber) {
+    public ResponseEntity<?> getAllClaimByCompanyId(@PathVariable("companyId") int companyId,
+                                                    @RequestParam(defaultValue = "0") Integer pageNumber) {
+
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(pageNumber, 10, sort);
-        List<ClaimDTO> claimList = claimService.getAllClaims(pageable);
+        List<ClaimDTO> claimList = claimService.getAllClaimByCompanyId(companyId, pageable);
         return new ResponseEntity<>(new Response(StatusType.OK, claimList), HttpStatus.OK);
     }
 
@@ -118,6 +120,7 @@ public class ClaimResource {
     )
     public ResponseEntity<?> updateClaim(@RequestBody ClaimDTO claimDTO) {
         Claim claim = MapperUtils.mapDTOToClaim(claimDTO);
+
         Vehicles vehicles = vehicleRepository.findOne(claimDTO.getVehicleId());
         claim.setVehicles(vehicles);
 
@@ -139,6 +142,7 @@ public class ClaimResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> deleteClaim(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, claimService.deleteClaim(id)), HttpStatus.OK);
+        boolean isDeleted = claimService.deleteClaim(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 }

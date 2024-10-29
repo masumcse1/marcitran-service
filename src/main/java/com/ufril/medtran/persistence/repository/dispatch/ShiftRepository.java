@@ -9,5 +9,11 @@ import java.util.List;
 
 @Repository
 public interface ShiftRepository extends JpaRepository<Shifts, Integer> {
-    List<Shifts> findAllByStatus(Integer status, Pageable pageable);
+
+    List<Shifts> findAllByCompanyId(Integer companyId);
+
+    List<Shifts> findAllByCompanyIdAndStatus(Integer companyId,
+                                             Integer status,
+                                             Pageable pageable);
+
 }

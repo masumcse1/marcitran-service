@@ -21,31 +21,34 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController(value = "payrollLogResourceV1")
-@RequestMapping(value = { "/v1/", "/oauth2/v1/" })
+@RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "payrollLog")
 public class PayrollLogResource {
-    private static Logger logger = Logger.getLogger(PayrollLogResource.class);
 
     @Autowired
     private PayrollLogService payrollLogService;
 
     @RequestMapping(value = "/payrollLog/getPayrollLogId/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getPayrollLogByEmployeeId(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, payrollLogService.getPayrollLogById(id)), HttpStatus.OK);
+        PayRollLog payRollLog = payrollLogService.getPayrollLogById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, payRollLog), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/payrollLog/createPayrollLog", method = RequestMethod.POST)
     public ResponseEntity<?> createPayrollLog(PayRollLog payRollLog) {
-        return new ResponseEntity<>(new Response(StatusType.OK, payrollLogService.createPayrollLog(payRollLog)), HttpStatus.OK);
+        payRollLog = payrollLogService.createPayrollLog(payRollLog);
+        return new ResponseEntity<>(new Response(StatusType.OK, payRollLog), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/payrollLog/updatePayrollLog", method = RequestMethod.POST)
     public ResponseEntity<?> updatePayrollLog(PayRollLog payRollLog) {
-        return new ResponseEntity<>(new Response(StatusType.OK, payrollLogService.updatePayrollLog(payRollLog)), HttpStatus.OK);
+        payRollLog = payrollLogService.updatePayrollLog(payRollLog);
+        return new ResponseEntity<>(new Response(StatusType.OK, payRollLog), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/payrollLog/deletePayrollLog/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> deletePayrollLog(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, payrollLogService.deletePayrollLog(id)), HttpStatus.OK);
+        boolean isDeleted = payrollLogService.deletePayrollLog(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 }

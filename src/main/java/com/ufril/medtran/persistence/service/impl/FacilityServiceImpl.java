@@ -17,13 +17,13 @@ public class FacilityServiceImpl implements FacilityService {
     private FacilityRepository facilityRepository;
 
     @Override
-    public List<Facilities> getAllFacilities() {
-        return facilityRepository.findAll();
+    public List<Facilities> getAllFacilities(int companyId) {
+        return facilityRepository.findAllByCompanyId(companyId);
     }
 
     @Override
-    public Facilities getFacilityByName(String name) {
-        return facilityRepository.findByName(name);
+    public Facilities getFacilityByName(int companyId, String name) {
+        return facilityRepository.findByCompanyIdAndName(companyId, name);
     }
 
     @Override

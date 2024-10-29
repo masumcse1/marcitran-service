@@ -18,8 +18,9 @@ public class VehicleServiceImpl implements VehicleService {
     private VehicleRepository vehicleRepository;
 
     @Override
-    public List<Vehicles> getAllVehicles(Pageable pageable) {
-        return vehicleRepository.findAll(pageable).getContent();
+    public List<Vehicles> getAllVehicles(Integer companyId, Pageable pageable) {
+        return vehicleRepository.findAllByCompanyId(companyId, pageable)
+                .getContent();
     }
 
     @Override

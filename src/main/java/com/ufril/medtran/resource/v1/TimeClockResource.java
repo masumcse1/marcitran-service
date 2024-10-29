@@ -12,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,13 +25,13 @@ import java.util.Date;
 import java.util.List;
 
 @RestController(value = "timeClockResourceV1")
-@RequestMapping(value = { "/v1/", "/oauth2/v1/" })
+@RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "timeClock")
 public class TimeClockResource {
-    private static Logger logger = Logger.getLogger(TimeClockResource.class);
 
     @Autowired
     private TimeClockService timeClockService;
+
     @Autowired
     private EmployeeService employeeService;
 
@@ -45,14 +44,15 @@ public class TimeClockResource {
             @ApiResponse(code = 404, message = "Unable to get all TimeClock", response = Response.class)
     })
     @RequestMapping(
-            value = "/timeClock/getAllTimeClock",
+            value = "/timeClock/getAllTimeClock/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getAllTimeClock(@RequestParam(defaultValue = "0") Integer pageNumber) {
-        Sort sort = new Sort(Sort.Direction.DESC,"id");
-        Pageable pageable = new PageRequest(pageNumber,10,sort);
-        List<TimeClock> timeClockList = timeClockService.getAllTimeClock(pageable);
+    public ResponseEntity<?> getAllTimeClock(@PathVariable("companyId") Integer companyId,
+                                             @RequestParam(defaultValue = "0") Integer pageNumber) {
 
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Pageable pageable = new PageRequest(pageNumber, 10, sort);
+        List<TimeClock> timeClockList = timeClockService.getAllTimeClock(companyId, pageable);
         return new ResponseEntity<>(new Response(StatusType.OK, timeClockList), HttpStatus.OK);
     }
 
@@ -69,7 +69,8 @@ public class TimeClockResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getTimeClockById(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, timeClockService.getTimeClockById(id)), HttpStatus.OK);
+        TimeClock timeClock = timeClockService.getTimeClockById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, timeClock), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -86,9 +87,8 @@ public class TimeClockResource {
     )
     public ResponseEntity<?> isTimeClockExists(@PathVariable("id") final int employeeID) {
         Employees employee = employeeService.getEmployeeById(employeeID);
-
-        return new ResponseEntity<>(new Response(StatusType.OK,
-                timeClockService.getTimeClockByEmployeeAndDate(employee, new Date())), HttpStatus.OK);
+        List<TimeClock> timeClocks = timeClockService.getTimeClockByEmployeeAndDate(employee, new Date());
+        return new ResponseEntity<>(new Response(StatusType.OK, timeClocks), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -100,12 +100,11 @@ public class TimeClockResource {
             @ApiResponse(code = 404, message = "Unable to get TimeClock", response = Response.class)
     })
     @RequestMapping(
-            value = "/timeClock/getTimeClockByToday",
+            value = "/timeClock/getTimeClockByToday/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getTimeClockByToday() {
-        List<TimeClock> timeClocks = timeClockService.getTimeClockByDate(new Date());
-
+    public ResponseEntity<?> getTimeClockByToday(@PathVariable("companyId") Integer companyId) {
+        List<TimeClock> timeClocks = timeClockService.getTimeClockByDate(companyId, new Date());
         return new ResponseEntity<>(new Response(StatusType.OK, timeClocks), HttpStatus.OK);
     }
 
@@ -130,7 +129,6 @@ public class TimeClockResource {
         timeClock.setEmployee(employee);
 
         timeClock = timeClockService.createTimeClock(timeClock);
-
         return new ResponseEntity<>(new Response(StatusType.OK, timeClock), HttpStatus.OK);
     }
 
@@ -150,7 +148,6 @@ public class TimeClockResource {
     )
     public ResponseEntity<?> updateTimeClock(@RequestBody TimeClock timeClock) {
         timeClock = timeClockService.updateTimeClock(timeClock);
-
         return new ResponseEntity<>(new Response(StatusType.OK, timeClock), HttpStatus.OK);
     }
 
@@ -167,6 +164,7 @@ public class TimeClockResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> deleteTimeClock(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, timeClockService.deleteTimeClock(id)), HttpStatus.OK);
+        boolean isDeleted = timeClockService.deleteTimeClock(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 }

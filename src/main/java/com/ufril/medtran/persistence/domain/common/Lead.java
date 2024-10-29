@@ -14,6 +14,7 @@ public class Lead {
     private String Website;
     private String phoneNumber;
     private String company;
+    private int companyId;
 
     public Integer getId() {
         return id;
@@ -69,5 +70,13 @@ public class Lead {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

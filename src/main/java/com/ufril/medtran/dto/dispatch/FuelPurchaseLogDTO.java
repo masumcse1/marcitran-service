@@ -1,8 +1,5 @@
 package com.ufril.medtran.dto.dispatch;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.Lob;
 import java.util.Date;
 
 public class FuelPurchaseLogDTO {
@@ -21,6 +18,7 @@ public class FuelPurchaseLogDTO {
     private String notes;
     private String attendant;
     private String downloadUri;
+    private int companyId;
 
     public int getId() {
         return id;
@@ -125,6 +123,7 @@ public class FuelPurchaseLogDTO {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
     public String getAttendant() {
         return attendant;
     }
@@ -139,5 +138,13 @@ public class FuelPurchaseLogDTO {
 
     public void setDownloadUri(String downloadUri) {
         this.downloadUri = downloadUri;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

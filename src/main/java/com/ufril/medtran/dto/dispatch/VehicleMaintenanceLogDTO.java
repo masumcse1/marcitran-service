@@ -1,7 +1,5 @@
 package com.ufril.medtran.dto.dispatch;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.Date;
 
 public class VehicleMaintenanceLogDTO {
@@ -20,6 +18,7 @@ public class VehicleMaintenanceLogDTO {
     private float cost;
     private String notes;
     private String downloadUri;
+    private int companyId;
 
     public int getId() {
         return id;
@@ -139,5 +138,13 @@ public class VehicleMaintenanceLogDTO {
 
     public void setDownloadUri(String downloadUri) {
         this.downloadUri = downloadUri;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

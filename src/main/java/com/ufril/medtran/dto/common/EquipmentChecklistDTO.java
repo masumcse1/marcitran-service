@@ -22,10 +22,10 @@ public class EquipmentChecklistDTO {
         this.setQuantity(checklist.getQuantity());
         this.setCondition(checklist.getCondition());
         this.setRemarks(checklist.getRemarks());
-
         this.setExpiry(checklist.getExpiry());
         this.setDayStartQuantity(checklist.getDayStartQuantity());
         this.setRefill(checklist.getRefill());
+        this.setCompanyId(checklist.getCompanyId());
     }
 
     private  Integer id;
@@ -40,6 +40,7 @@ public class EquipmentChecklistDTO {
     private Integer expiry;
     private Integer dayStartQuantity;
     private Integer refill;
+    private int companyId;
 
     public Integer getId() {
         return id;
@@ -127,5 +128,13 @@ public class EquipmentChecklistDTO {
 
     public void setExpiry(Integer expiry) {
         this.expiry = expiry;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

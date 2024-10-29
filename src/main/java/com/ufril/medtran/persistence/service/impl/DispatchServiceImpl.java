@@ -1,10 +1,6 @@
 package com.ufril.medtran.persistence.service.impl;
 
-import com.ufril.medtran.dto.dispatch.CallsByDispatcherDTO;
-import com.ufril.medtran.dto.dispatch.CallsPerDayNightDTO;
-import com.ufril.medtran.dto.dispatch.CallsPerVehicleDTO;
-import com.ufril.medtran.dto.dispatch.DispatchDTO;
-import com.ufril.medtran.dto.dispatch.PCRLogDTO;
+import com.ufril.medtran.dto.dispatch.*;
 import com.ufril.medtran.persistence.domain.dispatch.*;
 import com.ufril.medtran.persistence.repository.dispatch.*;
 import com.ufril.medtran.persistence.service.DispatchService;
@@ -23,33 +19,61 @@ public class DispatchServiceImpl implements DispatchService {
 
     @Autowired
     private DispatchRepository dispatchRepository;
+
     @Autowired
     private DispatchSchedulesRepository dispatchSchedulesRepository;
+
     @Autowired
     private DispatchLogsRepository dispatchLogsRepository;
+
     @Autowired
     private ShiftRepository shiftRepository;
+
     @Autowired
     private PCRLogRepository pcrLogRepository;
 
+    @Override
+    public List<DispatchDTO> getAllDispatchByCompanyId(Integer companyId,
+                                                       Integer status,
+                                                       Integer employeeId,
+                                                       Integer vehicleId,
+                                                       String patientName,
+                                                       String dispatcher,
+                                                       String shiftType,
+                                                       Pageable pageable) {
+
+        return dispatchRepository.getAllDispatchByCompanyId(companyId,
+                status, employeeId, vehicleId, patientName, dispatcher,
+                shiftType, pageable);
+    }
 
     @Override
-    public List<DispatchDTO> getAllDispatch(Integer status, Integer employeeId, Integer vehicleId,
-                                            String patientName, String dispatcher, String shiftType, Pageable pageable) {
-        return dispatchRepository.getAllDispatch(status, employeeId, vehicleId, patientName, dispatcher, shiftType, pageable);
+    public List<CallsPerDayNightDTO> getCallsPerDayNightSplitByCompanyId(Integer companyId,
+                                                                         Date startDate,
+                                                                         Date endDate) {
+
+        return dispatchRepository.getCallsPerDayNightSplitByCompanyId(companyId,
+                startDate, endDate);
     }
-   @Override
-    public List<CallsPerDayNightDTO> getCallsPerDayNightSplit(Date startDate, Date endDate) {
-        return dispatchRepository.getCallsPerDayNightSplit(startDate, endDate);
-    }
+
     @Override
-    public List<CallsPerVehicleDTO> countCallsPerVehicle(Date startDate, Date endDate) {
-        return dispatchRepository.countCallsPerVehicle(startDate, endDate);
+    public List<CallsPerVehicleDTO> countCallsPerVehicleByCompanyId(Integer companyId,
+                                                                    Date startDate,
+                                                                    Date endDate) {
+
+        return dispatchRepository.countCallsPerVehicleByCompanyId(companyId,
+                startDate, endDate);
     }
+
     @Override
-   public List<CallsByDispatcherDTO> getCallsByDispatcherCrewMember(Date startDate, Date endDate){
-        return dispatchRepository.getCallsByDispatcherCrewMember(startDate,endDate);
+    public List<CallsByDispatcherDTO> getCallsByDispatcherCrewMemberAndCompanyId(Integer companyId,
+                                                                                Date startDate,
+                                                                                Date endDate) {
+
+        return dispatchRepository.getCallsByDispatcherCrewMemberAndCompanyId(companyId,
+                startDate, endDate);
     }
+
     @Override
     public DispatchDTO getDispatchById(int id) {
         DispatchDTO dispatchDTO = new DispatchDTO();
@@ -61,23 +85,23 @@ public class DispatchServiceImpl implements DispatchService {
         dispatchDTO.setCaller(dispatch.getCaller());
         dispatchDTO.setPhone(dispatch.getPhone());
 
-        if(dispatch.getOrigin() != null) {
+        if (dispatch.getOrigin() != null) {
             dispatchDTO.setOrigin(dispatch.getOrigin().getId());
             dispatchDTO.setOriginAddress(dispatch.getOrigin().getName());
         }
 
-        if(dispatch.getDestination() != null) {
+        if (dispatch.getDestination() != null) {
             dispatchDTO.setDestination(dispatch.getDestination().getId());
             dispatchDTO.setDestinationAddress(dispatch.getDestination().getName());
         }
 
-        if(dispatch.getPatient() != null)
+        if (dispatch.getPatient() != null)
             dispatchDTO.setPatient(dispatch.getPatient().getId());
 
-        if(dispatchLogs.getShift() != null)
+        if (dispatchLogs.getShift() != null)
             dispatchDTO.setShift(dispatchLogs.getShift().getId());
 
-        if(dispatch.getServiceLevel() != null)
+        if (dispatch.getServiceLevel() != null)
             dispatchDTO.setServiceLevel(dispatch.getServiceLevel().getId());
 
         dispatchDTO.setPriceQuote(dispatch.getPriceQuote());
@@ -173,7 +197,7 @@ public class DispatchServiceImpl implements DispatchService {
     }
 
     @Override
-    public PCRLog getPCRByDispatchId(int id){
+    public PCRLog getPCRByDispatchId(int id) {
         return pcrLogRepository.findByDispatchId(id);
     }
 
@@ -186,13 +210,13 @@ public class DispatchServiceImpl implements DispatchService {
     public void updatePCRLog(PCRLogDTO pcrLogDTO) {
         PCRLog pcrLog = pcrLogRepository.findByDispatchId(pcrLogDTO.getDispatchId());
 
-        if(pcrLog.getSubmittedTime() == null)
+        if (pcrLog.getSubmittedTime() == null)
             pcrLog.setSubmittedTime(new Date());
 
-        if(pcrLog.getCreatedBy() == null)
+        if (pcrLog.getCreatedBy() == null)
             pcrLog.setCreatedBy(pcrLogDTO.getCreatedBy());
 
-        if(pcrLogDTO.getSignature() != null) {
+        if (pcrLogDTO.getSignature() != null) {
             String imageString = pcrLogDTO.getSignature().replace("data:image/png;base64,", "");
             byte[] signatureBytes = Base64.getDecoder().decode(imageString);
             pcrLog.setSignature(signatureBytes);

@@ -1,6 +1,5 @@
 package com.ufril.medtran.persistence.service.impl;
 
-import com.ufril.medtran.dto.dispatch.ShiftDTO;
 import com.ufril.medtran.persistence.domain.dispatch.JourneyLogs;
 import com.ufril.medtran.persistence.domain.dispatch.ShiftCrewMembers;
 import com.ufril.medtran.persistence.domain.dispatch.Shifts;
@@ -13,27 +12,29 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
 @Transactional
 public class ShiftServiceImpl implements ShiftService {
+
     @Autowired
     private ShiftRepository shiftRepository;
+
     @Autowired
     private ShiftCrewMemberRepository crewMemberRepository;
+
     @Autowired
     private JourneyLogsRepository journeyLogsRepository;
 
     @Override
-    public List<Shifts> getAllShifts(Integer status, Pageable pageable) {
-        return shiftRepository.findAllByStatus(status, pageable);
+    public List<Shifts> getAllShifts(Integer companyId, Integer status, Pageable pageable) {
+        return shiftRepository.findAllByCompanyIdAndStatus(companyId, status, pageable);
     }
 
     @Override
-    public List<Shifts> getAllShiftsByDate(Date fromDate, Date toDate) {
+    public List<Shifts> getAllShiftsByDate(Integer companyId, Date fromDate, Date toDate) {
         return null;
     }
 

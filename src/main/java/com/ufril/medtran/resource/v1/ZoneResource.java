@@ -8,7 +8,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,10 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController(value = "zoneResourceV1")
-@RequestMapping(value = { "/v1/", "/oauth2/v1/" })
+@RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "zone")
 public class ZoneResource {
-    private static Logger logger = Logger.getLogger(ZoneResource.class);
 
     @Autowired
     private ZoneService zoneService;
@@ -38,12 +36,11 @@ public class ZoneResource {
             @ApiResponse(code = 404, message = "Unable to get all Zone", response = Response.class)
     })
     @RequestMapping(
-            value = "/zone/getAllZone",
+            value = "/zone/getAllZone/{companyId}",
             method = RequestMethod.GET
     )
-    public ResponseEntity<?> getAllZone() {
-        List<Zone> zoneList = zoneService.getAllZone();
-
+    public ResponseEntity<?> getAllZone(@PathVariable("companyId") Integer companyId) {
+        List<Zone> zoneList = zoneService.getAllZone(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, zoneList), HttpStatus.OK);
     }
 
@@ -60,7 +57,8 @@ public class ZoneResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getZoneById(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, zoneService.getZoneById(id)), HttpStatus.OK);
+        Zone zone = zoneService.getZoneById(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, zone), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -79,7 +77,6 @@ public class ZoneResource {
     )
     public ResponseEntity<?> createZone(Zone zone) {
         zone = zoneService.createZone(zone);
-
         return new ResponseEntity<>(new Response(StatusType.OK, zone), HttpStatus.OK);
     }
 
@@ -99,7 +96,6 @@ public class ZoneResource {
     )
     public ResponseEntity<?> updateZone(Zone zone) {
         zone = zoneService.updateZone(zone);
-
         return new ResponseEntity<>(new Response(StatusType.OK, zone), HttpStatus.OK);
     }
 
@@ -116,6 +112,7 @@ public class ZoneResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> deleteZone(@PathVariable("id") final int id) {
-        return new ResponseEntity<>(new Response(StatusType.OK, zoneService.deleteZone(id)), HttpStatus.OK);
+        boolean isDeleted = zoneService.deleteZone(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
     }
 }

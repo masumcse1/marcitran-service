@@ -17,8 +17,8 @@ public class ServiceLevelServiceImpl implements ServiceLevelService {
     private ServiceLevelRepository serviceLevelRepository;
 
     @Override
-    public List<ServiceLevel> getAllServiceLevels() {
-        return serviceLevelRepository.findAll();
+    public List<ServiceLevel> getAllServiceLevels(Integer companyId) {
+        return serviceLevelRepository.findAllByCompanyId(companyId);
     }
 
     @Override

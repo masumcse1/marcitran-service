@@ -16,7 +16,7 @@ public abstract class Category {
     private Long id;
     private String name;
     private String description;
-
+    private int companyId;
 
     public Long getId() {
         return id;
@@ -42,6 +42,13 @@ public abstract class Category {
         this.description = description;
     }
 
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
 
     @Override
     public boolean equals(Object o) {

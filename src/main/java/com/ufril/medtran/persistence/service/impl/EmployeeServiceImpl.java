@@ -1,7 +1,5 @@
 package com.ufril.medtran.persistence.service.impl;
 
-import com.ufril.medtran.dto.account.EmployeeDTO;
-import com.ufril.medtran.dto.dispatch.CallsPerVehicleDTO;
 import com.ufril.medtran.persistence.domain.account.Employees;
 import com.ufril.medtran.persistence.repository.account.EmployeeRepository;
 import com.ufril.medtran.persistence.service.EmployeeService;
@@ -10,8 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,11 +18,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public List<Employees> getAllEmployees(boolean active, String fullName, Pageable pageable) {
-        if(fullName != null && !fullName.isEmpty())
-            return employeeRepository.findAllByActiveAndFullNameContaining(active, fullName, pageable);
+    public List<Employees> getAllEmployees(Integer companyId,
+                                           boolean active,
+                                           String fullName,
+                                           Pageable pageable) {
+
+        if (fullName != null && !fullName.isEmpty())
+            return employeeRepository.findAllByCompanyIdAndActiveAndFullNameContaining(
+                    companyId, active, fullName, pageable);
         else
-            return employeeRepository.findAllByActive(active, pageable);
+            return employeeRepository.findAllByCompanyIdAndActive(
+                    companyId, active, pageable);
     }
 
     @Override

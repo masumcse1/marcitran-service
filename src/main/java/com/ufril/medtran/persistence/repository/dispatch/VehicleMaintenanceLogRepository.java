@@ -10,6 +10,15 @@ import java.util.List;
 
 @Repository
 public interface VehicleMaintenanceLogRepository extends JpaRepository<VehicleMaintenanceLog, Integer> {
-    List<VehicleMaintenanceLog> findByDateBetween(Date startDate, Date endDate, Pageable pageable);
-    List<VehicleMaintenanceLog> findByDateBetweenAndVehicles_Id(Date startDate, Date endDate, Integer vehicleId, Pageable pageable);
+
+    List<VehicleMaintenanceLog> findByCompanyIdAndDateBetween(Integer companyId,
+                                                              Date startDate,
+                                                              Date endDate,
+                                                              Pageable pageable);
+
+    List<VehicleMaintenanceLog> findByCompanyIdAndDateBetweenAndVehicles_Id(Integer companyId,
+                                                                            Date startDate,
+                                                                            Date endDate,
+                                                                            Integer vehicleId,
+                                                                            Pageable pageable);
 }

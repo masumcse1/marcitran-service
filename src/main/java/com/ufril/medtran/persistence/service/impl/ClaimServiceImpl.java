@@ -19,8 +19,8 @@ public class ClaimServiceImpl implements ClaimService {
     private ClaimRepository claimRepository;
 
     @Override
-    public List<ClaimDTO> getAllClaims(Pageable pageable) {
-        return claimRepository.getAllClaims(pageable);
+    public List<ClaimDTO> getAllClaimByCompanyId(int companyId, Pageable pageable) {
+        return claimRepository.getAllClaimByCompanyId(companyId, pageable);
     }
 
     @Override
