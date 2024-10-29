@@ -26,7 +26,7 @@ public interface DispatchRepository extends JpaRepository<Dispatches, Integer> {
             "FROM DispatchLogs l " +
             "LEFT JOIN l.dispatch.Destination dest " +
             "LEFT JOIN l.dispatch.patient p " +
-            "WHERE l.companyId = :companyId " +
+            "WHERE l.dispatch.companyId = :companyId " +
             "AND (:employeeId IS NULL OR l.shift.id IN (SELECT m.shiftID.id FROM ShiftCrewMembers m WHERE m.employeeID.id = :employeeId)) " +
             "AND (:vehicleId IS NULL OR l.shift.vehicle.id = :vehicleId)" +
             "AND (:patientName IS NULL OR p.firstName LIKE CONCAT('%', :patientName, '%'))" +
@@ -57,7 +57,7 @@ public interface DispatchRepository extends JpaRepository<Dispatches, Integer> {
     @Query(value = "SELECT NEW com.ufril.medtran.dto.dispatch.CallsPerVehicleDTO(v.callSign, COUNT(d)) " +
             "FROM DispatchLogs d " +
             "JOIN d.shift.vehicle v " +
-            "WHERE d.companyId = :companyId " +
+            "WHERE d.dispatch.companyId = :companyId " +
             "AND d.dispatch.createdDate BETWEEN :startDate AND :endDate " +
             "GROUP BY v.callSign")
     List<CallsPerVehicleDTO> countCallsPerVehicleByCompanyId(@Param("companyId") Integer companyId,
