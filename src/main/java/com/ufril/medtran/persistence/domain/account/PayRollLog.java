@@ -18,7 +18,6 @@ public class PayRollLog {
     private float onCallHours;
     private float onCallEarnings;
     private float totalEarnings;
-    private int companyId;
 
     @OneToOne
     @JoinColumn(name = "employee_ID", referencedColumnName = "id")
@@ -102,14 +101,6 @@ public class PayRollLog {
 
     public void setTotalEarnings(float totalEarnings) {
         this.totalEarnings = totalEarnings;
-    }
-
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
     }
 
     public Employees getEmployeeID() {
