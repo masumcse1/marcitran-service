@@ -3,7 +3,7 @@ package com.ufril.medtran.persistence.domain.dispatch;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "serviceLevel")
+@Table(name = "service_level")
 public class ServiceLevel {
 
 	@Id
