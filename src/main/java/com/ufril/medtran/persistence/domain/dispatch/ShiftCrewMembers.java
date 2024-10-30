@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "shift_crew_members")
 public class ShiftCrewMembers {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

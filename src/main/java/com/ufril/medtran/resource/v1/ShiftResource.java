@@ -83,6 +83,7 @@ public class ShiftResource {
             dto.setStatus(shift.getStatus());
             dto.setFuelLevel(shift.getFuelLevel());
             dto.setShiftType(shift.getShiftType());
+            dto.setCompanyId(shift.getCompanyId());
             shiftList.add(dto);
         }
 
@@ -155,6 +156,7 @@ public class ShiftResource {
         dto.setServiceLevelName(shift.getEffServiceLevel().getName());
         dto.setStatus(shift.getStatus());
         dto.setFuelLevel(shift.getFuelLevel());
+        dto.setCompanyId(shift.getCompanyId());
 
         List<Integer> employees = new ArrayList<>();
         for (ShiftCrewMembers crewMember : shift.getShiftCrewMembers()) {
