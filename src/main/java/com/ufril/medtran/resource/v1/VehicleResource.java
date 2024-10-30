@@ -8,7 +8,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +23,6 @@ import java.util.List;
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
 @Api(value = "vehicle")
 public class VehicleResource {
-    private static Logger logger = Logger.getLogger(VehicleResource.class);
 
     @Autowired
     private VehicleService vehicleService;
