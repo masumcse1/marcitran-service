@@ -3,24 +3,16 @@ package com.ufril.medtran.resource.v1;
 import com.ufril.medtran.dto.common.Response;
 import com.ufril.medtran.dto.dispatch.VehicleMaintenanceLogDTO;
 import com.ufril.medtran.enumeration.StatusType;
-import com.ufril.medtran.persistence.domain.dispatch.FuelPurchaseLog;
 import com.ufril.medtran.persistence.domain.dispatch.VehicleMaintenanceLog;
 import com.ufril.medtran.persistence.domain.dispatch.Vehicles;
 import com.ufril.medtran.persistence.repository.dispatch.VehicleRepository;
-import com.ufril.medtran.persistence.repository.dispatch.VehicleTypeRepository;
 import com.ufril.medtran.persistence.service.VehicleMaintenanceLogService;
 import com.ufril.medtran.util.MapperUtils;
 import com.ufril.medtran.util.Utils;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,20 +21,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @RestController(value = "vehicleMaintenanceLogResourceV1")
 @RequestMapping(value = {"/v1/", "/oauth2/v1/"})
