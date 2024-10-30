@@ -15,7 +15,7 @@ import java.util.List;
 public interface ClaimRepository extends JpaRepository<Claim, Integer> {
 
     @Query("SELECT new com.ufril.medtran.dto.common.ClaimDTO(c) " +
-            "FROM Claim c WHERE c.companyId = 1?")
+            "FROM Claim c WHERE c.companyId = ?1")
     List<ClaimDTO> findAllByCompanyId(int companyId, Pageable pageable);
 
     @Query("SELECT new com.ufril.medtran.dto.common.ClaimDTO(c) " +
