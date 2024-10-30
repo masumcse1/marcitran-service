@@ -1,0 +1,56 @@
+ALTER TABLE `marcitran-prod`.`addresses` 
+ADD COLUMN `company_id` INT NULL AFTER `zip_code`;
+
+ALTER TABLE `marcitran-prod`.`affiliate` 
+ADD COLUMN `company_id` INT NULL AFTER `zip`;
+
+ALTER TABLE `marcitran-prod`.`claims` 
+ADD COLUMN `company_id` INT NULL AFTER `vehicles_id`;
+
+ALTER TABLE `marcitran-prod`.`dispatches` 
+ADD COLUMN `company_id` INT NULL AFTER `tag_id`;
+
+ALTER TABLE `marcitran-prod`.`employees` 
+ADD COLUMN `company_id` INT NULL AFTER `username_fk`;
+
+ALTER TABLE `marcitran-prod`.`equipment_checklist` 
+ADD COLUMN `company_id` INT NULL AFTER `shift_id`;
+
+ALTER TABLE `marcitran-prod`.`events` 
+ADD COLUMN `company_id` INT NULL AFTER `requested_service_id`;
+
+ALTER TABLE `marcitran-prod`.`facilities` 
+ADD COLUMN `company_id` INT NULL AFTER `zone_id`;
+
+ALTER TABLE `marcitran-prod`.`fuel_purchase_log` 
+ADD COLUMN `company_id` INT NULL AFTER `vehicles_id`;
+
+ALTER TABLE `marcitran-prod`.`incident` 
+ADD COLUMN `company_id` INT NULL AFTER `vehicle_id`;
+
+ALTER TABLE `marcitran-prod`.`journey_logs` 
+ADD COLUMN `company_id` INT NULL AFTER `vehicle_id`;
+
+ALTER TABLE `marcitran-prod`.`leads` 
+ADD COLUMN `company_id` INT NULL AFTER `phone_number`;
+
+ALTER TABLE `marcitran-prod`.`patients` 
+ADD COLUMN `company_id` INT NULL AFTER `zip`;
+
+ALTER TABLE `marcitran-prod`.`service_level` 
+ADD COLUMN `company_id` INT NULL AFTER `name`;
+
+ALTER TABLE `marcitran-prod`.`shifts` 
+ADD COLUMN `company_id` INT NULL AFTER `vehicle_id`;
+
+ALTER TABLE `marcitran-prod`.`time_clock` 
+ADD COLUMN `company_id` INT NULL AFTER `employee_id`;
+
+ALTER TABLE `marcitran-prod`.`vehicle_maintenance_log` 
+ADD COLUMN `company_id` INT NULL AFTER `vehicles_id`;
+
+ALTER TABLE `marcitran-prod`.`vehicles` 
+ADD COLUMN `company_id` INT NULL AFTER `vehicle_type_id`;
+
+ALTER TABLE `marcitran-prod`.`zone` 
+ADD COLUMN `company_id` INT NULL AFTER `west_of`;
