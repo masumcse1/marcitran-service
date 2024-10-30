@@ -80,6 +80,7 @@ public class VehicleMaintenanceLogResource {
             dto.setLocation(log.getLocation());
             dto.setCost(log.getCost());
             dto.setNotes(log.getNotes());
+            dto.setCompanyId(log.getCompanyId());
 
             if (log.getVehicles() != null) {
                 dto.setVehicleId(log.getVehicles().getId());
@@ -104,6 +105,7 @@ public class VehicleMaintenanceLogResource {
         dto.setCost(log.getCost());
         dto.setNotes(log.getNotes());
         dto.setDownloadUri(log.getDownloadUri());
+        dto.setCompanyId(log.getCompanyId());
 
         if (log.getVehicles() != null) {
             dto.setVehicleId(log.getVehicles().getId());
