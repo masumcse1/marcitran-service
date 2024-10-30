@@ -24,7 +24,7 @@ public interface ShiftService {
 
     boolean deleteShift(int id);
 
-    List<ShiftCrewMembers> mapShiftCrewMembers(List<ShiftCrewMembers> crewMembers);
+    void mapShiftCrewMembers(List<ShiftCrewMembers> shiftCrewMembers);
 
-    JourneyLogs addJourneyLogs(JourneyLogs journeyLogs);
+    void addJourneyLogs(JourneyLogs journeyLogs);
 }

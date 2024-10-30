@@ -23,7 +23,7 @@ public class ShiftServiceImpl implements ShiftService {
     private ShiftRepository shiftRepository;
 
     @Autowired
-    private ShiftCrewMemberRepository crewMemberRepository;
+    private ShiftCrewMemberRepository shiftCrewMemberRepository;
 
     @Autowired
     private JourneyLogsRepository journeyLogsRepository;
@@ -67,12 +67,12 @@ public class ShiftServiceImpl implements ShiftService {
     }
 
     @Override
-    public List<ShiftCrewMembers> mapShiftCrewMembers(List<ShiftCrewMembers> crewMembers) {
-        return crewMemberRepository.save(crewMembers);
+    public void mapShiftCrewMembers(List<ShiftCrewMembers> shiftCrewMembers) {
+        shiftCrewMemberRepository.save(shiftCrewMembers);
     }
 
     @Override
-    public JourneyLogs addJourneyLogs(JourneyLogs journeyLogs) {
-        return journeyLogsRepository.save(journeyLogs);
+    public void addJourneyLogs(JourneyLogs journeyLogs) {
+        journeyLogsRepository.save(journeyLogs);
     }
 }
