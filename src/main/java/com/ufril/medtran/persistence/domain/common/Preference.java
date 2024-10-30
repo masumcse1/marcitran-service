@@ -11,7 +11,6 @@ public class Preference {
     private Long id;
     private String name;
     private String value;
-    private int companyId;
 
     public Long getId() {
         return id;
@@ -36,13 +35,4 @@ public class Preference {
     public void setValue(String value) {
         this.value = value;
     }
-
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
 }
-
