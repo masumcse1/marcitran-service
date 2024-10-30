@@ -28,13 +28,13 @@ public class DropDownResource {
     private DropDownService dropDownService;
 
     @RequestMapping(value = "/dropdown/getDispatches/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getDispatchesByCompanyId(@PathVariable("companyId") Integer companyId) {
+    public ResponseEntity<?> getDispatches(@PathVariable("companyId") Integer companyId) {
         List<Dispatches> dispatches = dropDownService.getDispatchesByCompanyId(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, dispatches), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/dropdown/getShifts/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getShiftsByCompanyId(@PathVariable("companyId") Integer companyId) {
+    public ResponseEntity<?> getShifts(@PathVariable("companyId") Integer companyId) {
         List<Shifts> shifts = dropDownService.getShiftsByCompanyId(companyId);
         List<ShiftDTO> shiftList = new ArrayList<>();
 
@@ -61,31 +61,31 @@ public class DropDownResource {
     }
 
     @RequestMapping(value = "/dropdown/getVehicles/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getVehiclesByCompanyId(@PathVariable("companyId") Integer companyId) {
+    public ResponseEntity<?> getVehicles(@PathVariable("companyId") Integer companyId) {
         List<Vehicles> vehicles = dropDownService.getVehiclesByCompanyId(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, vehicles), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/dropdown/getFacilities/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getFacilitiesByCompanyId(@PathVariable("companyId") Integer companyId) {
+    public ResponseEntity<?> getFacilities(@PathVariable("companyId") Integer companyId) {
         List<Facilities> facilities = dropDownService.getFacilitiesByCompanyId(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, facilities), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/dropdown/getPatients/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getPatientsByCompanyId(@PathVariable("companyId") Integer companyId) {
+    public ResponseEntity<?> getPatients(@PathVariable("companyId") Integer companyId) {
         List<Patients> patients = dropDownService.getPatientsByCompanyId(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, patients), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/dropdown/getServiceLevels/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getServiceLevelsByCompanyId(@PathVariable("companyId") Integer companyId) {
+    public ResponseEntity<?> getServiceLevels(@PathVariable("companyId") Integer companyId) {
         List<ServiceLevel> serviceLevels = dropDownService.getServiceLevelsByCompanyId(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, serviceLevels), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/dropdown/getEmployees/{companyId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getEmployeesByCompanyId(@PathVariable("companyId") Integer companyId) {
+    public ResponseEntity<?> getEmployees(@PathVariable("companyId") Integer companyId) {
         List<Employees> employees = dropDownService.getEmployeesByCompanyId(companyId);
         return new ResponseEntity<>(new Response(StatusType.OK, employees), HttpStatus.OK);
     }
