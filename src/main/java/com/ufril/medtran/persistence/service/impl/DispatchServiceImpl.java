@@ -122,6 +122,7 @@ public class DispatchServiceImpl implements DispatchService {
         dispatchDTO.setPriority(dispatch.getPriority());
         dispatchDTO.setCommentsToCrew(dispatch.getCommentsToCrew());
         dispatchDTO.setBillingNotes(dispatch.getBillingNotes());
+        dispatchDTO.setCompanyId(dispatch.getCompanyId());
 
         dispatchDTO.setCreatedBy(dispatch.getCreatedBy());
         dispatchDTO.setCreatedDate(dispatch.getCreatedDate());
