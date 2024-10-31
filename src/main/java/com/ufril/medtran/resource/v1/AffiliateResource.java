@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -75,7 +72,7 @@ public class AffiliateResource {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> createAffiliate(Affiliate affiliate) {
+    public ResponseEntity<?> createAffiliate(@RequestBody Affiliate affiliate) {
         affiliate = affiliateService.createAffiliate(affiliate);
         return new ResponseEntity<>(new Response(StatusType.OK, affiliate), HttpStatus.OK);
     }
@@ -94,7 +91,7 @@ public class AffiliateResource {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> updateAffiliate(Affiliate affiliate) {
+    public ResponseEntity<?> updateAffiliate(@RequestBody Affiliate affiliate) {
         affiliate = affiliateService.updateAffiliate(affiliate);
         return new ResponseEntity<>(new Response(StatusType.OK, affiliate), HttpStatus.OK);
     }
