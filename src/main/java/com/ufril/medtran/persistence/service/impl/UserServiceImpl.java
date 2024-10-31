@@ -10,7 +10,6 @@ import com.ufril.medtran.util.DateUtils;
 import com.ufril.medtran.util.MapperUtils;
 import com.ufril.medtran.util.Utils;
 import org.apache.log4j.Logger;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,9 +44,6 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private CompanyRepository companyRepository;
 
     @Override
@@ -62,11 +58,14 @@ public class UserServiceImpl implements UserService {
         List<Role> roles = new ArrayList<>();
         roles.add(getRoleByName(userDTO.getRole()));
 
-        User user = modelMapper.map(userDTO, User.class);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = new User();
+        user.setEmail(userDTO.getEmail());
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setStatus(userDTO.getStatus());
+        user.setEmployeeId(userDTO.getEmployeeId());
+        user.setTwoFAEnabled(userDTO.isTwoFAEnabled());
         user.setRoles(roles);
-        user.setCreated(new Date());
-        user.setLastUpdatedOn(new Date());
         user.setLocked(false);
         user.setCompany(company);
 

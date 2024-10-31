@@ -17,7 +17,7 @@ public class CreateUserDTO {
     private boolean locked;
     private String status;
     private RoleType role;
-    private Integer employeeId;
+    private int employeeId;
     private int companyId;
 
     public String getEmail() {
@@ -84,11 +84,11 @@ public class CreateUserDTO {
         this.role = role;
     }
 
-    public Integer getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(Integer employeeId) {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 
