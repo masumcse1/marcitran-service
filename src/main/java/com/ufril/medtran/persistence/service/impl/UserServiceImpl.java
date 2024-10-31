@@ -110,12 +110,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateProfile(String username, UpdateProfileDTO profile, Address address) {
+    public void updateProfile(String username, UpdateProfileDTO profile, Address address) {
         User user = userRepository.findByUsername(username);
         user.setLastUpdatedOn(new Date());
         user.setLocked(profile.isLocked());
         user.setStatus(profile.getStatus());
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override

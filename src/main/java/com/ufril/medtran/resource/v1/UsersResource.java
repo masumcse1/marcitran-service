@@ -165,7 +165,7 @@ public class UsersResource {
 
         User user = userService.getUserByEmail(profile.getEmail());
 
-        User updatedUser = userService.updateProfile(user.getUsername(), profile, null);
+        userService.updateProfile(user.getUsername(), profile, null);
         Message message = messageHelper.buildMessage200("message.profileUpdated", locale);
         return new ResponseEntity<>(new Response(StatusType.OK, message), HttpStatus.OK);
     }

@@ -37,7 +37,7 @@ public interface UserService {
      */
     User getUserByUserNameOrEmail(String userID);
 
-    User updateProfile(String username, UpdateProfileDTO profile, Address address);
+    void updateProfile(String username, UpdateProfileDTO profile, Address address);
 
     void saveUser(User user);
 
