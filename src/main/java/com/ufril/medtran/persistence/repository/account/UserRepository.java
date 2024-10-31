@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author moin
  */
@@ -25,4 +27,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	boolean existsByUsername(@Param("username") String username);
 
     User findByUsernameOrEmail(String username, String email);
+
+    List<User> findAllByCompany_id(Integer companyId);
 }

@@ -97,11 +97,11 @@ public interface UserService {
 
     Role getRoleByName(RoleType roleType);
 
-    User removeRoleFromUser(User user, RoleType roleType);
+    void removeRoleFromUser(User user, RoleType roleType);
 
-    User assignRoleToUser(User user, RoleType roleType);
+    void assignRoleToUser(User user, RoleType roleType);
 
-	public List<GetProfileDTO> getAllUSers();
+	public List<GetProfileDTO> getAllUsers(Integer companyId);
 
 	List<RoleDTO> findAllRoles();
 

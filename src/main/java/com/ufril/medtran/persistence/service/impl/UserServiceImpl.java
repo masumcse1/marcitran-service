@@ -255,28 +255,28 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User removeRoleFromUser(User user, RoleType roleType) {
+    public void removeRoleFromUser(User user, RoleType roleType) {
         for (Role role : user.getRoles()) {
             if (role.getName().equals(roleType.toString())) {
                 user.getRoles().remove(role);
                 break;
             }
         }
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Transactional
     @Override
-    public User assignRoleToUser(User user, RoleType roleType) {
+    public void assignRoleToUser(User user, RoleType roleType) {
         Role role = roleRepository.findByName(roleType.toString());
         user.getRoles().add(role);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
-    public List<GetProfileDTO> getAllUSers() {
+    public List<GetProfileDTO> getAllUsers(Integer companyId) {
         List<GetProfileDTO> allUsers = new ArrayList<>();
-        for (User u : userRepository.findAll()) {
+        for (User u : userRepository.findAllByCompany_id(companyId)) {
             allUsers.add(MapperUtils.mapUserToProfileDTO(u));
         }
         return allUsers;
