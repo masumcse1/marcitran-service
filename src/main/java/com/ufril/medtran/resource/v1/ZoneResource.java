@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -75,7 +72,7 @@ public class ZoneResource {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> createZone(Zone zone) {
+    public ResponseEntity<?> createZone(@RequestBody Zone zone) {
         zone = zoneService.createZone(zone);
         return new ResponseEntity<>(new Response(StatusType.OK, zone), HttpStatus.OK);
     }
@@ -94,7 +91,7 @@ public class ZoneResource {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> updateZone(Zone zone) {
+    public ResponseEntity<?> updateZone(@RequestBody Zone zone) {
         zone = zoneService.updateZone(zone);
         return new ResponseEntity<>(new Response(StatusType.OK, zone), HttpStatus.OK);
     }
