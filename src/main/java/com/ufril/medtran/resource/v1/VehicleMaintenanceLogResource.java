@@ -40,7 +40,7 @@ public class VehicleMaintenanceLogResource {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    @RequestMapping(value = "/vehicleMaintenanceLog/{companyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/vehicleMaintenanceLogs/{companyId}", method = RequestMethod.GET)
     public ResponseEntity<?> getAll(@PathVariable("companyId") Integer companyId,
                                     @RequestParam("startDate")
                                     @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -77,7 +77,7 @@ public class VehicleMaintenanceLogResource {
         return new ResponseEntity<>(new Response(StatusType.OK, list), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/vehicleMaintenanceLog/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/vehicleMaintenanceLogById/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getById(@PathVariable("id") final int id) {
         VehicleMaintenanceLog log = vehicleMaintenanceLogService.getVehicleMaintenanceLogById(id);
 
