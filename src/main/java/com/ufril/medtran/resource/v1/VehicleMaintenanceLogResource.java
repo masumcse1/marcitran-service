@@ -115,7 +115,6 @@ public class VehicleMaintenanceLogResource {
         vehicleMaintenanceLog.setRepairType(null);
 
         vehicleMaintenanceLog = vehicleMaintenanceLogService.createVehicleMaintenanceLog(vehicleMaintenanceLog);
-
         return new ResponseEntity<>(new Response(StatusType.OK, vehicleMaintenanceLog), HttpStatus.OK);
     }
 
@@ -127,6 +126,13 @@ public class VehicleMaintenanceLogResource {
     )
     public ResponseEntity<?> update(@RequestBody VehicleMaintenanceLogDTO vehicleMaintenanceLogDTO) {
         VehicleMaintenanceLog vehicleMaintenanceLog = MapperUtils.mapDTOToVehicleMaintenanceLog(vehicleMaintenanceLogDTO);
+
+        Vehicles vehicles = vehicleRepository.findOne(vehicleMaintenanceLogDTO.getVehicleId());
+        vehicleMaintenanceLog.setVehicles(vehicles);
+
+        vehicleMaintenanceLog.setMaintenanceType(null);
+        vehicleMaintenanceLog.setRepairType(null);
+
         vehicleMaintenanceLog = vehicleMaintenanceLogService.updateVehicleMaintenanceLog(vehicleMaintenanceLog);
         return new ResponseEntity<>(new Response(StatusType.OK, vehicleMaintenanceLog), HttpStatus.OK);
     }
