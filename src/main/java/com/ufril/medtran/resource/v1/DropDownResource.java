@@ -1,5 +1,6 @@
 package com.ufril.medtran.resource.v1;
 
+import com.ufril.medtran.dto.account.EmployeeDTO;
 import com.ufril.medtran.dto.common.Response;
 import com.ufril.medtran.dto.dispatch.ShiftDTO;
 import com.ufril.medtran.enumeration.StatusType;
@@ -87,6 +88,29 @@ public class DropDownResource {
     @RequestMapping(value = "/dropdown/getEmployees/{companyId}", method = RequestMethod.GET)
     public ResponseEntity<?> getEmployees(@PathVariable("companyId") Integer companyId) {
         List<Employees> employees = dropDownService.getEmployeesByCompanyId(companyId);
-        return new ResponseEntity<>(new Response(StatusType.OK, employees), HttpStatus.OK);
+        List<EmployeeDTO> data = new ArrayList<>();
+
+        for (Employees employee : employees) {
+            EmployeeDTO employeeDTO = new EmployeeDTO();
+
+            employeeDTO.setId(employee.getId());
+            employeeDTO.setFullName(employee.getFullName());
+            employeeDTO.setPhone(employee.getPhone());
+            employeeDTO.setDateOfBirth(employee.getDateOfBirth());
+            employeeDTO.setEmergencyContactNo(employee.getEmergencyContactNo());
+            employeeDTO.setGetEmergencyContactName(employee.getGetEmergencyContactName());
+            employeeDTO.setCitizenship(employee.getCitizenship());
+            employeeDTO.setFirstHired(employee.getFirstHired());
+            employeeDTO.setStreetAddress(employee.getStreetAddress());
+            employeeDTO.setState(employee.getState());
+            employeeDTO.setCity(employee.getCity());
+            employeeDTO.setZip(employee.getZip());
+            employeeDTO.setGender(employee.getGender());
+            employeeDTO.setCompanyId(employee.getCompanyId());
+
+            data.add(employeeDTO);
+        }
+
+        return new ResponseEntity<>(new Response(StatusType.OK, data), HttpStatus.OK);
     }
 }
