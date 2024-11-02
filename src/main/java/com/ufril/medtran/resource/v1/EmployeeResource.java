@@ -71,6 +71,7 @@ public class EmployeeResource {
             employeeDTO.setCitizenship(employee.getCitizenship());
             employeeDTO.setFirstHired(employee.getFirstHired());
             employeeDTO.setStreetAddress(employee.getStreetAddress());
+            employeeDTO.setState(employee.getState());
             employeeDTO.setCity(employee.getCity());
             employeeDTO.setZip(employee.getZip());
             employeeDTO.setGender(employee.getGender());
@@ -106,6 +107,7 @@ public class EmployeeResource {
         employeeDTO.setCitizenship(employee.getCitizenship());
         employeeDTO.setFirstHired(employee.getFirstHired());
         employeeDTO.setStreetAddress(employee.getStreetAddress());
+        employeeDTO.setState(employee.getState());
         employeeDTO.setCity(employee.getCity());
         employeeDTO.setZip(employee.getZip());
         employeeDTO.setGender(employee.getGender());
@@ -162,7 +164,7 @@ public class EmployeeResource {
     }
 
     @ApiOperation(
-            value = "Create a new Employee",
+            value = "Update Employee",
             response = Response.class
     )
     @ApiResponses(value = {
