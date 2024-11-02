@@ -1,6 +1,7 @@
 package com.ufril.medtran.resource.v1;
 
 import com.ufril.medtran.dto.account.CreateUserDTO;
+import com.ufril.medtran.dto.account.EmployeeCertificateDTO;
 import com.ufril.medtran.dto.account.EmployeeDTO;
 import com.ufril.medtran.dto.common.Response;
 import com.ufril.medtran.enumeration.RoleType;
@@ -213,9 +214,9 @@ public class EmployeeResource {
     }
 
     @RequestMapping(value = "employee/mapEmployeeCertificates", method = RequestMethod.POST)
-    public ResponseEntity<?> mapEmployeeCertificates(List<EmployeeCertificates> empCertList) {
-        empCertList = empCertService.mapEmployeeCertificates(empCertList);
-        return new ResponseEntity<>(new Response(StatusType.OK, empCertList), HttpStatus.OK);
+    public ResponseEntity<?> mapEmployeeCertificates(@RequestBody EmployeeCertificateDTO employeeCertificateDTO) {
+        empCertService.mapEmployeeCertificates(employeeCertificateDTO);
+        return new ResponseEntity<>(new Response(StatusType.OK, employeeCertificateDTO), HttpStatus.OK);
     }
 
 }

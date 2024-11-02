@@ -1,5 +1,6 @@
 package com.ufril.medtran.persistence.service;
 
+import com.ufril.medtran.dto.account.EmployeeCertificateDTO;
 import com.ufril.medtran.persistence.domain.account.Certificates;
 import com.ufril.medtran.persistence.domain.account.EmployeeCertificates;
 
@@ -11,5 +12,5 @@ public interface EmpCertService {
 
     List<EmployeeCertificates> getCertificatesByEmployeeId(int id);
 
-    List<EmployeeCertificates> mapEmployeeCertificates(List<EmployeeCertificates> empCertList);
+    void mapEmployeeCertificates(EmployeeCertificateDTO employeeCertificateDTO);
 }
