@@ -260,6 +260,19 @@ public class ShiftResource {
     public ResponseEntity<?> addJourneyLog(@RequestBody List<JourneyLogDTO> journeyLogList) {
         for (JourneyLogDTO dto : journeyLogList) {
             JourneyLogs journeyLogs = MapperUtils.mapDTOToJourneyLog(dto);
+
+            Dispatches dispatches = new Dispatches();
+            dispatches.setId(dto.getDispatchId());
+            journeyLogs.setDispatches(dispatches);
+
+            Shifts shifts = new Shifts();
+            shifts.setId(dto.getShiftId());
+            journeyLogs.setShift(shifts);
+
+            Vehicles vehicles = new Vehicles();
+            vehicles.setId(dto.getVehicleId());
+            journeyLogs.setVehicle(vehicles);
+
             shiftService.addJourneyLogs(journeyLogs);
         }
 
