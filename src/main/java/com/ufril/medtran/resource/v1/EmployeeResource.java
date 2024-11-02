@@ -74,6 +74,7 @@ public class EmployeeResource {
             employeeDTO.setCity(employee.getCity());
             employeeDTO.setZip(employee.getZip());
             employeeDTO.setGender(employee.getGender());
+            employeeDTO.setCompanyId(employee.getCompanyId());
 
             User user = userService.getUserByEmployeeID(employee.getId());
             if (user != null) {
@@ -108,6 +109,7 @@ public class EmployeeResource {
         employeeDTO.setCity(employee.getCity());
         employeeDTO.setZip(employee.getZip());
         employeeDTO.setGender(employee.getGender());
+        employeeDTO.setCompanyId(employee.getCompanyId());
 
         User user = userService.getUserByEmployeeID(employee.getId());
         if (user != null) {
