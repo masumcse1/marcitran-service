@@ -21,6 +21,8 @@ public class PayrollLogResource {
     @RequestMapping(value = "/payrollLog/getPayrollLogId/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getPayrollLogByEmployeeId(@PathVariable("id") final int id) {
         PayRollLog payRollLog = payrollLogService.getPayrollLogById(id);
+        payRollLog.getEmployeeID().setUser(null);
+        payRollLog.getEmployeeID().setEmployeeCertificates(null);
         return new ResponseEntity<>(new Response(StatusType.OK, payRollLog), HttpStatus.OK);
     }
 
@@ -33,6 +35,8 @@ public class PayrollLogResource {
     @RequestMapping(value = "/payrollLog/updatePayrollLog", method = RequestMethod.POST)
     public ResponseEntity<?> updatePayrollLog(@RequestBody PayRollLog payRollLog) {
         payRollLog = payrollLogService.updatePayrollLog(payRollLog);
+        payRollLog.getEmployeeID().setUser(null);
+        payRollLog.getEmployeeID().setEmployeeCertificates(null);
         return new ResponseEntity<>(new Response(StatusType.OK, payRollLog), HttpStatus.OK);
     }
 
