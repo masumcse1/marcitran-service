@@ -44,8 +44,8 @@ public class JourneyLogServiceImpl implements JourneyLogService {
     }
 
     @Override
-    public JourneyLogs updateJourneyLog(JourneyLogs journeyLog) {
-        return journeyLogsRepository.save(journeyLog);
+    public void updateJourneyLog(JourneyLogs journeyLog) {
+        journeyLogsRepository.save(journeyLog);
     }
 
     @Override

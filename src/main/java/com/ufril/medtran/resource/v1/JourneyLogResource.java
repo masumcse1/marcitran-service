@@ -166,8 +166,9 @@ public class JourneyLogResource {
         journeyLog.setDispatches(dispatch);
 
         journeyLog = journeyLogService.createJourneyLog(journeyLog);
+        journeyLogDTO.setId(journeyLog.getId());
 
-        return new ResponseEntity<>(new Response(StatusType.OK, journeyLog), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(StatusType.OK, journeyLogDTO), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -196,9 +197,9 @@ public class JourneyLogResource {
         Dispatches dispatch = dispatchRepository.findOne(journeyLogDTO.getDispatchId());
         journeyLog.setDispatches(dispatch);
 
-        journeyLog = journeyLogService.updateJourneyLog(journeyLog);
+        journeyLogService.updateJourneyLog(journeyLog);
 
-        return new ResponseEntity<>(new Response(StatusType.OK, journeyLog), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(StatusType.OK, journeyLogDTO), HttpStatus.OK);
     }
 
     @ApiOperation(

@@ -18,7 +18,7 @@ public interface JourneyLogService {
 
     JourneyLogs createJourneyLog(JourneyLogs journeyLog);
 
-    JourneyLogs updateJourneyLog(JourneyLogs journeyLog);
+    void updateJourneyLog(JourneyLogs journeyLog);
 
     Boolean deleteJourneyLog(int id);
 }
