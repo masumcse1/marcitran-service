@@ -49,7 +49,7 @@ public class IncidentServiceImpl implements IncidentService {
     }
 
     @Override
-    public Boolean deleteIncident(int id) {
-        return null;
+    public void deleteIncident(int id) {
+        incidentRepo.delete(id);
     }
 }

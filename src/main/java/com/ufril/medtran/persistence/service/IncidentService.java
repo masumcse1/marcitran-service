@@ -20,5 +20,5 @@ public interface IncidentService {
 
     Incident updateIncident(Incident incident);
 
-    Boolean deleteIncident(int id);
+    void deleteIncident(int id);
 }

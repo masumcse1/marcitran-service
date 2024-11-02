@@ -86,7 +86,7 @@ public class IncidentResource {
         return new ResponseEntity<>(new Response(StatusType.OK, list), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/incident/{id}",
+    @RequestMapping(value = "/incidentById/{id}",
             method = RequestMethod.GET)
     public ResponseEntity<?> getIncidentById(@PathVariable("id") final int id) {
         Incident incident = incidentService.getIncidentById(id);
@@ -134,8 +134,9 @@ public class IncidentResource {
         incident.setSecondaryActor(secondaryActor);
 
         incident = incidentService.createIncident(incident);
+        dto.setId(incident.getId());
 
-        return new ResponseEntity<>(new Response(StatusType.OK, incident), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(StatusType.OK, dto), HttpStatus.OK);
     }
 
     @RequestMapping(
@@ -144,14 +145,29 @@ public class IncidentResource {
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
     )
-    public ResponseEntity<?> updateIncident(Incident incident) {
+    public ResponseEntity<?> updateIncident(@RequestBody Incident incident) {
         incident = incidentService.updateIncident(incident);
-        return new ResponseEntity<>(new Response(StatusType.OK, incident), HttpStatus.OK);
+
+        IncidentDTO dto = new IncidentDTO();
+        dto.setId(incident.getId());
+        dto.setIncidentTime(incident.getIncidentTime());
+        dto.setSummary(incident.getSummary());
+        dto.setCause(incident.getCause());
+        dto.setNotes(incident.getNotes());
+        dto.setCompanyId(incident.getCompanyId());
+        dto.setVehicleId(incident.getVehicle().getId());
+        dto.setCallSign(incident.getVehicle().getCallSign());
+        dto.setPrimaryActor(incident.getPrimaryActor().getId());
+        dto.setPrimaryActorName(incident.getPrimaryActor().getFullName());
+        dto.setSecondaryActor(incident.getSecondaryActor().getId());
+        dto.setSecondaryActorName(incident.getSecondaryActor().getFullName());
+
+        return new ResponseEntity<>(new Response(StatusType.OK, dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/incident/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteIncident(@PathVariable("id") final int id) {
-        boolean isDeleted = incidentService.deleteIncident(id);
-        return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
+        incidentService.deleteIncident(id);
+        return new ResponseEntity<>(new Response(StatusType.OK, true), HttpStatus.OK);
     }
 }
