@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,8 +53,26 @@ public class TimeClockResource {
 
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(pageNumber, 10, sort);
+
         List<TimeClock> timeClockList = timeClockService.getAllTimeClock(companyId, pageable);
-        return new ResponseEntity<>(new Response(StatusType.OK, timeClockList), HttpStatus.OK);
+        List<TimeClockDTO> dtoList = new ArrayList<>();
+
+        for (TimeClock timeClock : timeClockList) {
+            TimeClockDTO dto = new TimeClockDTO();
+
+            dto.setId(timeClock.getId());
+            dto.setEmployeeId(timeClock.getEmployee().getId());
+            dto.setFlag(timeClock.isFlag());
+            dto.setPunctuality(timeClock.getPunctuality());
+            dto.setClockIn(timeClock.getClockIn());
+            dto.setClockOut(timeClock.getClockOut());
+            dto.setComment(timeClock.getComment());
+            dto.setCompanyId(timeClock.getCompanyId());
+
+            dtoList.add(dto);
+        }
+
+        return new ResponseEntity<>(new Response(StatusType.OK, dtoList), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -70,7 +89,18 @@ public class TimeClockResource {
     )
     public ResponseEntity<?> getTimeClockById(@PathVariable("id") final int id) {
         TimeClock timeClock = timeClockService.getTimeClockById(id);
-        return new ResponseEntity<>(new Response(StatusType.OK, timeClock), HttpStatus.OK);
+        TimeClockDTO dto = new TimeClockDTO();
+
+        dto.setId(timeClock.getId());
+        dto.setEmployeeId(timeClock.getEmployee().getId());
+        dto.setFlag(timeClock.isFlag());
+        dto.setPunctuality(timeClock.getPunctuality());
+        dto.setClockIn(timeClock.getClockIn());
+        dto.setClockOut(timeClock.getClockOut());
+        dto.setComment(timeClock.getComment());
+        dto.setCompanyId(timeClock.getCompanyId());
+
+        return new ResponseEntity<>(new Response(StatusType.OK, dto), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -88,7 +118,7 @@ public class TimeClockResource {
     public ResponseEntity<?> isTimeClockExists(@PathVariable("id") final int employeeID) {
         Employees employee = employeeService.getEmployeeById(employeeID);
         List<TimeClock> timeClocks = timeClockService.getTimeClockByEmployeeAndDate(employee, new Date());
-        return new ResponseEntity<>(new Response(StatusType.OK, timeClocks), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(StatusType.OK, !timeClocks.isEmpty()), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -105,7 +135,24 @@ public class TimeClockResource {
     )
     public ResponseEntity<?> getTimeClockByToday(@PathVariable("companyId") Integer companyId) {
         List<TimeClock> timeClocks = timeClockService.getTimeClockByDate(companyId, new Date());
-        return new ResponseEntity<>(new Response(StatusType.OK, timeClocks), HttpStatus.OK);
+        List<TimeClockDTO> dtoList = new ArrayList<>();
+
+        for (TimeClock timeClock : timeClocks) {
+            TimeClockDTO dto = new TimeClockDTO();
+
+            dto.setId(timeClock.getId());
+            dto.setEmployeeId(timeClock.getEmployee().getId());
+            dto.setFlag(timeClock.isFlag());
+            dto.setPunctuality(timeClock.getPunctuality());
+            dto.setClockIn(timeClock.getClockIn());
+            dto.setClockOut(timeClock.getClockOut());
+            dto.setComment(timeClock.getComment());
+            dto.setCompanyId(timeClock.getCompanyId());
+
+            dtoList.add(dto);
+        }
+
+        return new ResponseEntity<>(new Response(StatusType.OK, dtoList), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -129,7 +176,9 @@ public class TimeClockResource {
         timeClock.setEmployee(employee);
 
         timeClock = timeClockService.createTimeClock(timeClock);
-        return new ResponseEntity<>(new Response(StatusType.OK, timeClock), HttpStatus.OK);
+        timeClockDTO.setId(timeClock.getId());
+
+        return new ResponseEntity<>(new Response(StatusType.OK, timeClockDTO), HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -148,7 +197,18 @@ public class TimeClockResource {
     )
     public ResponseEntity<?> updateTimeClock(@RequestBody TimeClock timeClock) {
         timeClock = timeClockService.updateTimeClock(timeClock);
-        return new ResponseEntity<>(new Response(StatusType.OK, timeClock), HttpStatus.OK);
+        TimeClockDTO dto = new TimeClockDTO();
+
+        dto.setId(timeClock.getId());
+        dto.setEmployeeId(timeClock.getEmployee().getId());
+        dto.setFlag(timeClock.isFlag());
+        dto.setPunctuality(timeClock.getPunctuality());
+        dto.setClockIn(timeClock.getClockIn());
+        dto.setClockOut(timeClock.getClockOut());
+        dto.setComment(timeClock.getComment());
+        dto.setCompanyId(timeClock.getCompanyId());
+
+        return new ResponseEntity<>(new Response(StatusType.OK, dto), HttpStatus.OK);
     }
 
     @ApiOperation(
