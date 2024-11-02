@@ -44,8 +44,8 @@ public class FuelPurchaseLogServiceImpl implements FuelPurchaseLogService {
 
     @Override
     @Transactional
-    public FuelPurchaseLog updateFuelPurchaseLog(FuelPurchaseLog fuelPurchaseLog) {
-        return fuelPurchaseLogRepository.save(fuelPurchaseLog);
+    public void updateFuelPurchaseLog(FuelPurchaseLog fuelPurchaseLog) {
+        fuelPurchaseLogRepository.save(fuelPurchaseLog);
     }
 
     @Override

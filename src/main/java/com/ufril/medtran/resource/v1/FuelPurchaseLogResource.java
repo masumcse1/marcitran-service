@@ -94,7 +94,7 @@ public class FuelPurchaseLogResource {
         return new ResponseEntity<>(new Response(StatusType.OK, list), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/fuelPurchaseLog/{id}",
+    @RequestMapping(value = "/fuelPurchaseLogById/{id}",
             method = RequestMethod.GET)
     public ResponseEntity<?> getFuelPurchaseLogById(@PathVariable("id") final int id) {
         FuelPurchaseLog log = fuelPurchaseLogService.getFuelPurchaseLogById(id);
@@ -141,7 +141,8 @@ public class FuelPurchaseLogResource {
 
         fuelPurchaseLog = fuelPurchaseLogService.createFuelPurchaseLog(fuelPurchaseLog);
 
-        return new ResponseEntity<>(new Response(StatusType.OK, fuelPurchaseLog), HttpStatus.OK);
+        dto.setId(fuelPurchaseLog.getId());
+        return new ResponseEntity<>(new Response(StatusType.OK, dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/fuelPurchaseLog",
@@ -150,8 +151,15 @@ public class FuelPurchaseLogResource {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> updateFuelPurchaseLog(@RequestBody FuelPurchaseLogDTO dto) {
         FuelPurchaseLog fuelPurchaseLog = MapperUtils.mapDTOToFuelPurchaseLog(dto);
-        fuelPurchaseLog = fuelPurchaseLogService.updateFuelPurchaseLog(fuelPurchaseLog);
-        return new ResponseEntity<>(new Response(StatusType.OK, fuelPurchaseLog), HttpStatus.OK);
+
+        Vehicles vehicles = vehicleRepository.findOne(dto.getVehicleId());
+        fuelPurchaseLog.setVehicles(vehicles);
+
+        Employees employees = employeeRepository.findOne(dto.getEmployeeId());
+        fuelPurchaseLog.setEmployee(employees);
+
+        fuelPurchaseLogService.updateFuelPurchaseLog(fuelPurchaseLog);
+        return new ResponseEntity<>(new Response(StatusType.OK, dto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/fuelPurchaseLog/{id}",
