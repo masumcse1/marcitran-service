@@ -1,5 +1,6 @@
 package com.ufril.medtran.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.apache.velocity.runtime.RuntimeConstants;
@@ -33,13 +34,13 @@ public class CommonConfig {
         return new ModelMapper();
     }
 
-//    @Bean
-//    AmazonS3Service amazonS3Service() {
-//        return  new AmazonS3ServiceImpl();
-//    }
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
 
     @Bean
-    MultipartConfigElement multipartConfigElement() {
+    public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setMaxFileSize("10MB");
         factory.setMaxRequestSize("15MB");
