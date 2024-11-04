@@ -2,7 +2,9 @@ package com.ufril.medtran.resource.v1;
 
 import com.ufril.medtran.dto.common.Response;
 import com.ufril.medtran.enumeration.StatusType;
+import com.ufril.medtran.persistence.domain.dispatch.VehicleGpsTrack;
 import com.ufril.medtran.persistence.domain.dispatch.Vehicles;
+import com.ufril.medtran.persistence.service.VehicleGpsTrackService;
 import com.ufril.medtran.persistence.service.VehicleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController(value = "vehicleResourceV1")
@@ -26,6 +30,9 @@ public class VehicleResource {
 
     @Autowired
     private VehicleService vehicleService;
+
+    @Autowired
+    private VehicleGpsTrackService vehicleGpsTrackService;
 
     @ApiOperation(
             value = "Get All Vehicle",
@@ -118,5 +125,20 @@ public class VehicleResource {
     public ResponseEntity<?> deleteVehicle(@PathVariable("id") final int id) {
         boolean flag = vehicleService.deleteVehicle(id);
         return new ResponseEntity<>(new Response(StatusType.OK, flag), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Get All gps track by device id", response = Response.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "", response = Response.class),
+            @ApiResponse(code = 404, message = "Unable to get gps track", response = Response.class)})
+    @RequestMapping(value = "/vehicle/gps-track/{deviceId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getCallsByDispatcher(@PathVariable("deviceId") String deviceId,
+                                                  @RequestParam("startDate")
+                                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+                                                  @RequestParam("endDate")
+                                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
+
+        List<VehicleGpsTrack> vehicleGpsTracks = vehicleGpsTrackService.getAll(deviceId, startDate, endDate);
+        return new ResponseEntity<>(new Response(StatusType.OK, vehicleGpsTracks), HttpStatus.OK);
     }
 }

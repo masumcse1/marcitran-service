@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class VehicleGpsTrackServiceImpl implements VehicleGpsTrackService {
 
@@ -17,5 +20,11 @@ public class VehicleGpsTrackServiceImpl implements VehicleGpsTrackService {
     @Override
     public void save(VehicleGpsTrack vehicleGpsTrack) {
         vehicleGpsTrackRepository.save(vehicleGpsTrack);
+    }
+
+    @Override
+    public List<VehicleGpsTrack> getAll(String deviceId, Date startDate, Date endDate) {
+        return vehicleGpsTrackRepository.findAllByDeviceIdAndTrackAtBetween(
+                deviceId, startDate, endDate);
     }
 }
