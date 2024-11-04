@@ -1,0 +1,9 @@
+{
+  "payload": {
+    "deviceId": "AB1234CD-E123-12FG-J123",
+    "latitude": "43.835140893792065",
+    "longitude": "-102.39237003211397"
+  },
+  "url": "ws://localhost:8082/gps",
+  "sendEndpoint": "/app/track"
+}
