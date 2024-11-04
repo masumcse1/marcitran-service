@@ -24,7 +24,7 @@ public class VehicleGpsTrackServiceImpl implements VehicleGpsTrackService {
 
     @Override
     public List<VehicleGpsTrack> getAll(String deviceId, Date startDate, Date endDate) {
-        return vehicleGpsTrackRepository.findAllByDeviceIdAndTrackAtBetween(
+        return vehicleGpsTrackRepository.findAllByDeviceIdAndTrackAtBetweenOrderByTrackAtAsc(
                 deviceId, startDate, endDate);
     }
 }

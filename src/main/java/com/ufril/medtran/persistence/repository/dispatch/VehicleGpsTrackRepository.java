@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface VehicleGpsTrackRepository extends CrudRepository<VehicleGpsTrack, Long> {
 
-    List<VehicleGpsTrack> findAllByDeviceIdAndTrackAtBetween(
+    List<VehicleGpsTrack> findAllByDeviceIdAndTrackAtBetweenOrderByTrackAtAsc(
             String deviceId, Date startDate, Date endDate);
 }
