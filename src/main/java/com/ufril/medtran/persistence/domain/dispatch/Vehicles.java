@@ -35,6 +35,7 @@ public class Vehicles {
     private String secondaryMessageAddress;
     private String notes;
     private String status;
+    private String deviceId;
     private int companyId;
 
 //	private VehicleMaintenanceLog vehicleMaintenanceLog;
@@ -205,6 +206,14 @@ public class Vehicles {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public int getCompanyId() {
