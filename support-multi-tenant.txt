@@ -50,6 +50,9 @@ ALTER TABLE `marcitran-prod`.`vehicle_maintenance_log`
 ADD COLUMN `company_id` INT NULL AFTER `vehicles_id`;
 
 ALTER TABLE `marcitran-prod`.`vehicles` 
+ADD COLUMN `device_id` VARCHAR(255) NULL AFTER `vehicle_type_id`;
+
+ALTER TABLE `marcitran-prod`.`vehicles` 
 ADD COLUMN `company_id` INT NULL AFTER `vehicle_type_id`;
 
 ALTER TABLE `marcitran-prod`.`zone` 
