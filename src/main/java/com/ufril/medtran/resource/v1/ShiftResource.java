@@ -4,6 +4,7 @@ import com.ufril.medtran.dto.common.Response;
 import com.ufril.medtran.dto.dispatch.JourneyLogDTO;
 import com.ufril.medtran.dto.dispatch.ShiftDTO;
 import com.ufril.medtran.enumeration.StatusType;
+import com.ufril.medtran.persistence.domain.common.Location;
 import com.ufril.medtran.persistence.domain.common.Station;
 import com.ufril.medtran.persistence.domain.dispatch.*;
 import com.ufril.medtran.persistence.service.*;
@@ -295,5 +296,22 @@ public class ShiftResource {
     public ResponseEntity<?> getAllStations() {
         List<Station> stationList = shiftService.getAllStations();
         return new ResponseEntity<>(new Response(StatusType.OK, stationList), HttpStatus.OK);
+    }
+
+    @ApiOperation(
+            value = "Get All Locations",
+            response = Response.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "", response = Response.class),
+            @ApiResponse(code = 404, message = "Unable to get all locations", response = Response.class)
+    })
+    @RequestMapping(
+            value = "/shift/getAllLocations",
+            method = RequestMethod.GET
+    )
+    public ResponseEntity<?> getAllLocations() {
+        List<Location> locationList = shiftService.getAllLocations();
+        return new ResponseEntity<>(new Response(StatusType.OK, locationList), HttpStatus.OK);
     }
 }
