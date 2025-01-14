@@ -1,5 +1,6 @@
 package com.ufril.medtran.persistence.service;
 
+import com.ufril.medtran.persistence.domain.common.Station;
 import com.ufril.medtran.persistence.domain.dispatch.JourneyLogs;
 import com.ufril.medtran.persistence.domain.dispatch.ShiftCrewMembers;
 import com.ufril.medtran.persistence.domain.dispatch.Shifts;
@@ -27,4 +28,6 @@ public interface ShiftService {
     void mapShiftCrewMembers(List<ShiftCrewMembers> shiftCrewMembers);
 
     void addJourneyLogs(JourneyLogs journeyLogs);
+
+    List<Station> getAllStations();
 }
