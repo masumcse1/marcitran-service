@@ -2,6 +2,8 @@ package com.ufril.medtran.dto.account;
 
 import com.ufril.medtran.enumeration.GenderType;
 import com.ufril.medtran.enumeration.RoleType;
+import com.ufril.medtran.persistence.domain.account.Certificates;
+
 import java.util.Date;
 
 public class EmployeeDTO {
@@ -9,6 +11,7 @@ public class EmployeeDTO {
     private String fullName;
     private String phone;
     private String email;
+    private String assignedStation;
     private String emergencyContactNo;
     private String getEmergencyContactName;
     private Date firstHired;
@@ -26,6 +29,8 @@ public class EmployeeDTO {
     private String matchingPassword;
     private String status;
     private RoleType role;
+
+    private int certificates;
     private int companyId;
 
     public Integer getId() {
@@ -58,6 +63,14 @@ public class EmployeeDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAssignedStation() {
+        return assignedStation;
+    }
+
+    public void setAssignedStation(String assignedStation) {
+        this.assignedStation = assignedStation;
     }
 
     public String getEmergencyContactNo() {
@@ -186,6 +199,14 @@ public class EmployeeDTO {
 
     public void setRole(RoleType role) {
         this.role = role;
+    }
+
+    public int getCertificates() {
+        return certificates;
+    }
+
+    public void setCertificates(int certificates) {
+        this.certificates = certificates;
     }
 
     public int getCompanyId() {

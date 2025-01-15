@@ -1,6 +1,5 @@
 package com.ufril.medtran.resource.v1;
 
-import com.ufril.medtran.dto.account.CreateUserDTO;
 import com.ufril.medtran.dto.account.EmployeeCertificateDTO;
 import com.ufril.medtran.dto.account.EmployeeDTO;
 import com.ufril.medtran.dto.common.Response;
@@ -149,6 +148,7 @@ public class EmployeeResource {
         employee.setActive(true);
         employee = employeeService.createEmployee(employee);
 
+/*
         CreateUserDTO userDTO = new CreateUserDTO();
         userDTO.setEmail(employeeDTO.getEmail());
         userDTO.setUsername(employeeDTO.getUsername());
@@ -160,6 +160,7 @@ public class EmployeeResource {
         userDTO.setCompanyId(employee.getCompanyId());
 
         userService.createUser(userDTO, null);
+*/
 
         return new ResponseEntity<>(new Response(StatusType.OK, employee), HttpStatus.OK);
     }
