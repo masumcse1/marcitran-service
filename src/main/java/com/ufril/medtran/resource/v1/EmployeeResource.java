@@ -75,6 +75,7 @@ public class EmployeeResource {
             employeeDTO.setCity(employee.getCity());
             employeeDTO.setZip(employee.getZip());
             employeeDTO.setGender(employee.getGender());
+            employeeDTO.setActive(employee.isActive());
             employeeDTO.setCompanyId(employee.getCompanyId());
 
             User user = userService.getUserByEmployeeID(employee.getId());
