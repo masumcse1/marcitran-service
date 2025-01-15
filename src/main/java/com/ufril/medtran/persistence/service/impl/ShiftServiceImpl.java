@@ -1,10 +1,12 @@
 package com.ufril.medtran.persistence.service.impl;
 
+import com.ufril.medtran.persistence.domain.common.CheckList;
 import com.ufril.medtran.persistence.domain.common.Location;
 import com.ufril.medtran.persistence.domain.common.Station;
 import com.ufril.medtran.persistence.domain.dispatch.JourneyLogs;
 import com.ufril.medtran.persistence.domain.dispatch.ShiftCrewMembers;
 import com.ufril.medtran.persistence.domain.dispatch.Shifts;
+import com.ufril.medtran.persistence.repository.common.CheckListRepository;
 import com.ufril.medtran.persistence.repository.common.LocationRepository;
 import com.ufril.medtran.persistence.repository.common.StationRepository;
 import com.ufril.medtran.persistence.repository.dispatch.JourneyLogsRepository;
@@ -37,6 +39,9 @@ public class ShiftServiceImpl implements ShiftService {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Autowired
+    private CheckListRepository checkListRepository;
 
     @Override
     public List<Shifts> getAllShifts(Integer companyId, Integer status, Pageable pageable) {
@@ -94,5 +99,10 @@ public class ShiftServiceImpl implements ShiftService {
     @Override
     public List<Location> getAllLocations() {
         return locationRepository.findAll();
+    }
+
+    @Override
+    public List<CheckList> getAllCheckList() {
+        return checkListRepository.findAll();
     }
 }
