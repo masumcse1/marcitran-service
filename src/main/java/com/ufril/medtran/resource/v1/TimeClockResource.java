@@ -135,24 +135,7 @@ public class TimeClockResource {
     )
     public ResponseEntity<?> getTimeClockByToday(@PathVariable("companyId") Integer companyId) {
         List<TimeClock> timeClocks = timeClockService.getTimeClockByDate(companyId, new Date());
-        List<TimeClockDTO> dtoList = new ArrayList<>();
-
-        for (TimeClock timeClock : timeClocks) {
-            TimeClockDTO dto = new TimeClockDTO();
-
-            dto.setId(timeClock.getId());
-            dto.setEmployeeId(timeClock.getEmployee().getId());
-            dto.setFlag(timeClock.isFlag());
-            dto.setPunctuality(timeClock.getPunctuality());
-            dto.setClockIn(timeClock.getClockIn());
-            dto.setClockOut(timeClock.getClockOut());
-            dto.setComment(timeClock.getComment());
-            dto.setCompanyId(timeClock.getCompanyId());
-
-            dtoList.add(dto);
-        }
-
-        return new ResponseEntity<>(new Response(StatusType.OK, dtoList), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(StatusType.OK, timeClocks), HttpStatus.OK);
     }
 
     @ApiOperation(
