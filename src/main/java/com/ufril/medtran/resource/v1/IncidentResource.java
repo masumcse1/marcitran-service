@@ -44,9 +44,9 @@ public class IncidentResource {
             method = RequestMethod.GET
     )
     public ResponseEntity<?> getAllIncident(@PathVariable("companyId") Integer companyId,
-                                            @RequestParam("startDate")
+                                            @RequestParam(value ="startDate", required = false)
                                             @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-                                            @RequestParam("endDate")
+                                            @RequestParam(value ="endDate", required = false)
                                             @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
                                             @RequestParam(value = "vehicleId", required = false) Integer vehicleId,
                                             @RequestParam(defaultValue = "0") Integer pageNumber) {

@@ -25,12 +25,22 @@ public class IncidentServiceImpl implements IncidentService {
                                           Integer vehicleId,
                                           Pageable pageable) {
 
-        if (vehicleId != null)
-            return incidentRepo.findByCompanyIdAndIncidentTimeBetweenAndVehicle_Id(
-                    companyId, startDate, endDate, vehicleId, pageable);
-        else
-            return incidentRepo.findByCompanyIdAndIncidentTimeBetween(
-                    companyId, startDate, endDate, pageable);
+        if (vehicleId != null) {
+            if (startDate != null && endDate != null) {
+                return incidentRepo.findByCompanyIdAndIncidentTimeBetweenAndVehicle_Id(
+                        companyId, startDate, endDate, vehicleId, pageable);
+            } else {
+                return incidentRepo.findByCompanyIdAndVehicle_Id(
+                        companyId, vehicleId, pageable);
+            }
+        } else {
+            if (startDate != null && endDate != null) {
+                return incidentRepo.findByCompanyIdAndIncidentTimeBetween(
+                        companyId, startDate, endDate, pageable);
+            } else {
+                return incidentRepo.findByCompanyId(companyId, pageable);
+            }
+        }
     }
 
     @Override

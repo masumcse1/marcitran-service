@@ -11,6 +11,12 @@ import java.util.List;
 @Repository
 public interface IncidentRepository extends JpaRepository<Incident, Integer> {
 
+    List<Incident> findByCompanyId(Integer companyId, Pageable pageable);
+
+    List<Incident> findByCompanyIdAndVehicle_Id(Integer companyId,
+                                                Integer vehicleId,
+                                                Pageable pageable);
+
     List<Incident> findByCompanyIdAndIncidentTimeBetween(Integer companyId,
                                                          Date startDate,
                                                          Date endDate,
