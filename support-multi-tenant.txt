@@ -57,3 +57,9 @@ ADD COLUMN `company_id` INT NULL AFTER `vehicle_type_id`;
 
 ALTER TABLE `marcitran-prod`.`zone` 
 ADD COLUMN `company_id` INT NULL AFTER `west_of`;
+
+CREATE TABLE `marcitran-prod`.`check_list` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
