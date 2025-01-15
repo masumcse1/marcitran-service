@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +25,22 @@ public class VehicleMaintenanceLogServiceImpl implements VehicleMaintenanceLogSe
                                                                    Integer vehicleId,
                                                                    Pageable pageable) {
 
-        if (vehicleId != null)
-            return vehicleMainRepo.findByCompanyIdAndDateBetweenAndVehicles_Id(
-                    companyId, startDate, endDate, vehicleId, pageable);
-        else
-            return vehicleMainRepo.findByCompanyIdAndDateBetween(
-                    companyId, startDate, endDate, pageable);
+        if (vehicleId != null) {
+            if (startDate != null && endDate != null) {
+                return vehicleMainRepo.findByCompanyIdAndDateBetweenAndVehicles_Id(
+                        companyId, startDate, endDate, vehicleId, pageable);
+            } else {
+                return vehicleMainRepo.findByCompanyIdAndVehicles_Id(
+                        companyId, vehicleId, pageable);
+            }
+        } else {
+            if (startDate != null && endDate != null) {
+                return vehicleMainRepo.findByCompanyIdAndDateBetween(
+                        companyId, startDate, endDate, pageable);
+            } else {
+                return vehicleMainRepo.findByCompanyId(companyId, pageable);
+            }
+        }
     }
 
     @Override

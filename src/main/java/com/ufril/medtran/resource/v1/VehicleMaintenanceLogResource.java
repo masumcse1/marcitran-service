@@ -40,11 +40,11 @@ public class VehicleMaintenanceLogResource {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    @RequestMapping(value = "/vehicleMaintenanceLogs/{companyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/vehicleMaintenanceLog/getAll/{companyId}", method = RequestMethod.GET)
     public ResponseEntity<?> getAll(@PathVariable("companyId") Integer companyId,
-                                    @RequestParam("startDate")
+                                    @RequestParam(value = "startDate", required = false)
                                     @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-                                    @RequestParam("endDate")
+                                    @RequestParam(value = "endDate", required = false)
                                     @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
                                     @RequestParam(value = "vehicleId", required = false) Integer vehicleId,
                                     @RequestParam(defaultValue = "0") Integer pageNumber) {
@@ -77,7 +77,7 @@ public class VehicleMaintenanceLogResource {
         return new ResponseEntity<>(new Response(StatusType.OK, list), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/vehicleMaintenanceLogById/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/vehicleMaintenanceLog/getById/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getById(@PathVariable("id") final int id) {
         VehicleMaintenanceLog log = vehicleMaintenanceLogService.getVehicleMaintenanceLogById(id);
 
@@ -100,7 +100,7 @@ public class VehicleMaintenanceLogResource {
     }
 
     @RequestMapping(
-            value = "/vehicleMaintenanceLog",
+            value = "/vehicleMaintenanceLog/create",
             method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
@@ -119,7 +119,7 @@ public class VehicleMaintenanceLogResource {
     }
 
     @RequestMapping(
-            value = "/vehicleMaintenanceLog",
+            value = "/vehicleMaintenanceLog/update",
             method = RequestMethod.PUT,
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE}
@@ -137,7 +137,7 @@ public class VehicleMaintenanceLogResource {
         return new ResponseEntity<>(new Response(StatusType.OK, vehicleMaintenanceLog), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/vehicleMaintenanceLog/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/vehicleMaintenanceLog/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable("id") final int id) {
         boolean isDeleted = vehicleMaintenanceLogService.deleteVehicleMaintenanceLog(id);
         return new ResponseEntity<>(new Response(StatusType.OK, isDeleted), HttpStatus.OK);
