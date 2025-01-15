@@ -65,32 +65,8 @@ public class ShiftResource {
 
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(pageNumber, 10, sort);
-
         List<Shifts> shifts = shiftService.getAllShifts(companyId, status, pageable);
-        List<ShiftDTO> shiftList = new ArrayList<>();
-
-        for (Shifts shift : shifts) {
-            ShiftDTO dto = new ShiftDTO();
-            dto.setId(shift.getId());
-            dto.setBasedFromLocation(shift.getBasedFromLocation());
-            dto.setPostingLocation(shift.getPostingLocation());
-            dto.setPrimaryRole(shift.getPrimaryRole());
-            dto.setStartTime(shift.getStartTime());
-            dto.setExpectedLength(shift.getExpectedLength());
-            dto.setPrimaryCheckList(shift.getPrimaryCheckList());
-            dto.setSecondaryCheckList(shift.getSecondaryCheckList());
-            dto.setVehicle(shift.getVehicle().getId());
-            dto.setVehicleCallSign(shift.getVehicle().getCallSign());
-            dto.setEffServiceLevel(shift.getEffServiceLevel().getId());
-            dto.setServiceLevelName(shift.getEffServiceLevel().getName());
-            dto.setStatus(shift.getStatus());
-            dto.setFuelLevel(shift.getFuelLevel());
-            dto.setShiftType(shift.getShiftType());
-            dto.setCompanyId(shift.getCompanyId());
-            shiftList.add(dto);
-        }
-
-        return new ResponseEntity<>(new Response(StatusType.OK, shiftList), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(StatusType.OK, shifts), HttpStatus.OK);
     }
 
     @ApiOperation(
