@@ -12,7 +12,7 @@ public class Lead {
     private String firstName;
     private String lastName;
     private String email;
-    private String Website;
+    private String website;
     private String phoneNumber;
     private String company;
     private int companyId;
@@ -50,11 +50,11 @@ public class Lead {
     }
 
     public String getWebsite() {
-        return Website;
+        return website;
     }
 
     public void setWebsite(String website) {
-        Website = website;
+        this.website = website;
     }
 
     public String getPhoneNumber() {
