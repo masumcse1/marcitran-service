@@ -11,6 +11,12 @@ import java.util.List;
 @Repository
 public interface FuelPurchaseLogRepository extends JpaRepository<FuelPurchaseLog, Integer> {
 
+    List<FuelPurchaseLog> findByCompanyId(Integer companyId, Pageable pageable);
+
+    List<FuelPurchaseLog> findByCompanyIdAndVehicles_Id(Integer companyId,
+                                                        int vehicleId,
+                                                        Pageable pageable);
+
     List<FuelPurchaseLog> findByCompanyIdAndPurchaseDateBetween(Integer companyId,
                                                                 Date startDate,
                                                                 Date endDate,

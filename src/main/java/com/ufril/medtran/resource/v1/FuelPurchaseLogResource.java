@@ -49,9 +49,9 @@ public class FuelPurchaseLogResource {
     @RequestMapping(value = "/fuelPurchaseLog/{companyId}",
             method = RequestMethod.GET)
     public ResponseEntity<?> getAllFuelPurchaseLog(@PathVariable("companyId") Integer companyId,
-                                                   @RequestParam("startDate")
+                                                   @RequestParam(value = "startDate", required = false)
                                                    @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-                                                   @RequestParam("endDate")
+                                                   @RequestParam(value = "endDate", required = false)
                                                    @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
                                                    @RequestParam(value = "vehicleId", required = false) Integer vehicleId,
                                                    @RequestParam(defaultValue = "0") Integer pageNumber) {
@@ -75,6 +75,7 @@ public class FuelPurchaseLogResource {
             dto.setCost(log.getCost());
             dto.setGallons(log.getGallons());
             dto.setNotes(log.getNotes());
+            dto.setEmployeeName(log.getEmployee().getFullName());
             dto.setAttendant(log.getAttendant());
             dto.setCompanyId(log.getCompanyId());
 

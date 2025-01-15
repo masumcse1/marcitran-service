@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface FuelPurchaseLogService {
+
     List<FuelPurchaseLog> getAllFuelPurchaseLogs(Integer companyId,
                                                  Date startDate,
                                                  Date endDate,

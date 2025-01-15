@@ -25,12 +25,22 @@ public class FuelPurchaseLogServiceImpl implements FuelPurchaseLogService {
                                                         Integer vehicleId,
                                                         Pageable pageable) {
 
-        if (vehicleId != null)
-            return fuelPurchaseLogRepository.findByCompanyIdAndPurchaseDateBetweenAndVehicles_Id(
-                    companyId, startDate, endDate, vehicleId, pageable);
-        else
-            return fuelPurchaseLogRepository.findByCompanyIdAndPurchaseDateBetween(
-                    companyId, startDate, endDate, pageable);
+        if (vehicleId != null) {
+            if (startDate != null && endDate != null) {
+                return fuelPurchaseLogRepository.findByCompanyIdAndPurchaseDateBetweenAndVehicles_Id(
+                        companyId, startDate, endDate, vehicleId, pageable);
+            } else {
+                return fuelPurchaseLogRepository.findByCompanyIdAndVehicles_Id(
+                        companyId, vehicleId, pageable);
+            }
+        } else {
+            if (startDate != null && endDate != null) {
+                return fuelPurchaseLogRepository.findByCompanyIdAndPurchaseDateBetween(
+                        companyId, startDate, endDate, pageable);
+            } else {
+                return fuelPurchaseLogRepository.findByCompanyId(companyId, pageable);
+            }
+        }
     }
 
     @Override
